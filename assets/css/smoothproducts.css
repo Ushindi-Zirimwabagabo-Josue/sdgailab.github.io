@@ -174,7 +174,9 @@ html, body {
     bottom: 25px;
   }
 }
-
+.sponsors {
+  flex-wrap: wrap;
+}
 .clean-block.add-on.sponsors a img {
   max-width: 170px;
   -webkit-filter: grayscale(0);

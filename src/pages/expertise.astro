@@ -1,0 +1,684 @@
+---
+import { withBase } from '../lib/url';
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import CmsText, { CmsList } from '../islands/CmsText';
+const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
+---
+
+<BaseLayout
+  title="Expertise - SDG AI Lab"
+  description="SDG AI Lab expertise across NLP, GIS, digital skills, resilience, fintech, research and advisory work."
+>
+  <div class="marina-focus-page" id="main">
+    <section class="band" id="focus">
+      <div class="wrap">
+        <div class="band-head reveal">
+          <h2>
+            <CmsText client:load page="expertise" section="heading" />
+          </h2>
+        </div>
+
+        <div class="focus-grid">
+          <div class="focus-card reveal tilt" id="nlp" style="--sdg:#00689D;">
+            <span class="focus-idx">01</span>
+            <h3><CmsText client:load page="expertise" section="nlp-title" /></h3>
+            <p><CmsText client:load page="expertise" section="nlp-body" /></p>
+            <CmsList client:load page="expertise" section="nlp-items" className="proj-list" />
+          </div>
+
+          <div class="focus-card reveal tilt" id="gis" style="--sdg:#3F7E44;">
+            <span class="focus-idx">02</span>
+            <h3><CmsText client:load page="expertise" section="gis-title" /></h3>
+            <p><CmsText client:load page="expertise" section="gis-body" /></p>
+            <CmsList client:load page="expertise" section="gis-items" className="proj-list" />
+          </div>
+
+          <div
+            class="focus-card reveal tilt"
+            id="skills"
+            style="--sdg:#FF3A21;"
+          >
+            <span class="focus-idx">03</span>
+            <h3><CmsText client:load page="expertise" section="skills-title" /></h3>
+            <p><CmsText client:load page="expertise" section="skills-body" /></p>
+            <CmsList client:load page="expertise" section="skills-items" className="proj-list" />
+          </div>
+
+          <div
+            class="focus-card reveal tilt"
+            id="resilience"
+            style="--sdg:#FD9D24;"
+          >
+            <span class="focus-idx">04</span>
+            <h3><CmsText client:load page="expertise" section="resilience-title" /></h3>
+            <p><CmsText client:load page="expertise" section="resilience-body" /></p>
+            <CmsList client:load page="expertise" section="resilience-items" className="proj-list" />
+          </div>
+
+          <div
+            class="focus-card reveal tilt"
+            id="fintech"
+            style="--sdg:#DD1367;"
+          >
+            <span class="focus-idx">05</span>
+            <h3><CmsText client:load page="expertise" section="fintech-title" /></h3>
+            <p><CmsText client:load page="expertise" section="fintech-body" /></p>
+            <CmsList client:load page="expertise" section="fintech-items" className="proj-list" />
+          </div>
+
+          <div
+            class="focus-card reveal tilt"
+            id="advisory"
+            style="--sdg:#7E57C2;"
+          >
+            <span class="focus-idx">06</span>
+            <h3><CmsText client:load page="expertise" section="advisory-title" /></h3>
+            <p><CmsText client:load page="expertise" section="advisory-body" /></p>
+            <CmsList client:load page="expertise" section="advisory-items" className="proj-list" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="wrap">
+        <div class="band-head reveal" style="margin-bottom:44px;">
+          <h2><CmsText client:load page="expertise" section="examples-heading" /></h2>
+        </div>
+        <div class="screen-grid reveal">
+          <a class="screen-card" href={withBase('/expertise#nlp')}>
+            <img
+              src={marinaAsset('assets/nlp-public-finance-platform.jpg')}
+              alt="Public Finance Simplification Platform interface, Fiji"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="screen-cap"
+              >Public Finance Simplification Platform</span
+            >
+          </a>
+          <a class="screen-card" href={withBase('/expertise#gis')}>
+            <img
+              src={marinaAsset('assets/gis-satellite.jpg')}
+              alt="Satellite image and land-use classification model output"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="screen-cap">Satellite imagery</span>
+          </a>
+          <a class="screen-card" href={withBase('/expertise#fintech')}>
+            <img
+              src={marinaAsset('assets/fintech-suptech-dashboard.jpg')}
+              alt="SupTech digital finance sentiment dashboard"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="screen-cap">Digital finance sentiment dashboard</span>
+          </a>
+          <a class="screen-card" href={withBase('/expertise#resilience')}>
+            <img
+              src={marinaAsset('assets/resilience-madagascar-dashboard.jpg')}
+              alt="Madagascar multi-hazard early warning dashboard"
+              loading="lazy"
+              decoding="async"
+              style="object-position:left top;"
+            />
+            <span class="screen-cap"
+              >Madagascar multi-hazard early warning dashboard</span
+            >
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <style>
+    .marina-focus-page {
+      --bg: #15181c;
+      --bg-raised: #1b1f24;
+      --bg-elevated: #21262c;
+      --border: #2c323a;
+      --border-soft: #24292f;
+      --text: #d9dde2;
+      --text-dim: #a0a8b2;
+      --text-mid: #b7bfc7;
+      --text-faint: #666f79;
+      --teal: #0383ae;
+      --blue: #1c61ac;
+      --amber: #6ec6e8;
+      --display: 'Cabinet Grotesk', sans-serif;
+      --body: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .marina-focus-page *,
+    .marina-focus-page *::before,
+    .marina-focus-page *::after {
+      box-sizing: border-box;
+    }
+    .marina-focus-page a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .marina-focus-page ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .marina-focus-page section[id] {
+      scroll-margin-top: 84px;
+    }
+    .marina-focus-page .reveal {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+      transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--rd, 0ms);
+    }
+    .marina-focus-page .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+    .marina-focus-page .tilt {
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition:
+        transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+        border-color 0.25s ease;
+    }
+
+    .marina-focus-page .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .marina-focus-page .eyebrow {
+      font-family: var(--body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-mid);
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .marina-focus-page .eyebrow::before {
+      content: attr(data-n);
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--teal);
+    }
+
+    .marina-focus-page h1,
+    .marina-focus-page h2,
+    .marina-focus-page h3 {
+      font-family: var(--display);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .marina-focus-page .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      padding: 11px 22px;
+      border: 1px solid transparent;
+      font-weight: 650;
+      font-size: 0.88rem;
+      transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .marina-focus-page .btn:hover {
+      transform: translateY(-1px);
+    }
+    .marina-focus-page .btn-gradient {
+      background: linear-gradient(
+        100deg,
+        var(--teal),
+        var(--blue) 70%,
+        var(--amber)
+      );
+      color: #04141a;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+        0 8px 30px -8px rgba(34, 211, 184, 0.55);
+    }
+    .marina-focus-page .btn-ghost {
+      border-color: var(--border);
+      background: transparent;
+      color: var(--text);
+    }
+    .marina-focus-page .btn-ghost:hover {
+      border-color: var(--text-dim);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .marina-focus-page .band {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .marina-focus-page #focus {
+      padding-top: 132px;
+    }
+
+    .marina-focus-page .band-head {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 60px;
+      margin-bottom: 72px;
+    }
+    .marina-focus-page .band-head .eyebrow {
+      grid-column: 1 / -1;
+    }
+    .marina-focus-page .band-head h2 {
+      background: linear-gradient(
+        115deg,
+        #ffffff 20%,
+        #a8e6f5 55%,
+        #26bde2 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(2.15rem, 4vw, 3.3rem);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      margin-top: 22px;
+    }
+    .marina-focus-page .band-head .desc {
+      color: var(--text-mid);
+      font-size: 1.02rem;
+      line-height: 1.6;
+      align-self: end;
+      max-width: 460px;
+      margin: 0;
+    }
+
+    .marina-focus-page .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border-soft);
+    }
+    .marina-focus-page .focus-card {
+      padding: 48px 52px 48px 32px;
+      border-bottom: 1px solid var(--border-soft);
+      position: relative;
+      transition: background 0.25s ease;
+    }
+    .marina-focus-page .focus-card::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 48px;
+      bottom: 48px;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--sdg, var(--teal));
+      opacity: 0.55;
+      transition:
+        opacity 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+    .marina-focus-page .focus-card:hover::before {
+      opacity: 1;
+    }
+    .marina-focus-page .focus-card:hover {
+      background: rgba(255, 255, 255, 0.014);
+    }
+    .marina-focus-page .focus-grid .focus-card:nth-child(odd) {
+      border-right: 1px solid var(--border-soft);
+      padding-right: 52px;
+    }
+    .marina-focus-page .focus-grid .focus-card:nth-child(even) {
+      padding-left: 32px;
+    }
+
+    .marina-focus-page .focus-idx {
+      display: block;
+      font-family: var(--body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--sdg, var(--text-faint));
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+    .marina-focus-page .focus-card h3 {
+      font-size: 1.2rem;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 14px;
+    }
+    .marina-focus-page .focus-card p {
+      color: var(--text-dim);
+      font-size: 0.94rem;
+      line-height: 1.6;
+      max-width: 440px;
+      margin: 0;
+    }
+    .marina-focus-page .focus-card:nth-child(2) {
+      --rd: 60ms;
+    }
+    .marina-focus-page .focus-card:nth-child(3) {
+      --rd: 120ms;
+    }
+    .marina-focus-page .focus-card:nth-child(4) {
+      --rd: 40ms;
+    }
+    .marina-focus-page .focus-card:nth-child(5) {
+      --rd: 100ms;
+    }
+    .marina-focus-page .focus-card:nth-child(6) {
+      --rd: 60ms;
+    }
+
+    .marina-focus-page :global(.proj-list) {
+      list-style: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-soft);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 10px;
+    }
+    .marina-focus-page :global(.proj-list) :global(li) {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      background: var(--bg-raised);
+      border: 1px solid var(--border-soft);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+    .marina-focus-page :global(.proj-list) :global(li):has(.proj-tag-link) {
+      padding: 0;
+      background: transparent;
+      border-color: var(--sdg, var(--teal));
+    }
+    .marina-focus-page .proj-tag-link {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      color: var(--sdg, var(--teal));
+      font-weight: 600;
+      transition:
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+    .marina-focus-page .proj-tag-link::after {
+      content: '↗';
+      font-size: 0.7em;
+    }
+    .marina-focus-page .proj-tag-link:hover {
+      /* background: var(--sdg, var(--teal)); */
+      /* color: var(--bg); */
+    }
+
+    .marina-focus-page .screen-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .marina-focus-page .screen-card {
+      display: block;
+    }
+    .marina-focus-page .screen-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      object-position: top;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      background: var(--bg-elevated);
+      transition:
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 1):hover img {
+      border-color: var(--teal);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 2):hover img {
+      border-color: var(--blue);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 3):hover img {
+      border-color: var(--amber);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 4):hover img {
+      border-color: var(--teal);
+    }
+    .marina-focus-page .screen-card:hover img {
+      transform: translateY(-3px);
+    }
+    .marina-focus-page .screen-visual {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: 12px;
+      border: 1px solid var(--border-soft);
+      background:
+        linear-gradient(135deg, rgba(217, 221, 226, 0.12), transparent 32%),
+        radial-gradient(
+          circle at 26% 30%,
+          rgba(76, 134, 255, 0.38),
+          transparent 18%
+        ),
+        radial-gradient(
+          circle at 72% 62%,
+          rgba(34, 211, 184, 0.22),
+          transparent 22%
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 54px,
+          rgba(255, 255, 255, 0.035) 54px 55px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent 0 42px,
+          rgba(255, 255, 255, 0.03) 42px 43px
+        ),
+        var(--bg-elevated);
+      display: block;
+      transition:
+        border-color 0.25s ease,
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+    .marina-focus-page .screen-visual--gis {
+      background:
+        radial-gradient(
+          circle at 24% 35%,
+          rgba(63, 126, 68, 0.56),
+          transparent 12%
+        ),
+        radial-gradient(
+          circle at 50% 48%,
+          rgba(76, 134, 255, 0.28),
+          transparent 18%
+        ),
+        radial-gradient(
+          circle at 78% 36%,
+          rgba(34, 211, 184, 0.2),
+          transparent 16%
+        ),
+        linear-gradient(135deg, rgba(63, 126, 68, 0.18), transparent 44%),
+        var(--bg-elevated);
+    }
+    .marina-focus-page .screen-visual--fintech {
+      background:
+        linear-gradient(180deg, rgba(162, 25, 66, 0.32), transparent),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 38px,
+          rgba(255, 255, 255, 0.05) 38px 39px
+        ),
+        linear-gradient(135deg, rgba(255, 170, 61, 0.2), transparent),
+        var(--bg-elevated);
+    }
+    .marina-focus-page .screen-visual--resilience {
+      background:
+        radial-gradient(
+          circle at 30% 42%,
+          rgba(253, 157, 36, 0.35),
+          transparent 18%
+        ),
+        radial-gradient(
+          circle at 62% 58%,
+          rgba(76, 134, 255, 0.32),
+          transparent 20%
+        ),
+        linear-gradient(135deg, rgba(253, 157, 36, 0.13), transparent),
+        var(--bg-elevated);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 1):hover .screen-visual {
+      border-color: var(--teal);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 2):hover .screen-visual {
+      border-color: var(--blue);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 3):hover .screen-visual {
+      border-color: var(--amber);
+    }
+    .marina-focus-page .screen-card:nth-child(4n + 4):hover .screen-visual {
+      border-color: var(--teal);
+    }
+    .marina-focus-page .screen-card:hover .screen-visual {
+      transform: translateY(-3px);
+    }
+    .marina-focus-page .screen-cap {
+      display: block;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    .marina-focus-page .cta-band {
+      padding: 130px 0;
+      text-align: center;
+      border-bottom: 1px solid var(--border-soft);
+      position: relative;
+    }
+    .marina-focus-page .cta-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(
+          680px 340px at 50% 0%,
+          rgba(34, 211, 184, 0.07),
+          transparent 70%
+        ),
+        radial-gradient(
+          480px 280px at 85% 30%,
+          rgba(76, 134, 255, 0.05),
+          transparent 70%
+        );
+      pointer-events: none;
+    }
+    .marina-focus-page .cta-band .wrap {
+      position: relative;
+      z-index: 1;
+    }
+    .marina-focus-page .cta-band h2 {
+      font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.015em;
+      margin: 22px auto 34px;
+      max-width: 820px;
+    }
+    .marina-focus-page .cta-band .desc {
+      max-width: 520px;
+      margin: 0 auto 40px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+    .marina-focus-page .cta-actions {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 820px) {
+      .marina-focus-page .band-head,
+      .marina-focus-page .focus-grid,
+      .marina-focus-page .screen-grid {
+        grid-template-columns: 1fr;
+      }
+      .marina-focus-page .focus-grid .focus-card:nth-child(odd) {
+        border-right: none;
+        padding-right: 0;
+      }
+      .marina-focus-page .focus-grid .focus-card:nth-child(even) {
+        padding-left: 32px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .marina-focus-page .wrap {
+        padding: 0 20px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marina-focus-page .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+  <script>
+    const revealItems = document.querySelectorAll('.marina-focus-page .reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }),
+        { threshold: 0.12 },
+      );
+      revealItems.forEach((item) => observer.observe(item));
+    } else revealItems.forEach((item) => item.classList.add('is-visible'));
+
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document
+        .querySelectorAll<HTMLElement>('.marina-focus-page .tilt')
+        .forEach((card) => {
+          let frame = 0;
+          card.addEventListener('mousemove', (event) => {
+            const bounds = card.getBoundingClientRect();
+            const x = (event.clientX - bounds.left) / bounds.width - 0.5;
+            const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+            cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(() => {
+              card.style.transform = `perspective(700px) rotateX(${y * -7}deg) rotateY(${x * 9}deg) translateY(-3px)`;
+            });
+          });
+          card.addEventListener('mouseleave', () => {
+            cancelAnimationFrame(frame);
+            card.style.transform = '';
+          });
+        });
+    }
+  </script>
+</BaseLayout>

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Contact Us - SDG AI Lab</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600,700">
     <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
     <link rel="stylesheet" href="assets/fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="assets/fonts/typicons.min.css">
@@ -19,11 +17,24 @@
     <link rel="stylesheet" href="assets/css/Team-Clean-1.css">
     <link rel="stylesheet" href="assets/css/Team-Clean.css">
     <link rel="stylesheet" href="assets/css/Team-Grid.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="manifest" href="icons/site.webmanifest">
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="icons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-config" content="icons/browserconfig.xml">
+    <meta name="theme-color" content="#000000">
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-xl bg-white clean-navbar" style="font-family: 'Open Sans', sans-serif;">
-        <div class="container"><a class="navbar-brand logo" href="index.html" style="font-family: 'Open Sans', sans-serif;"><img src="assets/img/Webp.net-resizeimage.jpg"><strong>&nbsp; &nbsp;SDG AI Lab&nbsp;&nbsp;</strong></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+    <nav class="navbar navbar-light navbar-expand-xl bg-white clean-navbar">
+        <div class="container"><a class="navbar-brand logo" href="index.html"><img
+                    src="assets/img/Webp.net-resizeimage.jpg" alt="SDG AI Lab Logo"><strong>&nbsp; &nbsp;SDG AI
+                    Lab&nbsp;&nbsp;</strong></a><button data-bs-toggle="collapse" class="navbar-toggler"
+                data-bs-target="#navcol-1" aria-label="Toggle navigation menu" aria-expanded="false"><span
+                    class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -42,261 +53,47 @@
                 <div class="block-heading">
                     <div class="intro" style="color: var(--gray-dark);">
                         <h2 class="text-center"><br><strong>Contact Us</strong></h2>
-                        <p style="color: var(--gray-dark);">For questions or feedback, please contact us by using the form below. We'll get back to you soon as possible.</p>
-                        <div id="contact"></div>
-                        <section class="td-form"></section>
+                        <p style="color: var(--gray-dark);">For questions or feedback, please contact us by using the
+                            form below. We'll get back to you soon as possible.</p>
                     </div>
                 </div>
             </div>
-            <div id="contact"></div>
             <div class="container" style="padding-bottom: 70px;">
-                <div class="modal fade" role="dialog" tabindex="-1" id="modal1">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4>Contact Information</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="contactForm" action="javascript:void();" method="get"><input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.mywebsite.com"><input class="form-control" type="hidden" name="subject" value="My Contact Form"><input class="form-control" type="hidden" name="to" value="email@mywebsite.com">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div id="modal-successfail"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6" id="modal-message">
-                                            <fieldset>
-                                                <legend><i class="fa fa-envelope"></i> Contact Us</legend>
-                                            </fieldset>
-                                            <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_name">Name</label><input class="form-control" type="text" id="modal_from_name" tabindex="-1" name="from_name" required="" placeholder="Full Name"></div>
-                                            <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_email">Email</label><input class="form-control" type="email" id="modal_from_email" name="from_email" required="" placeholder="Email Address"></div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_phone">Phone</label><input class="form-control" type="text" id="modal_from_phone" name="from_phone" placeholder="Primary Phone"></div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group mb-3"><label class="form-label" for="modal_calltime">Best Time to Call</label><select class="form-select" id="modal_calltime" name="Call Time">
-                                                            <optgroup label="This is a group">
-                                                                <option value="12" selected="">This is item 1</option>
-                                                                <option value="13">This is item 2</option>
-                                                                <option value="14">This is item 3</option>
-                                                            </optgroup>
-                                                        </select></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mb-3"><label class="form-label" for="modal_comments">Comments</label><textarea class="form-control" id="modal_comments" name="Comments" placeholder="Enter comments here" rows="5"></textarea></div>
-                                            <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" type="submit">Send <i class="fa fa-chevron-circle-right"></i></button></div>
-                                            <hr>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset>
-                                                <legend> <i class="fa fa-location-arrow"></i> Locate Us</legend>
-                                            </fieldset>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="static-map"><a href="https://www.google.com/maps/place/2+15th+St+NW+Washington+DC+20024" target="_blank"><img class="img-fluid" src="http://maps.googleapis.com/maps/api/staticmap?autoscale=2&amp;size=600x210&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C582+1801+W+International+Speedway+Blvd+Daytona+Beach+FL+32114&amp;zoom=12" alt="Google Map of Washington Monument"></a></div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <fieldset>
-                                                        <legend><i class="fa fa-envelope"></i> Contact Us</legend>
-                                                    </fieldset>
-                                                    <div><span><strong>Name</strong></span></div>
-                                                    <div><span>email@address.com</span></div>
-                                                    <div><span>www.awebsite.com</span></div>
-                                                    <hr>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <fieldset>
-                                                        <legend><i class="fa fa-location-arrow"></i> Our Address</legend>
-                                                    </fieldset>
-                                                    <div><span><strong>Office Name</strong></span></div>
-                                                    <div><span>55 Icannot Dr.</span></div>
-                                                    <div><span>Daytona Beach, FL 81500</span></div>
-                                                    <div><abbr data-toggle="tooltip" data-placement="top" title="Office Phone: 555-867-5309">O:</abbr> 555-867-5309</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <form id="contactForm" action="MAILTO:yoonseong.jung@undp.org" method="post" enctype="text/plain"><input class="form-control" type="hidden" id="Name"><input class="form-control" type="hidden" id="Email"><input class="form-control" type="hidden">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div id="successfail"></div>
-                        </div>
-                    </div>
-                    <div class="row">
+                <form id="contactForm" action="MAILTO:sdgailab@undp.org" method="post" enctype="text/plain"><input
+                        class="form-control" type="hidden" id="Name"><input class="form-control" type="hidden"
+                        id="Email"><input class="form-control" type="hidden">
+                    <div class="row mb-0">
                         <div class="col-md-6 col-xl-12" id="message">
-                            <fieldset></fieldset>
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="from_name">Name</label><input class="form-control" type="text" id="from_name" tabindex="-1" name="from_name" required="" placeholder="Full Name"></div>
-                            <div class="has-feedback form-group mb-3"><label class="form-label" for="from_email">Email</label><input class="form-control" type="email" id="from_email" name="from_email" required="" placeholder="Email Address"></div>
-                            <div class="form-group mb-3"><label class="form-label" for="comments">Comments</label><textarea class="form-control" id="comments" name="Comments" placeholder="Enter comments here" rows="8"></textarea></div>
-                            <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" type="submit">Send <i class="fa fa-chevron-circle-right"></i></button></div>
+                            <div class="has-feedback form-group mb-3"><label class="form-label"
+                                    for="from_name">Name</label><input class="form-control" type="text" id="from_name"
+                                    tabindex="-1" name="from_name" required="" placeholder="Full Name"></div>
+                            <div class="has-feedback form-group mb-3"><label class="form-label"
+                                    for="from_email">Email</label><input class="form-control" type="email"
+                                    id="from_email" name="from_email" required="" placeholder="Email Address"></div>
+                            <div class="form-group mb-3"><label class="form-label"
+                                    for="comments">Comments</label><textarea class="form-control" id="comments"
+                                    name="Comments" placeholder="Enter comments here" rows="8"></textarea></div>
+                            <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" type="submit"
+                                    aria-label="Send contact form">Send <i
+                                        class="fa fa-chevron-circle-right"></i></button></div>
                             <hr>
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="container">
-                <div class="modal fade" role="dialog" tabindex="-1" id="modal1">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4>Contact Information</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="contactForm" action="javascript:void();" method="get"><input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.mywebsite.com"><input class="form-control" type="hidden" name="subject" value="My Contact Form"><input class="form-control" type="hidden" name="to" value="email@mywebsite.com">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div id="modal-successfail"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6" id="modal-message">
-                                            <fieldset>
-                                                <legend><i class="fa fa-envelope"></i> Contact Us</legend>
-                                            </fieldset>
-                                            <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_name">Name</label><input class="form-control" type="text" id="modal_from_name" tabindex="-1" name="from_name" required="" placeholder="Full Name"></div>
-                                            <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_email">Email</label><input class="form-control" type="email" id="modal_from_email" name="from_email" required="" placeholder="Email Address"></div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_phone">Phone</label><input class="form-control" type="text" id="modal_from_phone" name="from_phone" placeholder="Primary Phone"></div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group mb-3"><label class="form-label" for="modal_calltime">Best Time to Call</label><select class="form-select" id="modal_calltime" name="Call Time">
-                                                            <optgroup label="This is a group">
-                                                                <option value="12" selected="">This is item 1</option>
-                                                                <option value="13">This is item 2</option>
-                                                                <option value="14">This is item 3</option>
-                                                            </optgroup>
-                                                        </select></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mb-3"><label class="form-label" for="modal_comments">Comments</label><textarea class="form-control" id="modal_comments" name="Comments" placeholder="Enter comments here" rows="5"></textarea></div>
-                                            <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" type="submit">Send <i class="fa fa-chevron-circle-right"></i></button></div>
-                                            <hr>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset>
-                                                <legend> <i class="fa fa-location-arrow"></i> Locate Us</legend>
-                                            </fieldset>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="static-map"><a href="https://www.google.com/maps/place/2+15th+St+NW+Washington+DC+20024" target="_blank"><img class="img-fluid" src="http://maps.googleapis.com/maps/api/staticmap?autoscale=2&amp;size=600x210&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C582+1801+W+International+Speedway+Blvd+Daytona+Beach+FL+32114&amp;zoom=12" alt="Google Map of Washington Monument"></a></div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <fieldset>
-                                                        <legend><i class="fa fa-envelope"></i> Contact Us</legend>
-                                                    </fieldset>
-                                                    <div><span><strong>Name</strong></span></div>
-                                                    <div><span>email@address.com</span></div>
-                                                    <div><span>www.awebsite.com</span></div>
-                                                    <hr>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <fieldset>
-                                                        <legend><i class="fa fa-location-arrow"></i> Our Address</legend>
-                                                    </fieldset>
-                                                    <div><span><strong>Office Name</strong></span></div>
-                                                    <div><span>55 Icannot Dr.</span></div>
-                                                    <div><span>Daytona Beach, FL 81500</span></div>
-                                                    <div><abbr data-toggle="tooltip" data-placement="top" title="Office Phone: 555-867-5309">O:</abbr> 555-867-5309</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="modal fade" role="dialog" tabindex="-1" id="modal1">
-                    <div class="modal-dialog modal-lg" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4>Contact Information</h4><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form id="contactForm" action="javascript:void();" method="get"><input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.mywebsite.com"><input class="form-control" type="hidden" name="subject" value="My Contact Form"><input class="form-control" type="hidden" name="to" value="email@mywebsite.com">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div id="modal-successfail"></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-6" id="modal-message">
-                                            <fieldset>
-                                                <legend><i class="fa fa-envelope"></i> Contact Us</legend>
-                                            </fieldset>
-                                            <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_name">Name</label><input class="form-control" type="text" id="modal_from_name" tabindex="-1" name="from_name" required="" placeholder="Full Name"></div>
-                                            <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_email">Email</label><input class="form-control" type="email" id="modal_from_email" name="from_email" required="" placeholder="Email Address"></div>
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    <div class="has-feedback form-group mb-3"><label class="form-label" for="modal_from_phone">Phone</label><input class="form-control" type="text" id="modal_from_phone" name="from_phone" placeholder="Primary Phone"></div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <div class="form-group mb-3"><label class="form-label" for="modal_calltime">Best Time to Call</label><select class="form-select" id="modal_calltime" name="Call Time">
-                                                            <optgroup label="This is a group">
-                                                                <option value="12" selected="">This is item 1</option>
-                                                                <option value="13">This is item 2</option>
-                                                                <option value="14">This is item 3</option>
-                                                            </optgroup>
-                                                        </select></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mb-3"><label class="form-label" for="modal_comments">Comments</label><textarea class="form-control" id="modal_comments" name="Comments" placeholder="Enter comments here" rows="5"></textarea></div>
-                                            <div class="form-group mb-3"><button class="btn btn-primary d-block w-100" type="submit">Send <i class="fa fa-chevron-circle-right"></i></button></div>
-                                            <hr>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <fieldset>
-                                                <legend> <i class="fa fa-location-arrow"></i> Locate Us</legend>
-                                            </fieldset>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="static-map"><a href="https://www.google.com/maps/place/2+15th+St+NW+Washington+DC+20024" target="_blank"><img class="img-fluid" src="http://maps.googleapis.com/maps/api/staticmap?autoscale=2&amp;size=600x210&amp;maptype=roadmap&amp;format=png&amp;visual_refresh=true&amp;markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C582+1801+W+International+Speedway+Blvd+Daytona+Beach+FL+32114&amp;zoom=12" alt="Google Map of Washington Monument"></a></div>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <fieldset>
-                                                        <legend><i class="fa fa-envelope"></i> Contact Us</legend>
-                                                    </fieldset>
-                                                    <div><span><strong>Name</strong></span></div>
-                                                    <div><span>email@address.com</span></div>
-                                                    <div><span>www.awebsite.com</span></div>
-                                                    <hr>
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <fieldset>
-                                                        <legend><i class="fa fa-location-arrow"></i> Our Address</legend>
-                                                    </fieldset>
-                                                    <div><span><strong>Office Name</strong></span></div>
-                                                    <div><span>55 Icannot Dr.</span></div>
-                                                    <div><span>Daytona Beach, FL 81500</span></div>
-                                                    <div><abbr data-toggle="tooltip" data-placement="top" title="Office Phone: 555-867-5309">O:</abbr> 555-867-5309</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="contact"></div>
-            <section class="td-form"></section>
         </section>
     </main>
     <footer class="page-footer dark">
-        <div class="footer-copyright"><div><a href="https://twitter.com/sdgailab?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @sdgailab</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><!-- Place this tag where you want the button to render. -->
-<a class="github-button" href="https://github.com/SDG-AI-Lab" aria-label="Follow @SDG-AI-Lab on GitHub">Follow @SDG-AI-Lab</a></div><!-- Place this tag in your head or just before your close body tag. -->
-<script async defer src="https://buttons.github.io/buttons.js"></script>
-            <p>© 2021 SDG AI Lab</p>
+        <div class="footer-copyright">
+            <div><a href="https://twitter.com/sdgailab?ref_src=twsrc%5Etfw" class="twitter-follow-button"
+                    data-show-count="false">Follow @sdgailab</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <!-- Place this tag where you want the button to render. -->
+                <a class="github-button" href="https://github.com/SDG-AI-Lab"
+                    aria-label="Follow @SDG-AI-Lab on GitHub">Follow @SDG-AI-Lab</a>
+            </div><!-- Place this tag in your head or just before your close body tag. -->
+            <script async defer src="https://buttons.github.io/buttons.js"></script>
+            <p id="copyright-year">© 2021 SDG AI Lab</p>
         </div>
     </footer>
     <script src="assets/js/jquery.min.js"></script>
@@ -309,6 +106,16 @@
     <script src="assets/js/particles.js"></script>
     <script src="assets/js/particles.min.js"></script>
     <script src="assets/js/stats.js"></script>
+    <script>
+        // Update copyright year dynamically
+        document.addEventListener('DOMContentLoaded', function () {
+            const copyrightElement = document.getElementById('copyright-year');
+            if (copyrightElement) {
+                const currentYear = new Date().getFullYear();
+                copyrightElement.textContent = `© ${currentYear} SDG AI Lab`;
+            }
+        });
+    </script>
 </body>
 
 </html>

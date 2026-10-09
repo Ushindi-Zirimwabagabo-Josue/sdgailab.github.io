@@ -1,3 +1,24 @@
+/* ---- Font Harmonization ---- */
+
+/* Override Bootstrap font variable to use Open Sans */
+:root {
+  --bs-font-sans-serif: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Global font declarations */
+html, body {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Ensure common elements inherit Open Sans */
+h1, h2, h3, h4, h5, h6,
+p, a, span, div,
+nav, header, footer,
+button, input, textarea, select,
+label, li, ul, ol {
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
 /* ---- base ---- */
 
 /* ---- stats.js ---- */

@@ -1,0 +1,128 @@
+---
+import { withBase } from '../../lib/url';
+import '../../styles/global.css';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'SDG AI Lab is a UNDP initiative advancing responsible artificial intelligence for sustainable development through applied research, open tools and partnerships.',
+  image = '/og-image.png',
+  noindex = false,
+} = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin);
+const socialImage = new URL(withBase(image), Astro.site ?? Astro.url.origin);
+const gaMeasurementId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID ?? '';
+const siteOrigin = Astro.site ?? Astro.url.origin;
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'SDG AI Lab',
+  alternateName: 'UNDP SDG AI Lab',
+  url: new URL(withBase('/'), siteOrigin).toString(),
+  logo: new URL(withBase('/android-chrome-256x256.png'), siteOrigin).toString(),
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'United Nations Development Programme',
+    url: 'https://www.undp.org/',
+  },
+  sameAs: [
+    'https://github.com/SDG-AI-Lab',
+    'https://www.linkedin.com/company/sdgailab',
+  ],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    email: 'sdgailab@undp.org',
+    contactType: 'technical support and partnerships',
+  },
+};
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "form-action 'self'",
+  "img-src 'self' data: https:",
+  "media-src 'self' https: blob:",
+  "font-src 'self' data: https://fonts.gstatic.com https://cdn.fontshare.com",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://api.fontshare.com",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://region1.google-analytics.com https://*.ingest.sentry.io https://*.sentry.io",
+  "frame-src 'self' https://www.youtube-nocookie.com https://www.youtube.com",
+  "manifest-src 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta http-equiv="Content-Security-Policy" content={contentSecurityPolicy} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="theme-color" content="#15181C" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://api.fontshare.com" />
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Long+Cang&display=swap" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SDG AI Lab" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="SDG AI Lab - Artificial Intelligence for Sustainable Development" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
+    <link rel="icon" href={withBase('/favicon.ico')} sizes="any" />
+    <link rel="icon" type="image/png" sizes="16x16" href={withBase('/favicon-16x16.png')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32x32.png')} />
+    <link rel="apple-touch-icon" sizes="180x180" href={withBase('/apple-touch-icon.png')} />
+    <link rel="manifest" href={withBase('/site.webmanifest')} />
+
+    {gaMeasurementId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}></script>
+        <script is:inline src={withBase('/scripts/analytics.js')} data-ga-measurement-id={gaMeasurementId}></script>
+      </>
+    )}
+  </head>
+  <body>
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-primary focus:px-4 focus:py-2 focus:text-white focus:shadow-lg"
+    >
+      Skip to main content
+    </a>
+
+    <Header />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+
+

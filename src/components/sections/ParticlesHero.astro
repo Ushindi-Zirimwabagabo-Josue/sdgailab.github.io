@@ -1,0 +1,26 @@
+---
+import particlesScriptUrl from '../../../assets/js/particles.min.js?url';
+import { withBase } from '../../lib/url';
+
+const particlesConfigPath = withBase('/particles-config.json');
+---
+
+<section id="particles-hero" class="relative min-h-[640px] overflow-hidden bg-primary-900 lg:min-h-[680px]">
+  <div id="particles-js" class="absolute inset-0"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-primary-900/95 via-primary/90 to-primary-500/80"></div>
+  <div class="relative z-10 flex min-h-[640px] items-center py-16 lg:min-h-[680px] lg:py-20">
+    <div class="container-narrow w-full">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<script is:inline src={particlesScriptUrl}></script>
+
+<script is:inline define:vars={{ particlesConfigPath }}>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion && window.particlesJS) {
+    window.particlesJS.load('particles-js', particlesConfigPath);
+  }
+</script>

@@ -1,0 +1,20 @@
+---
+interface Props { class?: string; label?: string; }
+const { class: className = 'h-40 w-40', label = 'SDG AI Lab applies AI and data for development impact' } = Astro.props;
+const colors = ['#E5243B','#DDA63A','#4C9F38','#C5192D','#FF3A21','#26BDE2','#FCC30B','#A21942','#FD6925','#DD1367','#FD9D24','#BF8B2E','#3F7E44','#0A97D9','#56C02B','#00689D','#19486A'];
+const circumference = 301.59;
+const segment = circumference / 17;
+const dash = segment - 2.7;
+---
+
+<svg class={className} viewBox="0 0 120 120" role="img" aria-label={label}>
+  <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="14" />
+  {colors.map((color, index) => (
+    <circle cx="60" cy="60" r="48" fill="none" stroke={color} stroke-width="14"
+      stroke-dasharray={`${dash} ${circumference - dash}`} stroke-dashoffset={-(index * segment)}
+      transform="rotate(-90 60 60)" />
+  ))}
+  <circle cx="60" cy="60" r="34" fill="#111947" />
+  <text x="60" y="55" fill="white" font-size="10" font-weight="700" text-anchor="middle">AI + DATA</text>
+  <text x="60" y="69" fill="#dbeafe" font-size="7" font-weight="600" letter-spacing="1.5" text-anchor="middle">FOR IMPACT</text>
+</svg>

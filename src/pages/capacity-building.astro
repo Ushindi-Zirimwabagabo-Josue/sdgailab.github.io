@@ -1,0 +1,76 @@
+---
+import { withBase } from '../lib/url';
+import BaseLayout from '../components/layout/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Capacity Building - SDG AI Lab"
+  description="Training, bootcamps, mentorship and community-building support from SDG AI Lab."
+>
+  <section class="section-padding bg-lab-surface">
+    <div class="container-narrow">
+      <p class="section-label">Capacity building</p>
+      <h1 class="mt-3 max-w-4xl text-3xl font-bold text-lab-text sm:text-5xl">
+        Training, mentorship and practical learning for teams working with AI and data
+      </h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-lab-muted">
+        Capacity building is the Lab's learning and enablement pathway: helping teams understand responsible AI, strengthen data readiness and build confidence through practical formats.
+      </p>
+
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+        {[
+          ['Training', 'Short learning sessions on responsible AI, data use, product thinking and implementation basics.'],
+          ['Bootcamps', 'Focused hands-on programmes for teams moving from problem framing to prototypes.'],
+          ['Mentorship', 'Technical and product guidance for teams developing or maintaining AI and data solutions.'],
+          ['Community', 'Volunteer and expert networks that support learning, review and knowledge exchange.'],
+        ].map(([title, body]) => (
+          <article class="rounded-xl border border-lab-border bg-lab-section p-6">
+            <h2 class="text-lg font-bold text-lab-text">{title}</h2>
+            <p class="mt-3 text-sm leading-6 text-lab-muted">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-section" aria-labelledby="capacity-pathways-heading">
+    <div class="container-narrow grid gap-10 lg:grid-cols-[.85fr_1.15fr]">
+      <div>
+        <p class="section-label">Learning pathways</p>
+        <h2 id="capacity-pathways-heading" class="mt-3 text-3xl font-bold text-lab-text sm:text-4xl">
+          Learning connected to real use cases
+        </h2>
+        <p class="mt-4 leading-7 text-lab-muted">
+          Each activity is shaped around the audience, capability being built and connection to responsible development work.
+        </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {[
+          'Audience and prerequisite knowledge',
+          'Learning objectives and expected outputs',
+          'Format, duration and delivery modality',
+          'Responsible AI and safeguards coverage',
+          'Related projects, tools or resources',
+          'Follow-up pathway for continued support',
+        ].map((item) => (
+          <div class="flex gap-3 rounded-lg border border-lab-border bg-lab-surface p-4">
+            <span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-primary"></span>
+            <p class="text-sm font-semibold text-lab-muted">{item}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-section text-lab-text">
+    <div class="container-narrow flex flex-col justify-between gap-6 md:flex-row md:items-center">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-lab-accent-soft">Get involved</p>
+        <h2 class="mt-3 text-3xl font-bold">Explore volunteer and expert contribution pathways.</h2>
+      </div>
+      <a href={withBase('/volunteer')} class="inline-flex min-h-12 items-center justify-center rounded-md bg-lab-accent px-6 py-3 text-sm font-bold text-white shadow transition hover:bg-primary-dark">
+        Volunteer with the Lab
+      </a>
+    </div>
+  </section>
+</BaseLayout>

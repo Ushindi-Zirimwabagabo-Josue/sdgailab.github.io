@@ -1,0 +1,67 @@
+version: 3
+
+constitution: .specify/memory/constitution.md
+
+project:
+  name: "SDG AI Lab Website"
+  type: "web-app"
+  deployment_target: "github-pages"
+  compliance: []
+
+layers:
+  frontend:
+    type: "astro-react-typescript"
+    root: "src/"
+    tech_tags:
+      - astro
+      - react
+      - typescript
+      - tailwind
+      - supabase
+      - postgresql
+    services:
+      - supabase-auth
+      - supabase-storage
+      - github-pages
+      - github-actions
+
+    quality_attribute_overrides:
+      include: []
+      exclude: []
+
+    scopes:
+      - components
+      - islands
+      - lib
+      - pages
+    test_command: >-
+      npm run test
+    coverage_command: >-
+      npm run test:coverage
+    source_patterns:
+      - "src/**/*.astro"
+      - "src/**/*.ts"
+      - "src/**/*.tsx"
+    test_patterns:
+      - "src/**/*.test.ts"
+      - "src/**/*.test.tsx"
+      - "src/**/*.spec.ts"
+      - "src/**/*.spec.tsx"
+      - "src/**/*.test.astro"
+      - "src/**/*.spec.astro"
+      - "tests/**/*.test.ts"
+      - "tests/**/*.test.tsx"
+      - "tests/**/*.integration.test.ts"
+    ignore:
+      - "**/*.d.ts"
+      - "**/*.config.*"
+      - "**/.astro/**"
+      - "**/dist/**"
+      - "**/node_modules/**"
+      - "**/coverage/**"
+      - "**/types.ts"
+      - "**/types/**"
+
+severity_overrides: {}
+
+excluded_checks: []

@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import { withBase } from '../lib/url';
+
+const launchCriteria = [
+  ['Content', 'Priority pages reviewed for clarity, audience relevance and UNDP alignment.'],
+  ['Projects', 'Project profiles verified for status, maturity, audience, timeline, claims and ready-to-use visuals.'],
+  ['Resources', 'Public resources include clear metadata, context and intended audience.'],
+  ['Design', 'Homepage, navigation, project pages and mobile layouts reviewed by design/UX stakeholders.'],
+  ['QA', 'Automated tests, E2E tests, accessibility checks, mobile review and broken-link checks completed.'],
+  ['Governance', 'Content owners, review cycle and post-launch update process confirmed.'],
+] as const;
+
+const timeline = [
+  ['Sprint review', 'Feedback consolidated from Gokhan, Dina, interns and design/content review inputs.'],
+  ['Launch-readiness pass', 'Critical improvements applied to hero messaging, CTAs, resources, project pages and contact pathways.'],
+  ['Content and design review', 'Remaining project copy, visuals, resources and design feedback to be confirmed by responsible owners.'],
+  ['Production decision', 'Move to production after launch blockers are resolved and sign-off is confirmed.'],
+] as const;
+---
+
+<BaseLayout
+  title="Launch Readiness - SDG AI Lab"
+  description="Temporary launch-readiness tracker for the SDG AI Lab website review process."
+  noindex={true}
+>
+  <section class="section-padding bg-lab-surface">
+    <div class="container-narrow">
+      <p class="section-label">Temporary review page</p>
+      <h1 class="mt-3 text-3xl font-bold text-lab-text sm:text-4xl">Website launch readiness</h1>
+      <p class="mt-4 max-w-3xl text-lg leading-8 text-lab-muted">
+        This page summarizes the remaining review process before the SDG AI Lab website moves from staging to production. It is intended for internal coordination and is excluded from search indexing.
+      </p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href={withBase('/')} class="inline-flex min-h-12 items-center justify-center rounded-md bg-primary px-6 py-3 text-sm font-bold text-white shadow transition hover:bg-primary-dark">
+          Review staging homepage
+        </a>
+        <a href={withBase('/projects')} class="inline-flex min-h-12 items-center justify-center rounded-md border border-lab-border px-6 py-3 text-sm font-bold text-lab-muted transition hover:border-primary hover:text-lab-accent-soft">
+          Review portfolio
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-section" aria-labelledby="timeline-heading">
+    <div class="container-narrow">
+      <h2 id="timeline-heading" class="text-2xl font-bold text-lab-text">Implementation and review timeline</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-4">
+        {timeline.map(([title, body], index) => (
+          <article class="rounded-xl border border-lab-border bg-lab-surface p-5 shadow-sm">
+            <span class="text-sm font-bold text-lab-accent-soft">{String(index + 1).padStart(2, '0')}</span>
+            <h3 class="mt-3 text-lg font-bold text-lab-text">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-lab-muted">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-surface" aria-labelledby="criteria-heading">
+    <div class="container-narrow">
+      <div class="max-w-3xl">
+        <p class="section-label">Launch criteria</p>
+        <h2 id="criteria-heading" class="mt-3 text-3xl font-bold text-lab-text sm:text-4xl">What must be true before production</h2>
+        <p class="mt-4 leading-7 text-lab-muted">
+          These criteria convert the review recommendations into practical sign-off checks. They separate website implementation from content, design and governance ownership.
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {launchCriteria.map(([title, body]) => (
+          <article class="rounded-xl border border-lab-border bg-lab-section p-6">
+            <h3 class="text-lg font-bold text-lab-text">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-lab-muted">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+  status: string;
+}
+
+const { status } = Astro.props;
+
+const colorMap: Record<string, string> = {
+  active: 'ui-badge--active',
+  completed: 'ui-badge--completed',
+  under_development: 'ui-badge--under-development',
+  on_hold: 'ui-badge--on-hold',
+};
+
+const labelMap: Record<string, string> = {
+  active: 'Active',
+  completed: 'Completed',
+  under_development: 'Under Development',
+  on_hold: 'On Hold',
+};
+
+const colors = colorMap[status] ?? 'ui-badge--neutral';
+const label = labelMap[status] ?? status;
+---
+
+<span class:list={['ui-badge ui-badge--md', colors]}>
+  {label}
+</span>

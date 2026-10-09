@@ -1,0 +1,381 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import CmsText, { CmsList } from '../islands/CmsText';
+
+const contactEmail = 'dina.akylbekova@undp.org';
+---
+
+<BaseLayout
+  title="Contact - SDG AI Lab"
+  description="Leave a request or email the SDG AI Lab directly."
+>
+  <main class="marina-contact" id="main">
+    <section class="band" id="contact-hero">
+      <div class="wrap">
+        <div class="band-head reveal">
+          <h1><CmsText client:load page="contact" section="heading" /></h1>
+          <div class="band-head-copy">
+            <p><CmsText client:load page="contact" section="intro" /></p>
+            <div class="contact-email">
+              <a class="contact-email-link" href={`mailto:${contactEmail}`}
+                >{contactEmail}</a
+              >
+              <button
+                type="button"
+                class="contact-email-copy"
+                data-email={contactEmail}
+                aria-label={`Copy ${contactEmail} to clipboard`}
+              >
+                Copy
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="contact-grid">
+          <div class="reveal">
+            <form id="contactForm">
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-name">Name</label><input
+                    type="text"
+                    id="cf-name"
+                    name="name"
+                    required
+                  />
+                </div>
+                <div class="form-field">
+                  <label for="cf-email">Email</label><input
+                    type="email"
+                    id="cf-email"
+                    name="email"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="form-field">
+                <label for="cf-org">Organization</label><input
+                  type="text"
+                  id="cf-org"
+                  name="organization"
+                />
+              </div>
+              <div class="form-field">
+                <label for="cf-message">What are you trying to solve?</label
+                ><textarea id="cf-message" name="message" required></textarea>
+              </div>
+              <button type="submit" class="marina-button marina-button--primary"
+                >Send request</button
+              >
+              <p class="form-note">
+                This opens your email client with the details filled in —
+                nothing is stored on this site.
+              </p>
+            </form>
+          </div>
+          <aside class="reveal" aria-label="Ways to work with us">
+            <span class="contact-side-label"
+              ><CmsText client:load page="contact" section="ways-label" /></span
+            >
+            <CmsList client:load page="contact" section="ways-items" className="engage-list" />
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    const form = document.querySelector<HTMLFormElement>('#contactForm');
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const name = String(data.get('name') ?? '').trim();
+      const email = String(data.get('email') ?? '').trim();
+      const organization = String(data.get('organization') ?? '').trim();
+      const message = String(data.get('message') ?? '').trim();
+      const subject = 'SDG AI Lab inquiry' + (name ? ' — ' + name : '');
+      const body = [
+        'Name: ' + name,
+        'Email: ' + email,
+        'Organization: ' + (organization || '—'),
+        '',
+        message,
+      ].join('\n');
+      window.location.href =
+        'mailto:dina.akylbekova@undp.org?subject=' +
+        encodeURIComponent(subject) +
+        '&body=' +
+        encodeURIComponent(body);
+    });
+
+    const copyButton = document.querySelector<HTMLButtonElement>(
+      '.contact-email-copy',
+    );
+    copyButton?.addEventListener('click', async () => {
+      const email = copyButton.dataset.email ?? '';
+      if (!email) return;
+
+      const label = copyButton.textContent;
+      try {
+        await navigator.clipboard.writeText(email);
+        copyButton.textContent = 'Copied';
+        copyButton.classList.add('is-copied');
+      } catch {
+        copyButton.textContent = 'Failed';
+      }
+
+      window.setTimeout(() => {
+        copyButton.textContent = label;
+        copyButton.classList.remove('is-copied');
+      }, 1600);
+    });
+
+    const reveals = document.querySelectorAll('.marina-contact .reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }),
+        { threshold: 0.12 },
+      );
+      reveals.forEach((item) => observer.observe(item));
+    } else reveals.forEach((item) => item.classList.add('is-visible'));
+  </script>
+  <style is:global>
+    .marina-contact {
+      --bg: #15181c;
+      --raised: #1b1f24;
+      --soft: #24292f;
+      --text: #d9dde2;
+      --dim: #a0a8b2;
+      --mid: #b7bfc7;
+      --faint: #666f79;
+      --teal: #0383ae;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+    }
+    .marina-contact * {
+      box-sizing: border-box;
+    }
+    .marina-contact .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+    .marina-contact .band {
+      padding: 150px 0 56px;
+      border-bottom: 1px solid var(--soft);
+    }
+    .marina-contact .band-head {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 60px;
+      margin-bottom: 72px;
+    }
+    .marina-contact .band-head h1 {
+      margin: 0;
+      background: linear-gradient(115deg, #fff 20%, #a8e6f5 55%, #26bde2 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      font-family: 'Cabinet Grotesk', sans-serif;
+      font-size: clamp(2.15rem, 4vw, 3.3rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+    }
+    .marina-contact .band-head-copy {
+      align-self: end;
+      max-width: 460px;
+    }
+    .marina-contact .band-head p {
+      margin: 0;
+      color: var(--mid);
+      font-size: 1.02rem;
+      line-height: 1.6;
+    }
+    .marina-contact .contact-email {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .marina-contact .contact-email-link {
+      color: var(--text);
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(3, 131, 174, 0.55);
+      transition:
+        color 0.15s ease,
+        border-color 0.15s ease;
+    }
+    .marina-contact .contact-email-link:hover {
+      color: #26bde2;
+      border-color: #26bde2;
+    }
+    .marina-contact .contact-email-copy {
+      appearance: none;
+      border: 1px solid var(--soft);
+      border-radius: 999px;
+      background: var(--raised);
+      color: var(--dim);
+      cursor: pointer;
+      font:
+        600 0.78rem 'Inter',
+        sans-serif;
+      padding: 7px 14px;
+      transition:
+        color 0.15s ease,
+        border-color 0.15s ease,
+        background 0.15s ease;
+    }
+    .marina-contact .contact-email-copy:hover {
+      border-color: var(--faint);
+      color: var(--text);
+    }
+    .marina-contact .contact-email-copy.is-copied {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: rgba(3, 131, 174, 0.12);
+    }
+    .marina-contact .contact-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .marina-contact .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .marina-contact .form-field {
+      margin-bottom: 20px;
+    }
+    .marina-contact .form-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 8px;
+    }
+    .marina-contact .form-field input,
+    .marina-contact .form-field select,
+    .marina-contact .form-field textarea {
+      width: 100%;
+      background: var(--raised);
+      border: 1px solid var(--soft);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.94rem;
+      transition: border-color 0.15s ease;
+    }
+    .marina-contact .form-field input:focus,
+    .marina-contact .form-field select:focus,
+    .marina-contact .form-field textarea:focus {
+      outline: none;
+      border-color: var(--teal);
+    }
+    .marina-contact .form-field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .marina-contact .form-note {
+      font-size: 0.8rem;
+      color: var(--faint);
+      margin-top: 14px;
+      line-height: 1.5;
+    }
+    .marina-contact .contact-side-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--faint);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .marina-contact :global(.engage-list) {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 6px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .marina-contact :global(.engage-list) li {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      font-size: 0.88rem;
+      color: var(--dim);
+      padding: 10px 0;
+      border-bottom: 1px solid var(--soft);
+    }
+    .marina-contact :global(.engage-list) li:last-child {
+      border-bottom: none;
+    }
+    .marina-contact :global(.engage-list) li::before {
+      content: '✓';
+      display: grid;
+      place-items: center;
+      flex: 0 0 18px;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      border-radius: 50%;
+      background: rgba(3, 131, 174, 0.12);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .marina-contact .reveal {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+      transition:
+        opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .marina-contact .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+    @media (max-width: 900px) {
+      .marina-contact .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    @media (max-width: 800px) {
+      .marina-contact .band-head {
+        grid-template-columns: 1fr;
+        gap: 26px;
+      }
+    }
+    @media (max-width: 560px) {
+      .marina-contact .wrap {
+        padding: 0 20px;
+      }
+      .marina-contact .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marina-contact .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+  </style>
+</BaseLayout>

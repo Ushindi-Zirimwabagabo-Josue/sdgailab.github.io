@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 10
+    groups:
+      astro:
+        patterns:
+          - astro
+          - '@astrojs/*'
+      testing:
+        patterns:
+          - vitest
+          - '@vitest/*'
+          - '@playwright/*'
+          - playwright
+          - jest-axe
+          - '@axe-core/*'
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
