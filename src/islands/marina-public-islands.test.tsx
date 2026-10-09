@@ -15,12 +15,14 @@ const {
   getFeaturedProjectsMock,
   getPublishedEvolutionTimelineMock,
   getPublishedNewsMock,
+  getPublishedPageCopyMock,
   getPublishedProjectsMock,
   getPublishedPublicationsMock,
 } = vi.hoisted(() => ({
   getFeaturedProjectsMock: vi.fn(),
   getPublishedEvolutionTimelineMock: vi.fn(),
   getPublishedNewsMock: vi.fn(),
+  getPublishedPageCopyMock: vi.fn(),
   getPublishedProjectsMock: vi.fn(),
   getPublishedPublicationsMock: vi.fn(),
 }));
@@ -29,6 +31,7 @@ vi.mock('../lib/queries', () => ({
   getFeaturedProjects: getFeaturedProjectsMock,
   getPublishedEvolutionTimeline: getPublishedEvolutionTimelineMock,
   getPublishedNews: getPublishedNewsMock,
+  getPublishedPageCopy: getPublishedPageCopyMock,
   getPublishedProjects: getPublishedProjectsMock,
   getPublishedPublications: getPublishedPublicationsMock,
 }));
@@ -59,6 +62,7 @@ describe('Marina public islands', () => {
     getPublishedEvolutionTimelineMock.mockResolvedValue({ data: [], error: null });
     getPublishedNewsMock.mockResolvedValue({ data: [], error: null });
     getFeaturedProjectsMock.mockResolvedValue({ data: [], error: null });
+    getPublishedPageCopyMock.mockResolvedValue({ data: [], error: null });
   });
 
   afterEach(() => {
@@ -116,6 +120,49 @@ describe('Marina public islands', () => {
     expect(container.textContent).toContain('Policy Chatbot');
     expect(container.textContent).not.toContain('Flood Mapping');
     expect(container.textContent).toContain('1 of 2 products shown');
+  });
+
+  it('PortfolioGrid opens with the focus from the page address', async () => {
+    window.history.replaceState({}, '', '/projects/?focus=gis');
+    getPublishedProjectsMock.mockResolvedValue({
+      data: [
+        {
+          id: 'p1',
+          title: 'Flood Mapping',
+          slug: 'flood-mapping',
+          project_status: 'active',
+          is_deployed: true,
+          image_url: null,
+          display_order: 1,
+          summary: 'GIS flood risk tool',
+          work_stream: 'GIS',
+          impact_area: 'GIS / Remote Sensing',
+        },
+        {
+          id: 'p2',
+          title: 'Policy Chatbot',
+          slug: 'policy-chatbot',
+          project_status: 'completed',
+          is_deployed: false,
+          image_url: null,
+          display_order: 2,
+          summary: 'NLP assistant',
+          work_stream: 'NLP',
+          impact_area: 'Natural Language Processing',
+        },
+      ],
+      error: null,
+    });
+
+    await render(<PortfolioGrid />);
+
+    const gisFilter = Array.from(container.querySelectorAll('button')).find((button) =>
+      button.textContent?.includes('GIS & GeoAI'),
+    );
+    expect(gisFilter?.className).toContain('active');
+    expect(container.textContent).toContain('Flood Mapping');
+    expect(container.textContent).not.toContain('Policy Chatbot');
+    window.history.replaceState({}, '', '/');
   });
 
   it('PortfolioGrid shows an unavailable message when the query fails', async () => {

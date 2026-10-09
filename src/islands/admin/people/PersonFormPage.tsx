@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ContentForm } from '../shared/ContentForm';
 import { StatusSelect } from '../shared/StatusSelect';
 import { ImageUpload } from '../shared/ImageUpload';
 import { FormFeedback } from '../shared/FormFeedback';
-import { getPerson, createPerson, updatePerson } from '../../../lib/admin-queries';
-import { TEAM_GROUP_TITLES, type TeamGroupTitle } from '../../../lib/teamGroups';
+import { getPerson, createPerson, updatePerson, listAssignableTeamGroups } from '../../../lib/admin-queries';
+import { TEAM_GROUP_TITLES } from '../../../lib/teamGroups';
 import { useToast } from '../layout/Toast';
-import type { PublishStatus, PeopleGroup } from '../../../lib/types';
+import type { PublishStatus, PeopleGroup, TeamGroup } from '../../../lib/types';
 
 interface PersonFormPageProps {
   id?: string | null;
@@ -17,7 +17,7 @@ const defaultValues = {
   role_title: '',
   photo_url: null as string | null,
   group_type: 'team' as PeopleGroup,
-  team_group: TEAM_GROUP_TITLES[0] as TeamGroupTitle | '',
+  team_group: '',
   biography: '',
   display_order: 0,
   status: 'draft' as PublishStatus,
@@ -37,10 +37,46 @@ export default function PersonFormPage({ id }: PersonFormPageProps) {
   const [feedback, setFeedback] = useState<{ message: string; type: 'success' | 'error' } | null>(
     null
   );
+  const [teamGroups, setTeamGroups] = useState<TeamGroup[]>([]);
+  const [groupsError, setGroupsError] = useState<string | null>(null);
 
   const isDirty =
     JSON.stringify({ ...values, photo_url: values.photo_url || null }) !==
     JSON.stringify({ ...initialValues, photo_url: initialValues.photo_url || null });
+
+  useEffect(() => {
+    let cancelled = false;
+    listAssignableTeamGroups().then(({ data, error }) => {
+      if (cancelled) return;
+      if (error || !data?.length) {
+        setGroupsError(error);
+        const fallback = TEAM_GROUP_TITLES.map((title, index) => ({
+          id: title,
+          title,
+          display_order: index + 1,
+          status: 'published' as const,
+          published_at: null,
+          created_at: '',
+          updated_at: '',
+        }));
+        setTeamGroups(fallback);
+        if (!id) {
+          setValues((current) => ({ ...current, team_group: current.team_group || fallback[0].title }));
+          setInitialValues((current) => ({ ...current, team_group: current.team_group || fallback[0].title }));
+        }
+        return;
+      }
+      setGroupsError(null);
+      setTeamGroups(data);
+      if (!id) {
+        setValues((current) => ({ ...current, team_group: current.team_group || data[0].title }));
+        setInitialValues((current) => ({ ...current, team_group: current.team_group || data[0].title }));
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
 
   useEffect(() => {
     if (!id) return;
@@ -59,7 +95,7 @@ export default function PersonFormPage({ id }: PersonFormPageProps) {
           role_title: data.role_title,
           photo_url: data.photo_url,
           group_type: data.group_type as PeopleGroup,
-          team_group: (data.team_group ?? '') as TeamGroupTitle | '',
+          team_group: data.team_group ?? '',
           biography: data.biography ?? '',
           display_order: data.display_order,
           status: data.status as PublishStatus,
@@ -119,6 +155,14 @@ export default function PersonFormPage({ id }: PersonFormPageProps) {
       setInitialValues(values);
     }
   };
+
+  const teamGroupOptions = useMemo(() => {
+    const titles = teamGroups.map((group) => group.title);
+    if (values.team_group && !titles.includes(values.team_group)) {
+      return [values.team_group, ...titles];
+    }
+    return titles;
+  }, [teamGroups, values.team_group]);
 
   if (fetching) {
     return (
@@ -180,8 +224,7 @@ export default function PersonFormPage({ id }: PersonFormPageProps) {
                 setValues((v) => ({
                   ...v,
                   group_type,
-                  team_group:
-                    group_type === 'team' ? v.team_group || TEAM_GROUP_TITLES[0] : '',
+                  team_group: group_type === 'team' ? v.team_group || teamGroups[0]?.title || '' : '',
                 }));
               }}
               className="border rounded px-3 py-2 text-sm border-lab-border focus:outline-none focus:ring-2 focus:ring-lab-accent focus:border-lab-accent w-full"
@@ -201,18 +244,27 @@ export default function PersonFormPage({ id }: PersonFormPageProps) {
                 onChange={(e) =>
                   setValues((v) => ({
                     ...v,
-                    team_group: e.target.value as TeamGroupTitle,
+                    team_group: e.target.value,
                   }))
                 }
                 required
                 className="border rounded px-3 py-2 text-sm border-lab-border focus:outline-none focus:ring-2 focus:ring-lab-accent focus:border-lab-accent w-full"
               >
-                {TEAM_GROUP_TITLES.map((title) => (
+                {teamGroupOptions.map((title) => (
                   <option key={title} value={title}>
                     {title}
                   </option>
                 ))}
               </select>
+              {groupsError ? (
+                <p className="mt-1 text-xs text-lab-muted">
+                  Saved team groups could not be loaded, so the built-in titles are shown. Publish the team groups migration, then reload this form.
+                </p>
+              ) : (
+                <p className="mt-1 text-xs text-lab-muted">
+                  Choose a published or draft group. Add or rename groups from Team Groups.
+                </p>
+              )}
             </div>
           )}
           <ImageUpload

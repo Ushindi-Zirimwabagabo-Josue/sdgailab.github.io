@@ -8,11 +8,13 @@ const {
   getPersonMock,
   createPersonMock,
   updatePersonMock,
+  listAssignableTeamGroupsMock,
   showToastMock,
 } = vi.hoisted(() => ({
   getPersonMock: vi.fn(),
   createPersonMock: vi.fn(),
   updatePersonMock: vi.fn(),
+  listAssignableTeamGroupsMock: vi.fn(),
   showToastMock: vi.fn(),
 }));
 
@@ -20,6 +22,7 @@ vi.mock('../../../lib/admin-queries', () => ({
   getPerson: getPersonMock,
   createPerson: createPersonMock,
   updatePerson: updatePersonMock,
+  listAssignableTeamGroups: listAssignableTeamGroupsMock,
 }));
 
 vi.mock('../layout/Toast', () => ({
@@ -135,6 +138,17 @@ describe('PersonFormPage', () => {
     getPersonMock.mockResolvedValue({ data: null, error: null });
     createPersonMock.mockResolvedValue({ data: { id: 'person-1' }, error: null });
     updatePersonMock.mockResolvedValue({ data: { id: 'person-1' }, error: null });
+    listAssignableTeamGroupsMock.mockResolvedValue({
+      data: [
+        {
+          id: 'group-1',
+          title: 'Coordination · Research & Advisory',
+          display_order: 1,
+          status: 'published',
+        },
+      ],
+      error: null,
+    });
 
     container = document.createElement('div');
     document.body.appendChild(container);

@@ -1,4 +1,5 @@
 import { getSupabase, isSupabaseConfigured } from './supabase';
+import { TEAM_GROUP_TITLES } from './teamGroups';
 import {
   PUBLIC_LIST_MAX,
   PUBLIC_LIST_PAGE_SIZE,
@@ -16,6 +17,7 @@ import type {
   PublicationListItem,
   PersonCard,
   PartnerLogo,
+  TeamGroup,
   EvolutionTimelineCard,
   PageContent,
   PeopleGroup,
@@ -98,6 +100,46 @@ export async function getFeaturedProjects(): Promise<QueryResult<FeaturedProject
 
     if (publishedError) return { data: [], error: publishedError.message };
     return { data: (publishedData ?? []).slice(0, 3) as FeaturedProjectCard[], error: null };
+  });
+}
+
+/** Homepage carousel, in the order shown on the page. */
+export const HOME_GALLERY_SLUGS = [
+  'tech-volunteers-for-resilience-tech4r',
+  'digital-social-vulnerability-index-dsvi',
+  'frontier-future-tech-leaders-programmes',
+  'innovation-campus',
+] as const;
+
+export type HomeGalleryProject = {
+  id: string;
+  title: string;
+  slug: string;
+  image_url: string | null;
+};
+
+export async function getHomeGalleryProjects(): Promise<QueryResult<HomeGalleryProject[]>> {
+  return withPublicCache('projects:home-gallery', async () => {
+    if (!isSupabaseConfigured) return { data: [], error: null };
+
+    const { data, error } = await getSupabase()
+      .from('projects')
+      .select('id, title, slug, image_url')
+      .eq('status', 'published')
+      .in('slug', [...HOME_GALLERY_SLUGS]);
+
+    if (error) return { data: [], error: error.message };
+
+    const bySlug = new Map(
+      ((data ?? []) as HomeGalleryProject[]).map((project) => [project.slug, project]),
+    );
+    return {
+      data: HOME_GALLERY_SLUGS.flatMap((slug) => {
+        const project = bySlug.get(slug);
+        return project ? [project] : [];
+      }),
+      error: null,
+    };
   });
 }
 
@@ -232,6 +274,31 @@ export async function getNewsArticleBySlug(slug: string): Promise<QueryResult<Ne
 
     if (error) return { data: null, error: error.message };
     return { data: data as NewsArticle | null, error: null };
+  });
+}
+
+export async function getPublishedTeamGroups(): Promise<QueryResult<Pick<TeamGroup, 'id' | 'title' | 'display_order'>[]>> {
+  return withPublicCache('team-groups:published', async () => {
+    if (!isSupabaseConfigured) {
+      return {
+        data: TEAM_GROUP_TITLES.map((title, index) => ({
+          id: title,
+          title,
+          display_order: index + 1,
+        })),
+        error: null,
+      };
+    }
+    const { data, error } = await getSupabase()
+      .from('team_groups')
+      .select('id, title, display_order')
+      .eq('status', 'published')
+      .order('display_order', { ascending: true })
+      .order('title', { ascending: true })
+      .limit(PUBLIC_LIST_MAX);
+
+    if (error) return { data: [], error: error.message };
+    return { data: data as Pick<TeamGroup, 'id' | 'title' | 'display_order'>[], error: null };
   });
 }
 

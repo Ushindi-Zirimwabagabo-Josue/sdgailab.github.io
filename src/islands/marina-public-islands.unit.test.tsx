@@ -14,12 +14,14 @@ const {
   getFeaturedProjectsMock,
   getPublishedEvolutionTimelineMock,
   getPublishedNewsMock,
+  getPublishedPageCopyMock,
   getPublishedProjectsMock,
   getPublishedPublicationsMock,
 } = vi.hoisted(() => ({
   getFeaturedProjectsMock: vi.fn(),
   getPublishedEvolutionTimelineMock: vi.fn(),
   getPublishedNewsMock: vi.fn(),
+  getPublishedPageCopyMock: vi.fn(),
   getPublishedProjectsMock: vi.fn(),
   getPublishedPublicationsMock: vi.fn(),
 }));
@@ -28,6 +30,7 @@ vi.mock('../lib/queries', () => ({
   getFeaturedProjects: getFeaturedProjectsMock,
   getPublishedEvolutionTimeline: getPublishedEvolutionTimelineMock,
   getPublishedNews: getPublishedNewsMock,
+  getPublishedPageCopy: getPublishedPageCopyMock,
   getPublishedProjects: getPublishedProjectsMock,
   getPublishedPublications: getPublishedPublicationsMock,
 }));
@@ -58,6 +61,7 @@ describe('Marina public islands (unit)', () => {
     getPublishedEvolutionTimelineMock.mockResolvedValue({ data: [], error: null });
     getPublishedNewsMock.mockResolvedValue({ data: [], error: null });
     getFeaturedProjectsMock.mockResolvedValue({ data: [], error: null });
+    getPublishedPageCopyMock.mockResolvedValue({ data: [], error: null });
   });
 
   afterEach(() => {

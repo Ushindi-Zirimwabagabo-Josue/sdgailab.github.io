@@ -118,6 +118,16 @@ export interface Person {
   updated_at: string;
 }
 
+export interface TeamGroup {
+  id: string;
+  title: string;
+  display_order: number;
+  status: PublishStatus;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface Partner {
   id: string;
   name: string;

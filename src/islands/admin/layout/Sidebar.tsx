@@ -14,6 +14,7 @@ const navItems = [
   { label: 'News', href: '#/news' },
   { label: 'Publications', href: '#/publications' },
   { label: 'People', href: '#/people' },
+  { label: 'Team Groups', href: '#/team-groups' },
   { label: 'Partners', href: '#/partners' },
   { label: 'Evolution Timeline', href: '#/evolution-timeline' },
   { label: 'Page Content', href: '#/page-content' },

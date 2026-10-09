@@ -1,47 +1,10 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import CmsText, { CmsLines } from '../islands/CmsText';
+import HomeGallery from '../islands/HomeGallery';
 import PartnerLogos from '../islands/PartnerLogos';
 import { withBase } from '../lib/url';
 
-const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
-const galleryTiles = [
-  {
-    name: 'Tech4R',
-    location: 'Volunteer response',
-    color: 'var(--lab-teal)',
-    image: 'assets/hero-tech4r.jpg',
-    alt: 'Tech4R volunteers working a live coordination session',
-  },
-  {
-    name: 'DSVI',
-    location: 'Georgia',
-    color: 'var(--lab-accent)',
-    image: 'assets/dsvi-georgia-map.jpg',
-    alt: 'DSVI drivetime access map, Georgia',
-  },
-  {
-    name: 'Frontier Tech Leaders',
-    location: 'Cohort graduation',
-    color: 'var(--lab-light-blue)',
-    image: 'assets/hero-ftl-graduation.jpg',
-    alt: 'Frontier Tech Leaders cohort graduation',
-  },
-  {
-    name: 'Innovation Campus',
-    location: 'Türkiye',
-    color: 'var(--lab-accent)',
-    image: 'assets/hero-innovation-campus.jpg',
-    alt: 'Innovation Campus graduates with Samsung',
-  },
-  {
-    name: 'Game Dev Bootcamp',
-    location: 'UAE',
-    color: 'var(--lab-teal)',
-    image: 'assets/hero-gamedev-uae.jpg',
-    alt: 'Game Development Bootcamp cohort, UAE',
-  },
-];
 const impactStats = [
   { value: 50, suffix: '+', label: 'Digital Projects' },
   { value: 3000, suffix: '+', label: 'Learners' },
@@ -104,33 +67,7 @@ const impactStats = [
           id="projects-preview"
           aria-label="Selected work"
         >
-          <div class="marina-live-gallery-inner">
-            {
-              [galleryTiles, galleryTiles].map((tiles, setIndex) => (
-                <div
-                  class="marina-live-gallery-track"
-                  aria-hidden={setIndex === 1 ? 'true' : undefined}
-                >
-                  {tiles.map((tile) => (
-                    <article class="marina-live-work-tile">
-                      <div class="marina-live-work-art">
-                        <img
-                          src={marinaAsset(tile.image)}
-                          alt={setIndex === 0 ? tile.alt : ''}
-                          loading={setIndex === 0 ? 'eager' : 'lazy'}
-                          decoding="async"
-                        />
-                      </div>
-                      <div class="marina-live-work-caption">
-                        <span>{tile.name}</span>
-                        {/* <small>{tile.location}</small> */}
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              ))
-            }
-          </div>
+          <HomeGallery client:load />
         </div>
         <CmsText
           client:load

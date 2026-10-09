@@ -1,12 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { loadPageCopy } from '../lib/pageCopy';
 import { sectionFallback } from '../lib/pageSections';
-import { FOCUS_LABELS, toFocus, type FocusCategory } from '../lib/projectFocus';
+import {
+  FOCUS_LABELS,
+  PORTFOLIO_FOCUS_LABELS,
+  focusFromQuery,
+  projectMatchesFocus,
+  toFocus,
+  type FocusCategory,
+  type PortfolioFocus,
+} from '../lib/projectFocus';
 import { getPublishedProjects } from '../lib/queries';
 import { withBase } from '../lib/url';
 import type { ProjectListItem } from '../lib/types';
 
-type FocusFilter = 'all' | FocusCategory;
+type FocusFilter = 'all' | PortfolioFocus;
+
+const VISIBLE_FOCUS_COUNT = 4;
 type ProjectStatusLabel = 'ongoing' | 'completed';
 type OpenFilter = 'country' | 'year' | null;
 
@@ -158,12 +168,21 @@ export default function PortfolioGrid() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [focusFilter, setFocusFilter] = useState<FocusFilter>('all');
+  const [focusPage, setFocusPage] = useState(0);
   const [countryFilter, setCountryFilter] = useState('all');
   const [yearFilter, setYearFilter] = useState('all');
   const [openFilter, setOpenFilter] = useState<OpenFilter>(null);
   const [headingTemplate, setHeadingTemplate] = useState(() => sectionFallback('projects', 'heading'));
   const [intro, setIntro] = useState(() => sectionFallback('projects', 'intro'));
   const toolbarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const next = focusFromQuery(new URLSearchParams(window.location.search).get('focus'));
+    if (next === 'all') return;
+    setFocusFilter(next);
+    const index = Object.keys(PORTFOLIO_FOCUS_LABELS).indexOf(next) + 1;
+    if (index >= VISIBLE_FOCUS_COUNT) setFocusPage(Math.floor(index / VISIBLE_FOCUS_COUNT));
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -229,13 +248,21 @@ export default function PortfolioGrid() {
   const filteredCards = useMemo(
     () =>
       cards.filter((project) => {
-        const focusMatch = focusFilter === 'all' || project.focus === focusFilter;
+        const focusMatch = focusFilter === 'all' || projectMatchesFocus(project, focusFilter);
         const countryMatch = countryFilter === 'all' || project.places.includes(countryFilter);
         const yearMatch = yearFilter === 'all' || project.project_year === Number(yearFilter);
         return focusMatch && countryMatch && yearMatch;
       }),
     [cards, countryFilter, focusFilter, yearFilter]
   );
+
+  function selectFocus(value: FocusFilter) {
+    setFocusFilter(value);
+    const url = new URL(window.location.href);
+    if (value === 'all') url.searchParams.delete('focus');
+    else url.searchParams.set('focus', value);
+    window.history.replaceState({}, '', url);
+  }
 
   function openProject(project: PortfolioCard) {
     window.location.href = withBase(`/projects/detail/?slug=${project.slug}`);
@@ -253,10 +280,15 @@ export default function PortfolioGrid() {
 
   const focusFilters: { id: FocusFilter; label: string }[] = [
     { id: 'all', label: 'All focus areas' },
-    { id: 'gis', label: FOCUS_LABELS.gis },
-    { id: 'nlp', label: FOCUS_LABELS.nlp },
-    { id: 'training', label: FOCUS_LABELS.training },
+    ...(Object.entries(PORTFOLIO_FOCUS_LABELS) as [PortfolioFocus, string][]).map(([id, label]) => ({
+      id,
+      label,
+    })),
   ];
+  const focusStart = focusPage * VISIBLE_FOCUS_COUNT;
+  const visibleFocusFilters = focusFilters.slice(focusStart, focusStart + VISIBLE_FOCUS_COUNT);
+  const hasEarlierFocus = focusPage > 0;
+  const hasMoreFocus = focusStart + VISIBLE_FOCUS_COUNT < focusFilters.length;
 
   return (
     <>
@@ -275,16 +307,40 @@ export default function PortfolioGrid() {
 
       <div className="portfolio-toolbar reveal" ref={toolbarRef}>
         <div className="proj-filters" role="group" aria-label="Filter by focus area">
-          {focusFilters.map((filter) => (
+          {hasEarlierFocus ? (
+            <button
+              type="button"
+              className="proj-filter-more"
+              aria-label="Show previous focus areas"
+              onClick={() => setFocusPage((page) => page - 1)}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M15 6l-6 6 6 6" />
+              </svg>
+            </button>
+          ) : null}
+          {visibleFocusFilters.map((filter) => (
             <button
               key={filter.id}
               type="button"
               className={`proj-filter ${focusFilter === filter.id ? 'active' : ''}`}
-              onClick={() => setFocusFilter(filter.id)}
+              onClick={() => selectFocus(filter.id)}
             >
               {filter.label}
             </button>
           ))}
+          {hasMoreFocus ? (
+            <button
+              type="button"
+              className="proj-filter-more"
+              aria-label="Show more focus areas"
+              onClick={() => setFocusPage((page) => page + 1)}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+            </button>
+          ) : null}
         </div>
         <div className="filter-dropdowns">
           <details

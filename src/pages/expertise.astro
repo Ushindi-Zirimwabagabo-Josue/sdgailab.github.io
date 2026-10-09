@@ -19,63 +19,67 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
         </div>
 
         <div class="focus-grid">
-          <div class="focus-card reveal tilt" id="nlp" style="--sdg:#00689D;">
+          <a class="focus-card reveal tilt" id="nlp" href={withBase('/projects/?focus=nlp')} style="--sdg:#00689D;">
             <span class="focus-idx">01</span>
             <h3><CmsText client:load page="expertise" section="nlp-title" /></h3>
             <p><CmsText client:load page="expertise" section="nlp-body" /></p>
             <CmsList client:load page="expertise" section="nlp-items" className="proj-list" />
-          </div>
+          </a>
 
-          <div class="focus-card reveal tilt" id="gis" style="--sdg:#3F7E44;">
+          <a class="focus-card reveal tilt" id="gis" href={withBase('/projects/?focus=gis')} style="--sdg:#3F7E44;">
             <span class="focus-idx">02</span>
             <h3><CmsText client:load page="expertise" section="gis-title" /></h3>
             <p><CmsText client:load page="expertise" section="gis-body" /></p>
             <CmsList client:load page="expertise" section="gis-items" className="proj-list" />
-          </div>
+          </a>
 
-          <div
+          <a
             class="focus-card reveal tilt"
             id="skills"
+            href={withBase('/projects/?focus=training')}
             style="--sdg:#FF3A21;"
           >
             <span class="focus-idx">03</span>
             <h3><CmsText client:load page="expertise" section="skills-title" /></h3>
             <p><CmsText client:load page="expertise" section="skills-body" /></p>
             <CmsList client:load page="expertise" section="skills-items" className="proj-list" />
-          </div>
+          </a>
 
-          <div
+          <a
             class="focus-card reveal tilt"
             id="resilience"
+            href={withBase('/projects/?focus=resilience')}
             style="--sdg:#FD9D24;"
           >
             <span class="focus-idx">04</span>
             <h3><CmsText client:load page="expertise" section="resilience-title" /></h3>
             <p><CmsText client:load page="expertise" section="resilience-body" /></p>
             <CmsList client:load page="expertise" section="resilience-items" className="proj-list" />
-          </div>
+          </a>
 
-          <div
+          <a
             class="focus-card reveal tilt"
             id="fintech"
+            href={withBase('/projects/?focus=fintech')}
             style="--sdg:#DD1367;"
           >
             <span class="focus-idx">05</span>
             <h3><CmsText client:load page="expertise" section="fintech-title" /></h3>
             <p><CmsText client:load page="expertise" section="fintech-body" /></p>
             <CmsList client:load page="expertise" section="fintech-items" className="proj-list" />
-          </div>
+          </a>
 
-          <div
+          <a
             class="focus-card reveal tilt"
             id="advisory"
+            href={withBase('/projects/?focus=advisory')}
             style="--sdg:#7E57C2;"
           >
             <span class="focus-idx">06</span>
             <h3><CmsText client:load page="expertise" section="advisory-title" /></h3>
             <p><CmsText client:load page="expertise" section="advisory-body" /></p>
             <CmsList client:load page="expertise" section="advisory-items" className="proj-list" />
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -139,11 +143,11 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
       --bg-elevated: #21262c;
       --border: #2c323a;
       --border-soft: #24292f;
-      --text: #d9dde2;
-      --text-dim: #a0a8b2;
-      --text-mid: #b7bfc7;
-      --text-faint: #666f79;
-      --teal: #0383ae;
+      --text: #eef2f6;
+      --text-dim: #c3ccd4;
+      --text-mid: #d7dee6;
+      --text-faint: #aeb7c0;
+      --teal: #3ec6e6;
       --blue: #1c61ac;
       --amber: #6ec6e8;
       --display: 'Cabinet Grotesk', sans-serif;
@@ -200,7 +204,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
 
     .marina-focus-page .eyebrow {
       font-family: var(--body);
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       font-weight: 600;
       color: var(--text-mid);
       display: flex;
@@ -212,7 +216,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
       content: attr(data-n);
       font-family: var(--display);
       font-weight: 600;
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       color: var(--teal);
     }
 
@@ -234,7 +238,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
       padding: 11px 22px;
       border: 1px solid transparent;
       font-weight: 650;
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       transition:
         box-shadow 0.2s ease,
         transform 0.2s ease,
@@ -289,7 +293,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
         115deg,
         #ffffff 20%,
         #a8e6f5 55%,
-        #26bde2 100%
+        #c5eef8 100%
       );
       -webkit-background-clip: text;
       background-clip: text;
@@ -302,7 +306,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
     }
     .marina-focus-page .band-head .desc {
       color: var(--text-mid);
-      font-size: 1.02rem;
+      font-size: 1.1rem;
       line-height: 1.6;
       align-self: end;
       max-width: 460px;
@@ -316,10 +320,16 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
       border-top: 1px solid var(--border-soft);
     }
     .marina-focus-page .focus-card {
+      display: block;
       padding: 48px 52px 48px 32px;
       border-bottom: 1px solid var(--border-soft);
       position: relative;
+      cursor: pointer;
       transition: background 0.25s ease;
+    }
+    .marina-focus-page .focus-card:focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: -2px;
     }
     .marina-focus-page .focus-card::before {
       content: '';
@@ -352,7 +362,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
     .marina-focus-page .focus-idx {
       display: block;
       font-family: var(--body);
-      font-size: 0.78rem;
+      font-size: 0.86rem;
       font-weight: 700;
       color: var(--sdg, var(--text-faint));
       margin-bottom: 20px;
@@ -366,7 +376,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
     }
     .marina-focus-page .focus-card p {
       color: var(--text-dim);
-      font-size: 0.94rem;
+      font-size: 1.02rem;
       line-height: 1.6;
       max-width: 440px;
       margin: 0;
@@ -397,7 +407,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
       gap: 8px 10px;
     }
     .marina-focus-page :global(.proj-list) :global(li) {
-      font-size: 0.76rem;
+      font-size: 0.84rem;
       color: var(--text-dim);
       background: var(--bg-raised);
       border: 1px solid var(--border-soft);
@@ -564,7 +574,7 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
     .marina-focus-page .screen-cap {
       display: block;
       margin-top: 10px;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       color: var(--text-dim);
       text-align: center;
     }

@@ -6,7 +6,6 @@ import {
   type ListPageOptions,
 } from './pagination';
 import { getSupabaseAuth } from './supabase-auth';
-import { isTeamGroupTitle } from './teamGroups';
 import type {
   PublishStatus,
   ProjectStatus,
@@ -18,6 +17,7 @@ import type {
   PublicationType,
   Person,
   Partner,
+  TeamGroup,
   PageContent,
   EvolutionTimelineItem,
 } from './types';
@@ -112,6 +112,13 @@ export interface PublicationInput {
   summary: string;
   source_url: string;
   cover_image_url?: string | null;
+  display_order: number;
+  status: PublishStatus;
+  published_at?: string | null;
+}
+
+export interface TeamGroupInput {
+  title: string;
   display_order: number;
   status: PublishStatus;
   published_at?: string | null;
@@ -302,10 +309,33 @@ function assertOptionalTeamGroup(value: unknown, groupType: PeopleGroup): string
     }
     return null;
   }
-  if (typeof value !== 'string' || !isTeamGroupTitle(value)) {
+  if (typeof value !== 'string') {
     throw new Error('Team group is invalid.');
   }
-  return groupType === 'team' ? value : null;
+  const title = value.trim();
+  if (!title) {
+    if (groupType === 'team') {
+      throw new Error('Team group is required for team members.');
+    }
+    return null;
+  }
+  if (title.length > 120) {
+    throw new Error('Team group must be 120 characters or fewer.');
+  }
+  return groupType === 'team' ? title : null;
+}
+
+function validateTeamGroupInput(input: TeamGroupInput): TeamGroupInput {
+  const title = assertNonEmptyString(input.title, 'Title');
+  if (title.length > 120) {
+    throw new Error('Title must be 120 characters or fewer.');
+  }
+  return {
+    title,
+    display_order: assertNonNegativeInteger(input.display_order, 'Display order'),
+    status: assertStatus(input.status),
+    published_at: assertOptionalIsoDateTime(input.published_at, 'Published at'),
+  };
 }
 
 function assertPublicationType(value: unknown): PublicationType {
@@ -805,6 +835,85 @@ export async function archivePerson(id: string): Promise<AdminResult<{ id: strin
 
 export async function deletePerson(id: string): Promise<AdminResult<{ id: string }>> {
   return permanentlyDeleteRecord('people', id);
+}
+
+export async function listTeamGroups(options?: ListPageOptions): Promise<AdminListResult<TeamGroup>> {
+  return listAll<TeamGroup>('team_groups', 'display_order', true, options);
+}
+
+export async function listAssignableTeamGroups(): Promise<AdminResult<TeamGroup[]>> {
+  const { data, error } = await getSupabaseAuth()
+    .from('team_groups')
+    .select('*')
+    .neq('status', 'archived')
+    .order('display_order', { ascending: true })
+    .order('title', { ascending: true })
+    .limit(ADMIN_LIST_MAX_PAGE_SIZE);
+  if (error) return { data: [], error: error.message };
+  return { data: (data ?? []) as TeamGroup[], error: null };
+}
+
+export async function getTeamGroup(id: string): Promise<AdminResult<TeamGroup>> {
+  return getById<TeamGroup>('team_groups', id);
+}
+
+export async function createTeamGroup(input: TeamGroupInput): Promise<AdminResult<TeamGroup>> {
+  return createRecord<TeamGroup, TeamGroupInput>('team_groups', input, validateTeamGroupInput);
+}
+
+export async function updateTeamGroup(id: string, input: TeamGroupInput): Promise<AdminResult<TeamGroup>> {
+  const existing = await getTeamGroup(id);
+  if (existing.error) return { data: null, error: existing.error };
+  if (!existing.data) return { data: null, error: 'Team group not found.' };
+
+  const updated = await updateRecord<TeamGroup, TeamGroupInput>(
+    'team_groups',
+    id,
+    input,
+    validateTeamGroupInput
+  );
+  if (updated.error || !updated.data) return updated;
+
+  const previousTitle = existing.data.title;
+  const nextTitle = updated.data.title;
+  if (previousTitle !== nextTitle) {
+    const { error } = await getSupabaseAuth()
+      .from('people')
+      .update({ team_group: nextTitle })
+      .eq('team_group', previousTitle);
+    if (error) {
+      return {
+        data: updated.data,
+        error: `The group was renamed, but its members could not be moved: ${error.message}`,
+      };
+    }
+  }
+
+  return updated;
+}
+
+export async function archiveTeamGroup(id: string): Promise<AdminResult<{ id: string }>> {
+  return archiveRecord('team_groups', id);
+}
+
+export async function deleteTeamGroup(id: string): Promise<AdminResult<{ id: string }>> {
+  const existing = await getTeamGroup(id);
+  if (existing.error) return { data: null, error: existing.error };
+  if (!existing.data) return { data: null, error: 'Team group not found.' };
+
+  const { count, error } = await getSupabaseAuth()
+    .from('people')
+    .select('id', { count: 'exact', head: true })
+    .eq('team_group', existing.data.title);
+  if (error) return { data: null, error: error.message };
+  if ((count ?? 0) > 0) {
+    return {
+      data: null,
+      error: 'Reassign the people in this group before deleting it. Archiving hides it without removing those members.',
+    };
+  }
+
+  return permanentlyDeleteRecord('team_groups', id);
 }
 
 export async function listPartners(options?: ListPageOptions): Promise<AdminListResult<Partner>> {

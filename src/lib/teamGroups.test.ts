@@ -56,4 +56,16 @@ describe('teamGroups', () => {
     expect(groups[1]?.members.map((member) => member.id)).toEqual(['2']);
     expect(groups[3]?.members.map((member) => member.id)).toEqual(['4']);
   });
+
+  it('uses CMS titles and order, including groups added later', () => {
+    const groups = groupPeopleByTeamGroup(
+      [
+        { id: '1', display_order: 1, team_group: 'Interns', biography: null },
+        { id: '2', display_order: 1, team_group: 'Partnerships', biography: null },
+      ],
+      ['Partnerships', 'Interns']
+    );
+
+    expect(groups.map((group) => group.title)).toEqual(['Partnerships', 'Interns']);
+  });
 });

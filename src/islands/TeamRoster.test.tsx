@@ -7,13 +7,15 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import TeamRoster from './TeamRoster';
 import { expectAccessibleSmoke } from '../test/axe';
 
-const { getPublishedPeopleMock, logAppErrorMock } = vi.hoisted(() => ({
+const { getPublishedPeopleMock, getPublishedTeamGroupsMock, logAppErrorMock } = vi.hoisted(() => ({
   getPublishedPeopleMock: vi.fn(),
+  getPublishedTeamGroupsMock: vi.fn(),
   logAppErrorMock: vi.fn(),
 }));
 
 vi.mock('../lib/queries', () => ({
   getPublishedPeople: getPublishedPeopleMock,
+  getPublishedTeamGroups: getPublishedTeamGroupsMock,
 }));
 
 vi.mock('../lib/observability', () => ({
@@ -59,6 +61,10 @@ describe('TeamRoster', () => {
     root = createRoot(container);
     vi.clearAllMocks();
     getPublishedPeopleMock.mockResolvedValue({ data: [], error: null });
+    getPublishedTeamGroupsMock.mockResolvedValue({
+      data: [{ id: 'group-1', title: 'Coordination · Research & Advisory', display_order: 1 }],
+      error: null,
+    });
   });
 
   afterEach(() => {

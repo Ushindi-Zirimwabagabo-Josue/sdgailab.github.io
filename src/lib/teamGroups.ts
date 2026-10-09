@@ -20,20 +20,23 @@ export function isTeamGroupTitle(value: string | null | undefined): value is Tea
   return Boolean(value && (TEAM_GROUP_TITLES as readonly string[]).includes(value));
 }
 
-/** Resolve the marina team section title from CMS team_group, with legacy biography fallback. */
-export function resolveTeamGroupTitle(person: {
-  team_group?: string | null;
-  biography?: string | null;
-}): TeamGroupTitle | null {
-  if (isTeamGroupTitle(person.team_group)) return person.team_group;
+/** Resolve a section title from CMS team_group, with legacy biography fallback. */
+export function resolveTeamGroupTitle(
+  person: {
+    team_group?: string | null;
+    biography?: string | null;
+  },
+  titles: readonly string[] = TEAM_GROUP_TITLES
+): string | null {
+  const allowed = new Set(titles);
+  if (person.team_group && allowed.has(person.team_group)) return person.team_group;
 
   const biography = person.biography?.trim();
-  if (biography && LEGACY_BIOGRAPHY_TO_TEAM_GROUP[biography]) {
-    return LEGACY_BIOGRAPHY_TO_TEAM_GROUP[biography];
-  }
+  const legacyTitle = biography ? LEGACY_BIOGRAPHY_TO_TEAM_GROUP[biography] : undefined;
+  if (legacyTitle && allowed.has(legacyTitle)) return legacyTitle;
 
   if (biography) {
-    const matched = TEAM_GROUP_TITLES.find((title) => biography.includes(title));
+    const matched = titles.find((title) => biography.includes(title));
     if (matched) return matched;
   }
 
@@ -41,19 +44,18 @@ export function resolveTeamGroupTitle(person: {
 }
 
 export function groupPeopleByTeamGroup<T extends { team_group?: string | null; biography?: string | null; display_order: number }>(
-  people: T[]
-): { title: TeamGroupTitle; members: T[] }[] {
-  const buckets = new Map<TeamGroupTitle, T[]>(
-    TEAM_GROUP_TITLES.map((title) => [title, []])
-  );
+  people: T[],
+  titles: readonly string[] = TEAM_GROUP_TITLES
+): { title: string; members: T[] }[] {
+  const buckets = new Map<string, T[]>(titles.map((title) => [title, []]));
 
   for (const person of people) {
-    const title = resolveTeamGroupTitle(person);
+    const title = resolveTeamGroupTitle(person, titles);
     if (!title) continue;
     buckets.get(title)?.push(person);
   }
 
-  return TEAM_GROUP_TITLES
+  return titles
     .map((title) => ({
       title,
       members: (buckets.get(title) ?? []).sort((a, b) => a.display_order - b.display_order),

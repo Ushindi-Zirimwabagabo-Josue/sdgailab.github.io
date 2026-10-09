@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { logAppError } from '../lib/observability';
-import { getPublishedPeople } from '../lib/queries';
-import { groupPeopleByTeamGroup } from '../lib/teamGroups';
+import { getPublishedPeople, getPublishedTeamGroups } from '../lib/queries';
+import { groupPeopleByTeamGroup, TEAM_GROUP_TITLES } from '../lib/teamGroups';
 import type { PersonCard } from '../lib/types';
 import ObservabilityBoundary from './components/ObservabilityBoundary';
 
@@ -56,8 +56,8 @@ function CompactRoster({ people }: { people: PersonCard[] }) {
   );
 }
 
-function GroupedRoster({ people }: { people: PersonCard[] }) {
-  const groups = groupPeopleByTeamGroup(people);
+function GroupedRoster({ people, titles }: { people: PersonCard[]; titles: string[] }) {
+  const groups = groupPeopleByTeamGroup(people, titles);
 
   if (groups.length === 0) {
     return (
@@ -98,6 +98,7 @@ function GroupedRoster({ people }: { people: PersonCard[] }) {
 
 function TeamRosterContent({ layout }: { layout: TeamRosterLayout }) {
   const [people, setPeople] = useState<PersonCard[]>([]);
+  const [groupTitles, setGroupTitles] = useState<string[]>([...TEAM_GROUP_TITLES]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -106,13 +107,21 @@ function TeamRosterContent({ layout }: { layout: TeamRosterLayout }) {
 
     async function loadPeople() {
       try {
-        const { data, error: err } = await withTimeout(getPublishedPeople('team'), LOAD_TIMEOUT_MS);
+        const [peopleResult, groupsResult] = await withTimeout(
+          Promise.all([getPublishedPeople('team'), getPublishedTeamGroups()]),
+          LOAD_TIMEOUT_MS
+        );
         if (cancelled) return;
-        if (err) {
-          logAppError('public.team.load', new Error(err), { layout });
-          setError(err);
+        if (peopleResult.error) {
+          logAppError('public.team.load', new Error(peopleResult.error), { layout });
+          setError(peopleResult.error);
         } else {
-          setPeople(data);
+          setPeople(peopleResult.data);
+        }
+        if (!groupsResult.error && groupsResult.data.length > 0) {
+          setGroupTitles(groupsResult.data.map((group) => group.title));
+        } else if (groupsResult.error) {
+          logAppError('public.team.groups', new Error(groupsResult.error), { layout });
         }
       } catch (loadError) {
         if (!cancelled) {
@@ -160,7 +169,7 @@ function TeamRosterContent({ layout }: { layout: TeamRosterLayout }) {
       {error ? (
         <p className="team-refresh-note">Team information is currently being refreshed.</p>
       ) : null}
-      {layout === 'compact' ? <CompactRoster people={people} /> : <GroupedRoster people={people} />}
+      {layout === 'compact' ? <CompactRoster people={people} /> : <GroupedRoster people={people} titles={groupTitles} />}
     </>
   );
 }

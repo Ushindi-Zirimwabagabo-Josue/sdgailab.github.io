@@ -706,3 +706,8 @@ export function sectionLines(value: string): string[] {
     .map((line) => line.trim())
     .filter(Boolean);
 }
+
+/** Drop a markdown bullet or numbered marker from one list line. */
+export function sectionListItem(line: string): string {
+  return line.replace(/^(?:[-*+]|\d+[.)])\s+/, '');
+}

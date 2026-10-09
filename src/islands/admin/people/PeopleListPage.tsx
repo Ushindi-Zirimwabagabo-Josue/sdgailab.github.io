@@ -121,7 +121,12 @@ export default function PeopleListPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold text-lab-text mb-6">People</h1>
+      <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <h1 className="text-2xl font-semibold text-lab-text">People</h1>
+        <a href="#/team-groups" className="text-sm font-medium text-lab-accent-soft hover:underline">
+          Manage team groups
+        </a>
+      </div>
       <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-2">
           <button

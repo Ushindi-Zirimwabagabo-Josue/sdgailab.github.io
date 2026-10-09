@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { loadPageCopy } from '../lib/pageCopy';
-import { sectionFallback, sectionLines } from '../lib/pageSections';
+import { sectionFallback, sectionLines, sectionListItem } from '../lib/pageSections';
 
 type TextTag = 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'div';
 
@@ -127,9 +127,14 @@ export function CmsList({ page, section, className }: CmsListProps) {
 
   return (
     <ul className={className}>
-      {sectionLines(text).map((line, index) => (
-        <li key={`${index}-${line}`}>{line}</li>
-      ))}
+      {sectionLines(text).map((line, index) => {
+        const item = sectionListItem(line);
+        return (
+          <li key={`${index}-${item}`}>
+            <span>{renderRich(item)}</span>
+          </li>
+        );
+      })}
     </ul>
   );
 }

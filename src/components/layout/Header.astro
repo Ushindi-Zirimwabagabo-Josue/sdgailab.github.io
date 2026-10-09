@@ -33,36 +33,18 @@ function isActive(link: { href: string; activePath?: string }): boolean {
 
 <header class="marina-header">
   <nav aria-label="Main navigation" class="marina-wrap marina-nav">
-    <div class="marina-nav-brand-group">
-      <img
-        src={withBase('/header-logos/undp-logo.png')}
-        alt="UNDP"
-        class="marina-nav-partner-logo marina-nav-undp"
-        width="300"
-        height="608"
+    <a
+      href={withBase('/')}
+      class="marina-nav-logo"
+      aria-label="SDG AI Lab homepage"
+      ><img
+        src={withBase('/header-logos/sdg-ai-lab.png')}
+        alt="SDG AI Lab"
+        width="192"
+        height="193"
         decoding="async"
-      />
-      <img
-        src={withBase('/header-logos/icpsd.png')}
-        alt="ICPSD"
-        class="marina-nav-partner-logo marina-nav-icpsd"
-        width="320"
-        height="158"
-        decoding="async"
-      />
-      <a
-        href={withBase('/')}
-        class="marina-nav-logo"
-        aria-label="SDG AI Lab homepage"
-        ><img
-          src={withBase('/header-logos/sdg-ai-lab.png')}
-          alt="SDG AI Lab"
-          width="192"
-          height="193"
-          decoding="async"
-        /></a
-      >
-    </div>
+      /></a
+    >
     <ul class="marina-nav-links" role="list">
       {
         navLinks.map((link) => (
@@ -84,44 +66,66 @@ function isActive(link: { href: string; activePath?: string }): boolean {
           </li>
         ))
       }
+      <li class="marina-nav-contact">
+        <a
+          href={withBase('/contact')}
+          class="marina-button marina-button--primary marina-button--small"
+          aria-current={isActive({ href: withBase('/contact') })
+            ? 'page'
+            : undefined}
+        >
+          Contact
+        </a>
+      </li>
     </ul>
 
-    <div class="marina-nav-cta">
-      <a
-        href={withBase('/contact')}
-        class="marina-button marina-button--primary marina-button--small"
+    <div class="marina-nav-end">
+      <div class="marina-nav-partners">
+        <img
+          src={withBase('/header-logos/icpsd.png')}
+          alt="ICPSD"
+          class="marina-nav-partner-logo marina-nav-icpsd"
+          width="320"
+          height="158"
+          decoding="async"
+        />
+        <img
+          src={withBase('/header-logos/undp-logo.png')}
+          alt="UNDP"
+          class="marina-nav-partner-logo marina-nav-undp"
+          width="300"
+          height="608"
+          decoding="async"
+        />
+      </div>
+      <button
+        type="button"
+        id="mobile-menu-toggle"
+        class="marina-mobile-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle navigation menu"
       >
-        Contact
-      </a>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            class="menu-icon"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 7h16M4 12h16M4 17h16"></path>
+          <path
+            class="close-icon hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
     </div>
-
-    <button
-      type="button"
-      id="mobile-menu-toggle"
-      class="marina-mobile-toggle"
-      aria-expanded="false"
-      aria-controls="mobile-menu"
-      aria-label="Toggle navigation menu"
-    >
-      <svg
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="2"
-        stroke="currentColor"
-        aria-hidden="true"
-      >
-        <path
-          class="menu-icon"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M4 7h16M4 12h16M4 17h16"></path>
-        <path
-          class="close-icon hidden"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          d="M6 18L18 6M6 6l12 12"></path>
-      </svg>
-    </button>
   </nav>
 
   <div id="mobile-menu" class="marina-mobile-menu">

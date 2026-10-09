@@ -148,11 +148,11 @@ const contactEmail = 'dina.akylbekova@undp.org';
       --bg: #15181c;
       --raised: #1b1f24;
       --soft: #24292f;
-      --text: #d9dde2;
-      --dim: #a0a8b2;
-      --mid: #b7bfc7;
-      --faint: #666f79;
-      --teal: #0383ae;
+      --text: #eef2f6;
+      --dim: #c3ccd4;
+      --mid: #d7dee6;
+      --faint: #aeb7c0;
+      --teal: #3ec6e6;
       background: var(--bg);
       color: var(--text);
       font-family: 'Inter', sans-serif;
@@ -177,7 +177,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
     }
     .marina-contact .band-head h1 {
       margin: 0;
-      background: linear-gradient(115deg, #fff 20%, #a8e6f5 55%, #26bde2 100%);
+      background: linear-gradient(115deg, #fff 20%, #a8e6f5 55%, #c5eef8 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -195,7 +195,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
     .marina-contact .band-head p {
       margin: 0;
       color: var(--mid);
-      font-size: 1.02rem;
+      font-size: 1.1rem;
       line-height: 1.6;
     }
     .marina-contact .contact-email {
@@ -207,7 +207,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
     }
     .marina-contact .contact-email-link {
       color: var(--text);
-      font-size: 1rem;
+      font-size: 1.08rem;
       font-weight: 600;
       text-decoration: none;
       border-bottom: 1px solid rgba(3, 131, 174, 0.55);
@@ -227,7 +227,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
       color: var(--dim);
       cursor: pointer;
       font:
-        600 0.78rem 'Inter',
+        600 1rem 'Inter',
         sans-serif;
       padding: 7px 14px;
       transition:
@@ -260,7 +260,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
     }
     .marina-contact .form-field label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.86rem;
       font-weight: 600;
       letter-spacing: 0.02em;
       text-transform: uppercase;
@@ -277,7 +277,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
       padding: 12px 14px;
       color: var(--text);
       font-family: 'Inter', sans-serif;
-      font-size: 0.94rem;
+      font-size: 1.02rem;
       transition: border-color 0.15s ease;
     }
     .marina-contact .form-field input:focus,
@@ -291,13 +291,13 @@ const contactEmail = 'dina.akylbekova@undp.org';
       min-height: 120px;
     }
     .marina-contact .form-note {
-      font-size: 0.8rem;
+      font-size: 0.88rem;
       color: var(--faint);
       margin-top: 14px;
       line-height: 1.5;
     }
     .marina-contact .contact-side-label {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
       font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -305,7 +305,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
       margin-bottom: 10px;
       display: block;
     }
-    .marina-contact :global(.engage-list) {
+    .marina-contact .engage-list {
       display: flex;
       flex-direction: column;
       gap: 0;
@@ -313,31 +313,28 @@ const contactEmail = 'dina.akylbekova@undp.org';
       padding: 0;
       list-style: none;
     }
-    .marina-contact :global(.engage-list) li {
+    .marina-contact .engage-list li {
       display: flex;
       align-items: flex-start;
       gap: 13px;
-      font-size: 0.88rem;
+      font-size: 0.96rem;
       color: var(--dim);
       padding: 10px 0;
       border-bottom: 1px solid var(--soft);
     }
-    .marina-contact :global(.engage-list) li:last-child {
+    .marina-contact .engage-list li:last-child {
       border-bottom: none;
     }
-    .marina-contact :global(.engage-list) li::before {
-      content: '✓';
-      display: grid;
-      place-items: center;
-      flex: 0 0 18px;
-      width: 18px;
-      height: 18px;
-      margin-top: 2px;
-      border-radius: 50%;
-      background: rgba(3, 131, 174, 0.12);
-      color: var(--teal);
-      font-size: 12px;
+    .marina-contact .engage-list strong {
+      color: var(--text);
       font-weight: 700;
+    }
+    .marina-contact .engage-list li::before {
+      content: '•';
+      flex: 0 0 auto;
+      color: var(--dim);
+      font-size: 1.15rem;
+      line-height: 1.35;
     }
     .marina-contact .reveal {
       opacity: 0;
