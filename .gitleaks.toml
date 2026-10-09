@@ -1,0 +1,15 @@
+title = "SDG AI Lab gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Docs, examples, generated reports, and CI test placeholders"
+paths = [
+  '''(?i)\.env\.example$''',
+  '''\.github/workflows/test\.yml$''',
+  '''^coverage/''',
+  '''^\.sdgqalab/''',
+  '''^specs/.+\.md$''',
+  '''^\.agents/''',
+]

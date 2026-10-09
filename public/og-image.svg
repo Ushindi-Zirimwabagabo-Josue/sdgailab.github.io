@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#111947"/>
+  <circle cx="1030" cy="120" r="240" fill="none" stroke="#ffffff" stroke-opacity=".08" stroke-width="2"/>
+  <circle cx="1030" cy="120" r="160" fill="none" stroke="#ffffff" stroke-opacity=".08" stroke-width="2"/>
+  <text x="90" y="126" fill="#9cc7ff" font-family="Arial,sans-serif" font-size="24" font-weight="700" letter-spacing="4">A UNDP INITIATIVE</text>
+  <text x="90" y="255" fill="white" font-family="Arial,sans-serif" font-size="72" font-weight="700">Artificial Intelligence</text>
+  <text x="90" y="345" fill="white" font-family="Arial,sans-serif" font-size="72" font-weight="700">for Sustainable Development</text>
+  <text x="90" y="430" fill="#dbeafe" font-family="Arial,sans-serif" font-size="28">SDG AI Lab · Research · Prototypes · Open knowledge</text>
+  <g transform="translate(90 540)">
+    <rect width="60" height="18" fill="#E5243B"/><rect x="60" width="60" height="18" fill="#DDA63A"/><rect x="120" width="60" height="18" fill="#4C9F38"/><rect x="180" width="60" height="18" fill="#C5192D"/><rect x="240" width="60" height="18" fill="#FF3A21"/><rect x="300" width="60" height="18" fill="#26BDE2"/><rect x="360" width="60" height="18" fill="#FCC30B"/><rect x="420" width="60" height="18" fill="#A21942"/><rect x="480" width="60" height="18" fill="#FD6925"/><rect x="540" width="60" height="18" fill="#DD1367"/><rect x="600" width="60" height="18" fill="#FD9D24"/><rect x="660" width="60" height="18" fill="#BF8B2E"/><rect x="720" width="60" height="18" fill="#3F7E44"/><rect x="780" width="60" height="18" fill="#0A97D9"/><rect x="840" width="60" height="18" fill="#56C02B"/><rect x="900" width="60" height="18" fill="#00689D"/><rect x="960" width="60" height="18" fill="#19486A"/>
+  </g>
+</svg>

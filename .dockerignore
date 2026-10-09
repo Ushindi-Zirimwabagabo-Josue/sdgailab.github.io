@@ -1,0 +1,16 @@
+node_modules
+dist
+.astro
+.git
+.github
+coverage
+playwright-report
+test-results
+.env
+.env.*
+!.env.example
+*.md
+.sdgqalab
+.cursor
+.vscode
+.idea

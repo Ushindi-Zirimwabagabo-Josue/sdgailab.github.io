@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import PageContent from '../islands/PageContent';
+---
+
+<BaseLayout title="Volunteer - SDG AI Lab">
+  <section class="section-padding">
+    <div class="container-narrow">
+      <h1 class="text-3xl sm:text-4xl font-bold text-lab-text mb-8">Volunteering with Us</h1>
+      <PageContent client:load pageSlug="volunteer" sectionSlug="main" />
+
+      <div class="mt-12 grid gap-8 border-y border-lab-border/70 py-8 md:grid-cols-3">
+        <article class="border-l-2 border-lab-accent/45 pl-5">
+          <h2 class="text-lg font-bold text-lab-text">Contribute technical skills</h2>
+          <p class="mt-3 text-sm leading-6 text-lab-muted">Support data analysis, responsible AI review, prototyping, documentation or open-source implementation.</p>
+        </article>
+        <article class="border-l-2 border-lab-accent/45 pl-5">
+          <h2 class="text-lg font-bold text-lab-text">Work with real development needs</h2>
+          <p class="mt-3 text-sm leading-6 text-lab-muted">Volunteer contributions connect to defined project questions, users, safeguards and expected outputs.</p>
+        </article>
+        <article class="border-l-2 border-lab-accent/45 pl-5">
+          <h2 class="text-lg font-bold text-lab-text">Leave reusable knowledge</h2>
+          <p class="mt-3 text-sm leading-6 text-lab-muted">Contributions can result in documented methods, lessons, tools or resources that others can build on.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,264 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import CmsText from '../islands/CmsText';
+import TeamRoster from '../islands/TeamRoster';
+---
+
+<BaseLayout
+  title="Our Team — SDG AI Lab"
+  description="SDG AI Lab team organized across coordination, research, advisory, GIS, GeoAI, software development, NLP, LLM, training and data science groups."
+>
+  <div class="marina-team-page" id="main">
+    <section class="band" id="team">
+      <div class="wrap">
+        <div class="band-head reveal">
+          <h1><CmsText client:load page="team" section="heading" /></h1>
+        </div>
+        <TeamRoster client:load />
+      </div>
+    </section>
+  </div>
+
+  <style is:global>
+    .marina-team-page {
+      --bg: #15181c;
+      --bg-raised: #1b1f24;
+      --bg-elevated: #21262c;
+      --border: #2c323a;
+      --border-soft: #24292f;
+      --text: #eef2f6;
+      --text-dim: #c3ccd4;
+      --text-mid: #d7dee6;
+      --text-faint: #aeb7c0;
+      --teal: #3ec6e6;
+      --blue: #1c61ac;
+      --amber: #6ec6e8;
+      --display: 'Cabinet Grotesk', sans-serif;
+      --body: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    .marina-team-page *,
+    .marina-team-page *::before,
+    .marina-team-page *::after {
+      box-sizing: border-box;
+    }
+    .marina-team-page a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .marina-team-page section[id] {
+      scroll-margin-top: 84px;
+    }
+
+    .marina-team-page .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .marina-team-page h1,
+    .marina-team-page h2 {
+      font-family: var(--display);
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .marina-team-page .band-head h1 {
+      display: inline-block;
+      width: max-content;
+      max-width: 100%;
+      background-image: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #ffffff 35%,
+        #a8e6f5 70%,
+        #c5eef8 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      font-size: clamp(2.15rem, 4vw, 3.3rem);
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+    }
+
+    .marina-team-page .band {
+      padding: 56px 0 80px;
+      border-bottom: 1px solid var(--border-soft);
+    }
+    .marina-team-page #team {
+      padding-top: 150px;
+    }
+
+    .marina-team-page .band-head {
+      margin-bottom: 72px;
+    }
+
+    .marina-team-page .team-group {
+      margin-bottom: 48px;
+    }
+    .marina-team-page .team-group:last-child {
+      margin-bottom: 0;
+    }
+    .marina-team-page .team-group h2 {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .marina-team-page .team-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+      gap: 20px;
+    }
+    .marina-team-page .person-card {
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 26px 22px;
+      background: var(--bg-raised);
+      text-align: center;
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+    .marina-team-page .person-card:hover {
+      border-color: var(--border);
+      transform: translateY(-2px);
+    }
+    .marina-team-page .person-avatar {
+      width: 104px;
+      height: 104px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: transparent;
+      border: 1px solid var(--border-soft);
+      margin: 0 auto 20px;
+    }
+    .marina-team-page .person-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .marina-team-page .person-card .name {
+      font-size: 1.08rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .marina-team-page .person-card .role {
+      font-size: 0.92rem;
+      color: var(--text-dim);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    .marina-team-page .team-status {
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      padding: 2rem;
+      background: var(--bg-raised);
+      color: var(--text-dim);
+      text-align: center;
+    }
+    .marina-team-page .team-status p {
+      margin: 0;
+    }
+    .marina-team-page .team-spinner {
+      display: inline-block;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 999px;
+      border: 3px solid rgba(3, 131, 174, 0.25);
+      border-top-color: var(--teal);
+      animation: marina-team-spin 0.8s linear infinite;
+    }
+    .marina-team-page .team-refresh-note {
+      margin: 0 0 1.25rem;
+      border: 1px solid rgba(217, 164, 65, 0.35);
+      border-radius: 0.96rem;
+      padding: 0.97rem 1rem;
+      background: rgba(217, 164, 65, 0.08);
+      color: #e6c07b;
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+    @keyframes marina-team-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .marina-team-page .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition:
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .marina-team-page .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      .marina-team-page .team-row {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 640px) {
+      .marina-team-page .wrap {
+        padding: 0 20px;
+      }
+    }
+    @media (max-width: 560px) {
+      .marina-team-page .team-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .marina-team-page .person-avatar {
+        width: 84px;
+        height: 84px;
+      }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .marina-team-page .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .marina-team-page .team-spinner {
+        animation: none;
+      }
+    }
+  </style>
+
+  <script>
+    const items = document.querySelectorAll('.marina-team-page .band-head.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }),
+        { threshold: 0.12 },
+      );
+      items.forEach((item) => observer.observe(item));
+    } else {
+      items.forEach((item) => item.classList.add('is-visible'));
+    }
+  </script>
+</BaseLayout>

@@ -1,0 +1,197 @@
+---
+import { withBase } from '../../lib/url';
+const pathname = Astro.url.pathname;
+const base = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '';
+
+const navLinks = [
+  { href: withBase('/about'), label: 'About' },
+  { href: withBase('/expertise'), label: 'Expertise' },
+  { href: withBase('/services'), label: 'Services' },
+  {
+    href: withBase('/projects'),
+    label: 'Solutions',
+    activePath: withBase('/projects'),
+  },
+  { href: withBase('/research'), label: 'Research' },
+];
+
+const mobileLinks = [
+  ...navLinks,
+  { href: withBase('/contact'), label: 'Contact' },
+];
+
+function isActive(link: { href: string; activePath?: string }): boolean {
+  const href = link.activePath ?? link.href;
+  const cleanHref = href.split('#')[0];
+  const rootHref = base + '/' || '/';
+  if (cleanHref === rootHref || (base && cleanHref === base)) {
+    return pathname === rootHref || pathname === base || pathname === '/';
+  }
+  return pathname === cleanHref || pathname.startsWith(cleanHref + '/');
+}
+---
+
+<header class="marina-header">
+  <nav aria-label="Main navigation" class="marina-wrap marina-nav">
+    <a
+      href={withBase('/')}
+      class="marina-nav-logo"
+      aria-label="SDG AI Lab homepage"
+      ><img
+        src={withBase('/header-logos/sdg-ai-lab.png')}
+        alt="SDG AI Lab"
+        width="192"
+        height="193"
+        decoding="async"
+      /></a
+    >
+    <ul class="marina-nav-links" role="list">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class:list={[
+                'marina-nav-link',
+                {
+                  'is-section-active':
+                    link.label === 'Solutions' &&
+                    pathname.startsWith(withBase('/programmes')),
+                },
+              ]}
+              aria-current={isActive(link) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="marina-nav-contact">
+        <a
+          href={withBase('/contact')}
+          class="marina-button marina-button--primary marina-button--small"
+          aria-current={isActive({ href: withBase('/contact') })
+            ? 'page'
+            : undefined}
+        >
+          Contact
+        </a>
+      </li>
+    </ul>
+
+    <div class="marina-nav-end">
+      <div class="marina-nav-partners">
+        <img
+          src={withBase('/header-logos/icpsd.png')}
+          alt="ICPSD"
+          class="marina-nav-partner-logo marina-nav-icpsd"
+          width="320"
+          height="158"
+          decoding="async"
+        />
+        <img
+          src={withBase('/header-logos/undp-logo.png')}
+          alt="UNDP"
+          class="marina-nav-partner-logo marina-nav-undp"
+          width="300"
+          height="608"
+          decoding="async"
+        />
+      </div>
+      <button
+        type="button"
+        id="mobile-menu-toggle"
+        class="marina-mobile-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            class="menu-icon"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 7h16M4 12h16M4 17h16"></path>
+          <path
+            class="close-icon hidden"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="marina-mobile-menu">
+    <ul class="marina-wrap" role="list">
+      {
+        mobileLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="marina-mobile-link"
+              aria-current={isActive(link) ? 'page' : undefined}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+
+  if (toggle && menu) {
+    const toggleButton = toggle;
+    const menuPanel = menu;
+    const menuIcon = toggleButton.querySelector('.menu-icon');
+    const closeIcon = toggleButton.querySelector('.close-icon');
+
+    function closeMenu() {
+      toggleButton.setAttribute('aria-expanded', 'false');
+      menuPanel.classList.remove('is-open');
+      menuIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+    }
+
+    function openMenu() {
+      toggleButton.setAttribute('aria-expanded', 'true');
+      menuPanel.classList.add('is-open');
+      menuIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      const firstLink = menuPanel.querySelector('a');
+      firstLink?.focus();
+    }
+
+    toggleButton.addEventListener('click', () => {
+      const isOpen = toggleButton.getAttribute('aria-expanded') === 'true';
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+
+    menuPanel.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (toggleButton.getAttribute('aria-expanded') === 'true') closeMenu();
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (
+        e.key === 'Escape' &&
+        toggleButton.getAttribute('aria-expanded') === 'true'
+      ) {
+        closeMenu();
+      }
+    });
+  }
+</script>

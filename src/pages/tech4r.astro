@@ -1,0 +1,182 @@
+---
+import { withBase } from '../lib/url';
+import BaseLayout from '../components/layout/BaseLayout.astro';
+
+const serviceAreas = [
+  {
+    title: 'Software planning and design',
+    body: 'Translate field needs into practical requirements, workflows, UX/UI concepts and implementation plans.',
+    items: ['Needs assessment', 'Workflow mapping', 'UX/UI design', 'Solution architecture'],
+  },
+  {
+    title: 'Software development and management',
+    body: 'Coordinate volunteer-supported delivery of digital tools that respond to urgent disaster-response needs.',
+    items: ['Prototype delivery', 'Project coordination', 'Open-source development', 'Maintenance planning'],
+  },
+  {
+    title: 'Ecosystem facilitation',
+    body: 'Bring together NGOs, volunteer developers, startups, technology companies, academia and public institutions.',
+    items: ['Partner matching', 'Hackathons', 'Knowledge sharing', 'Volunteer mobilization'],
+  },
+];
+
+const workflow = [
+  ['Map needs', 'Work with field organizations to identify digital and data gaps in disaster contexts.'],
+  ['Design response', 'Shape software requests, user journeys and solution requirements with partners.'],
+  ['Mobilize expertise', 'Engage volunteer developers, designers, data specialists and technology partners.'],
+  ['Build and adapt', 'Develop practical tools, prototypes and reusable resources that can support response and recovery.'],
+];
+
+const portfolioExamples = [
+  'Warehouse and inventory management for NGOs',
+  'NGO field coordination',
+  'Debris removal tracking',
+  'Logistical needs of volunteers',
+  'Mapping village schools',
+  'Digital memory and lessons from the field',
+  'Virtual earthquake experience',
+  'Remote telerehab support',
+];
+
+const ecosystemActors = [
+  'Volunteer software developers',
+  'Technology companies and startups',
+  'NGOs and field organizations',
+  'Academia',
+  'Governments and international organizations',
+];
+---
+
+<BaseLayout
+  title="Tech4R - SDG AI Lab"
+  description="Tech4R mobilizes data-driven and digital solutions for disaster rescue, response, recovery and resilience."
+>
+  <section class="section-padding bg-lab-base text-lab-text">
+    <div class="container-narrow grid gap-10 lg:grid-cols-[1fr_0.85fr] lg:items-center">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.22em] text-lab-accent-soft">Featured initiative</p>
+        <h1 class="mt-4 max-w-4xl text-4xl font-extrabold tracking-tight sm:text-6xl">
+          Tech4R: Technology for Rescue, Response, Recovery and Resilience
+        </h1>
+        <p class="mt-6 max-w-3xl text-lg leading-8 text-lab-muted">
+          Tech4R connects disaster-response needs with technology volunteers, startups, companies and partners to create practical digital tools for field organizations and communities affected by disasters.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href={withBase('/contact')} class="inline-flex min-h-12 items-center justify-center rounded-md bg-lab-accent px-6 py-3 text-sm font-bold text-white shadow transition hover:bg-primary-light">
+            Discuss a resilience need
+          </a>
+          <a href="https://tech4r.org/" target="_blank" rel="noreferrer" class="inline-flex min-h-12 items-center justify-center rounded-md border border-lab-border bg-lab-surface px-6 py-3 text-sm font-bold text-lab-accent-soft transition hover:border-lab-accent/50 hover:bg-lab-base">
+            Visit Tech4R
+          </a>
+        </div>
+      </div>
+      <div class="rounded-3xl bg-lab-surface/70 p-6 ring-1 ring-lab-border/70">
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-lab-accent-soft">Focus</p>
+        <div class="mt-5 grid gap-3">
+          {['Data-driven disaster response', 'Digital tools for field coordination', 'Volunteer technology ecosystem', 'Reusable open-source solutions'].map((item) => (
+            <div class="border-l-2 border-lab-accent/45 pl-4 text-sm font-bold text-lab-text">{item}</div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-surface" aria-labelledby="what-heading">
+    <div class="container-narrow grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <div>
+        <p class="section-label">What it does</p>
+        <h2 id="what-heading" class="mt-3 text-3xl font-bold text-lab-text sm:text-4xl">Digital support for disaster relief and recovery</h2>
+        <p class="mt-5 leading-7 text-lab-muted">
+          Tech4R helps relief organizations clarify software needs, design usable tools, coordinate development support and connect with a wider technology ecosystem during and after disasters.
+        </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {workflow.map(([title, body], index) => (
+          <article class="border-l-2 border-lab-accent/45 pl-5">
+            <span class="text-sm font-bold text-lab-accent-soft">{String(index + 1).padStart(2, '0')}</span>
+            <h3 class="mt-3 text-lg font-bold text-lab-text">{title}</h3>
+            <p class="mt-3 text-sm leading-6 text-lab-muted">{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-section" aria-labelledby="services-heading">
+    <div class="container-narrow">
+      <div class="mb-10 max-w-3xl">
+        <p class="section-label">Service model</p>
+        <h2 id="services-heading" class="mt-3 text-3xl font-bold text-lab-text sm:text-4xl">Three connected areas of support</h2>
+        <p class="mt-4 leading-7 text-lab-muted">
+          The initiative combines planning, delivery and ecosystem coordination so digital tools can respond to real operational needs.
+        </p>
+      </div>
+      <div class="grid gap-6 lg:grid-cols-3">
+        {serviceAreas.map((area) => (
+          <article class="border-t border-lab-border/70 pt-6">
+            <h3 class="text-xl font-bold text-lab-text">{area.title}</h3>
+            <p class="mt-3 text-sm leading-6 text-lab-muted">{area.body}</p>
+            <ul class="mt-5 space-y-2 text-sm leading-6 text-lab-muted">
+              {area.items.map((item) => (
+                <li class="flex gap-2"><span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true"></span>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-section text-lab-text" aria-labelledby="ecosystem-heading">
+    <div class="container-narrow grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-lab-accent-soft">Ecosystem</p>
+        <h2 id="ecosystem-heading" class="mt-3 text-3xl font-bold sm:text-4xl">A network built for rapid collaboration</h2>
+        <p class="mt-5 leading-7 text-lab-muted">
+          Tech4R brings together technical and field actors so disaster-response challenges can be translated into usable digital support quickly and responsibly.
+        </p>
+      </div>
+      <div class="grid gap-3 sm:grid-cols-2">
+        {ecosystemActors.map((actor) => (
+          <div class="border-l-2 border-lab-accent/45 pl-4 text-sm font-bold text-lab-text">{actor}</div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-surface" aria-labelledby="portfolio-heading">
+    <div class="container-narrow">
+      <div class="mb-10 max-w-3xl">
+        <p class="section-label">Example outputs</p>
+        <h2 id="portfolio-heading" class="mt-3 text-3xl font-bold text-lab-text sm:text-4xl">Tools and ideas from the Tech4R portfolio</h2>
+        <p class="mt-4 leading-7 text-lab-muted">
+          The initiative has explored practical digital tools across coordination, logistics, mapping, knowledge capture and recovery support.
+        </p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {portfolioExamples.map((item) => (
+          <article class="border-l-2 border-lab-accent/45 pl-5">
+            <h3 class="text-base font-bold text-lab-text">{item}</h3>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section-padding bg-lab-base text-lab-text">
+    <div class="container-narrow flex flex-col justify-between gap-6 md:flex-row md:items-center">
+      <div>
+        <p class="text-sm font-bold uppercase tracking-[0.18em] text-lab-accent-soft">Work with Tech4R</p>
+        <h2 class="mt-3 text-3xl font-bold">Have a disaster resilience challenge that could benefit from digital support?</h2>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row">
+        <a href={withBase('/contact')} class="inline-flex min-h-12 items-center justify-center rounded-md bg-lab-surface px-6 py-3 text-sm font-bold text-lab-accent-soft shadow transition hover:bg-lab-section">
+          Contact the Lab
+        </a>
+        <a href={withBase('/projects')} class="inline-flex min-h-12 items-center justify-center rounded-md border border-lab-border bg-lab-surface px-6 py-3 text-sm font-bold text-lab-accent-soft transition hover:border-lab-accent/50 hover:bg-lab-base">
+          Browse projects
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

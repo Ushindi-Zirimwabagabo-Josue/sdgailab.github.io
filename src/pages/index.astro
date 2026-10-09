@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import CmsText, { CmsLines } from '../islands/CmsText';
+import HomeGallery from '../islands/HomeGallery';
+import PartnerLogos from '../islands/PartnerLogos';
+import { withBase } from '../lib/url';
+
+const impactStats = [
+  { value: 50, suffix: '+', label: 'Digital Projects' },
+  { value: 3000, suffix: '+', label: 'Learners' },
+  { value: 15, label: 'Knowledge Products' },
+  { value: 3500, suffix: '+', label: 'Online UN Volunteers' },
+  { value: 25, label: 'Countries' },
+];
+---
+
+<BaseLayout
+  title="SDG AI Lab — Digital Technologies for the SDGs"
+  description="SDG AI Lab helps UNDP units and development partners turn emerging technologies into practical solutions for real-world development challenges."
+>
+  <div class="marina-live-home">
+    <section class="marina-live-hero" aria-labelledby="home-hero-heading">
+      <video
+        class="marina-live-hero-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src={withBase('/media/hero-gradient.mp4')} type="video/mp4" />
+      </video>
+      <div class="marina-live-hero-video-overlay" aria-hidden="true"></div>
+      <!--
+        Original CSS-art background retained as a fallback reference. Do not remove
+        until the video treatment is approved.
+      <div class="marina-live-hero-blob" aria-hidden="true"></div><div
+        class="marina-live-hero-grid"
+        aria-hidden="true"
+      >
+      </div><span class="marina-live-hero-orb" aria-hidden="true"></span><div
+        class="marina-live-wheel-shade"
+        aria-hidden="true"
+      >
+      </div>
+      -->
+      <div class="marina-live-wrap">
+        <!-- <p class="marina-live-hero-badge" aria-hidden="true">
+          We build for impact
+        </p> -->
+        <div class="marina-live-hero-top">
+          <h1 id="home-hero-heading">
+            <CmsLines
+              client:load
+              page="home"
+              section="hero-title"
+              lineClass="marina-live-title-line"
+            />
+          </h1>
+        </div>
+        <div class="marina-live-hero-sub">
+          <CmsText client:load page="home" section="hero-intro" as="p" className="lede" />
+        </div>
+        <div
+          class="marina-live-gallery reveal"
+          id="projects-preview"
+          aria-label="Selected work"
+        >
+          <HomeGallery client:load />
+        </div>
+        <CmsText
+          client:load
+          page="home"
+          section="hero-note"
+          as="p"
+          className="marina-live-hero-note"
+          rich
+        />
+      </div>
+    </section>
+    <section class="marina-live-mission">
+      <div class="marina-live-wrap reveal">
+        <CmsText client:load page="home" section="mission" as="p" rich />
+      </div>
+    </section>
+    <section class="marina-live-band" aria-label="Impact indicators">
+      <div class="marina-live-wrap">
+        <div class="marina-live-impact">
+          {
+            impactStats.map((stat) => (
+              <article class="marina-live-impact-item reveal">
+                <>
+                  <span
+                    class="number"
+                    data-count={stat.value}
+                    data-suffix={stat.suffix ?? ''}
+                  >
+                    {stat.value.toLocaleString('en-US')}
+                    {stat.suffix}
+                  </span>
+                  <span class="label">{stat.label}</span>
+                </>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+    <section
+      class="marina-live-band marina-live-partners"
+      aria-labelledby="partners-heading"
+    >
+      <div class="marina-live-wrap">
+        <h2 id="partners-heading" class="reveal">
+          <CmsText client:load page="home" section="partners-heading" />
+        </h2>
+        <div class="reveal">
+          <PartnerLogos client:load variant="home" />
+        </div>
+      </div>
+    </section>
+  </div>
+  <button class="marina-live-to-top" type="button" aria-label="Back to top"
+    ><svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"></path></svg
+    ></button
+  >
+  <script>
+    const revealItems = document.querySelectorAll('.marina-live-home .reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }),
+        { threshold: 0.12 },
+      );
+      revealItems.forEach((item) => observer.observe(item));
+    } else revealItems.forEach((item) => item.classList.add('is-visible'));
+    const counters = document.querySelectorAll<HTMLElement>(
+      '.marina-live-home [data-count]',
+    );
+    if (
+      'IntersectionObserver' in window &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            observer.unobserve(entry.target);
+            const element = entry.target as HTMLElement;
+            const target = Number(element.dataset.count || 0);
+            const suffix = element.dataset.suffix || '';
+            const start = performance.now();
+            const tick = (now: number) => {
+              const progress = Math.min((now - start) / 1400, 1);
+              element.textContent = `${Math.round(target * (1 - Math.pow(1 - progress, 3))).toLocaleString('en-US')}${suffix}`;
+              if (progress < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }),
+        { threshold: 0.4 },
+      );
+      counters.forEach((counter) => observer.observe(counter));
+    }
+    const hero = document.querySelector<HTMLElement>('.marina-live-hero');
+    hero?.addEventListener('mousemove', (event) => {
+      const bounds = hero.getBoundingClientRect();
+      hero.style.setProperty(
+        '--mx',
+        `${((event.clientX - bounds.left) / bounds.width) * 100}%`,
+      );
+      hero.style.setProperty(
+        '--my',
+        `${((event.clientY - bounds.top) / bounds.height) * 100}%`,
+      );
+    });
+    const toTop = document.querySelector<HTMLButtonElement>(
+      '.marina-live-to-top',
+    );
+    const updateToTop = () =>
+      toTop?.classList.toggle('is-visible', window.scrollY > 900);
+    updateToTop();
+    window.addEventListener('scroll', updateToTop, { passive: true });
+    toTop?.addEventListener('click', () =>
+      window.scrollTo({ top: 0, behavior: 'smooth' }),
+    );
+  </script>
+</BaseLayout>

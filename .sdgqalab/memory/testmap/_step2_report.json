@@ -1,0 +1,367 @@
+{
+  "source_counts": {
+    "components": 8,
+    "islands": 53,
+    "lib": 12,
+    "pages": 22
+  },
+  "total": 95,
+  "unit_test_files": 21,
+  "unit_test_files_excl_types_test": 20,
+  "integ_test_files": 56,
+  "unit_test_files_by_scope": {
+    "components": 0,
+    "islands": 5,
+    "lib": 13,
+    "pages": 0
+  },
+  "integ_test_files_by_scope": {
+    "components": 0,
+    "islands": 47,
+    "lib": 1,
+    "pages": 0
+  },
+  "unit_covered": 78,
+  "unit_pct": 82.1,
+  "integ_covered": 89,
+  "integ_pct": 93.7,
+  "unit_by_scope": {
+    "components": {
+      "source": 8,
+      "covered": 7,
+      "pct": 87.5,
+      "uncovered": [
+        "src/components/ui/StatusBadge.astro"
+      ]
+    },
+    "islands": {
+      "source": 53,
+      "covered": 37,
+      "pct": 69.8,
+      "uncovered": [
+        "src/islands/ContactForm.tsx",
+        "src/islands/admin/layout/Sidebar.tsx",
+        "src/islands/admin/layout/Toast.tsx",
+        "src/islands/admin/shared/ConfirmDialog.tsx",
+        "src/islands/admin/shared/ContentForm.tsx",
+        "src/islands/admin/shared/ContentTable.tsx",
+        "src/islands/admin/shared/FormFeedback.tsx",
+        "src/islands/admin/shared/ImageUpload.tsx",
+        "src/islands/admin/shared/MarkdownField.tsx",
+        "src/islands/admin/shared/SlugField.tsx",
+        "src/islands/admin/shared/StatusSelect.tsx",
+        "src/islands/admin/shared/VideoUpload.tsx",
+        "src/islands/components/ObservabilityBoundary.tsx",
+        "src/islands/components/ProjectCard.tsx",
+        "src/islands/components/ProjectShowcase.tsx",
+        "src/islands/components/StatusBadge.tsx"
+      ]
+    },
+    "lib": {
+      "source": 12,
+      "covered": 12,
+      "pct": 100,
+      "uncovered": []
+    },
+    "pages": {
+      "source": 22,
+      "covered": 22,
+      "pct": 100,
+      "uncovered": []
+    }
+  },
+  "integ_by_scope": {
+    "components": {
+      "source": 8,
+      "covered": 8,
+      "pct": 100,
+      "uncovered": []
+    },
+    "islands": {
+      "source": 53,
+      "covered": 53,
+      "pct": 100,
+      "uncovered": []
+    },
+    "lib": {
+      "source": 12,
+      "covered": 8,
+      "pct": 66.7,
+      "uncovered": [
+        "src/data/sampleContent.ts",
+        "src/lib/storage.ts",
+        "src/lib/supabase-auth.ts",
+        "src/lib/supabase.ts"
+      ]
+    },
+    "pages": {
+      "source": 22,
+      "covered": 20,
+      "pct": 90.9,
+      "uncovered": [
+        "src/pages/robots.txt.ts",
+        "src/pages/sitemap.xml.ts"
+      ]
+    }
+  },
+  "unit_uncovered": [
+    "src/components/ui/StatusBadge.astro",
+    "src/islands/ContactForm.tsx",
+    "src/islands/admin/layout/Sidebar.tsx",
+    "src/islands/admin/layout/Toast.tsx",
+    "src/islands/admin/shared/ConfirmDialog.tsx",
+    "src/islands/admin/shared/ContentForm.tsx",
+    "src/islands/admin/shared/ContentTable.tsx",
+    "src/islands/admin/shared/FormFeedback.tsx",
+    "src/islands/admin/shared/ImageUpload.tsx",
+    "src/islands/admin/shared/MarkdownField.tsx",
+    "src/islands/admin/shared/SlugField.tsx",
+    "src/islands/admin/shared/StatusSelect.tsx",
+    "src/islands/admin/shared/VideoUpload.tsx",
+    "src/islands/components/ObservabilityBoundary.tsx",
+    "src/islands/components/ProjectCard.tsx",
+    "src/islands/components/ProjectShowcase.tsx",
+    "src/islands/components/StatusBadge.tsx"
+  ],
+  "integ_uncovered": [
+    "src/data/sampleContent.ts",
+    "src/lib/storage.ts",
+    "src/lib/supabase-auth.ts",
+    "src/lib/supabase.ts",
+    "src/pages/robots.txt.ts",
+    "src/pages/sitemap.xml.ts"
+  ],
+  "approx_it_count": 380,
+  "e2e_journey_count": 25,
+  "e2e_journeys": [
+    {
+      "file": "e2e/accessibility.spec.ts",
+      "name": "homepage has no serious accessibility violations"
+    },
+    {
+      "file": "e2e/accessibility.spec.ts",
+      "name": "admin login surface has no serious accessibility violations"
+    },
+    {
+      "file": "e2e/admin-editor-journeys.spec.ts",
+      "name": "editor can request a magic link and land on the dashboard after callback"
+    },
+    {
+      "file": "e2e/admin-editor-journeys.spec.ts",
+      "name": "non-allowlisted users see the unauthorized editor page"
+    },
+    {
+      "file": "e2e/admin-editor-journeys.spec.ts",
+      "name": "editor can create and publish a project"
+    },
+    {
+      "file": "e2e/admin-editor-journeys.spec.ts",
+      "name": "editor can create and publish a news article"
+    },
+    {
+      "file": "e2e/admin-editor-journeys.spec.ts",
+      "name": "editor can upload and replace project media"
+    },
+    {
+      "file": "e2e/admin-editor-journeys.spec.ts",
+      "name": "editor can archive and permanently delete a project"
+    },
+    {
+      "file": "e2e/cms-pages.spec.ts",
+      "name": "about page follows Marina about-page structure"
+    },
+    {
+      "file": "e2e/cms-pages.spec.ts",
+      "name": "volunteer page hydrates page content"
+    },
+    {
+      "file": "e2e/cms-pages.spec.ts",
+      "name": "team page follows Marina team-page structure"
+    },
+    {
+      "file": "e2e/marina-nav-journeys.spec.ts",
+      "name": "contact page exposes the request form and engagement options"
+    },
+    {
+      "file": "e2e/marina-nav-journeys.spec.ts",
+      "name": "services page is reachable from primary nav"
+    },
+    {
+      "file": "e2e/marina-nav-journeys.spec.ts",
+      "name": "research page loads research outputs section"
+    },
+    {
+      "file": "e2e/marina-nav-journeys.spec.ts",
+      "name": "expertise page is reachable from primary nav"
+    },
+    {
+      "file": "e2e/marina-page-smokes.spec.ts",
+      "name": "capacity-building page exposes learning pathways"
+    },
+    {
+      "file": "e2e/marina-page-smokes.spec.ts",
+      "name": "how-we-work page exposes engagement modes"
+    },
+    {
+      "file": "e2e/marina-page-smokes.spec.ts",
+      "name": "project detail hydrates a sample project by slug"
+    },
+    {
+      "file": "e2e/marina-page-smokes.spec.ts",
+      "name": "news detail hydrates a sample article by slug"
+    },
+    {
+      "file": "e2e/marina-secondary-journeys.spec.ts",
+      "name": "programmes page shows cohort cards"
+    },
+    {
+      "file": "e2e/marina-secondary-journeys.spec.ts",
+      "name": "publications page hydrates the publications island"
+    },
+    {
+      "file": "e2e/marina-secondary-journeys.spec.ts",
+      "name": "editor can create and publish a publication"
+    },
+    {
+      "file": "e2e/public-and-admin.spec.ts",
+      "name": "homepage loads with primary navigation and hero content"
+    },
+    {
+      "file": "e2e/public-and-admin.spec.ts",
+      "name": "projects page is reachable from the homepage"
+    },
+    {
+      "file": "e2e/public-and-admin.spec.ts",
+      "name": "admin route serves a protected noindex shell with the client admin island"
+    }
+  ],
+  "unit_tests": [
+    "src/data/sampleContent.test.ts",
+    "src/islands/admin/admin-pages.unit.test.tsx",
+    "src/islands/admin/admin-shell.unit.test.tsx",
+    "src/islands/detail-islands.unit.test.tsx",
+    "src/islands/marina-public-islands.unit.test.tsx",
+    "src/islands/public-islands.unit.test.tsx",
+    "src/lib/admin-queries.test.ts",
+    "src/lib/admin-security.test.ts",
+    "src/lib/auth-callback.test.ts",
+    "src/lib/magic-link-errors.test.ts",
+    "src/lib/markdown.test.ts",
+    "src/lib/observability.test.ts",
+    "src/lib/queries.test.ts",
+    "src/lib/storage.test.ts",
+    "src/lib/supabase-auth.test.ts",
+    "src/lib/supabase.test.ts",
+    "src/lib/types.test.ts",
+    "src/lib/url.test.ts",
+    "tests/unit/astro-components.unit.test.ts",
+    "tests/unit/astro-pages.unit.test.ts",
+    "tests/unit/page-endpoints.unit.test.ts"
+  ],
+  "integ_tests": [
+    "src/islands/ContactForm.test.tsx",
+    "src/islands/admin/AdminApp.integration.test.tsx",
+    "src/islands/admin/AdminApp.test.tsx",
+    "src/islands/admin/auth/AuthCallback.integration.test.tsx",
+    "src/islands/admin/auth/AuthCallback.test.tsx",
+    "src/islands/admin/auth/AuthProvider.test.tsx",
+    "src/islands/admin/auth/AuthStack.integration.test.tsx",
+    "src/islands/admin/auth/LoginPage.test.tsx",
+    "src/islands/admin/dashboard/DashboardPage.test.tsx",
+    "src/islands/admin/evolution-timeline/EvolutionTimelineFormPage.test.tsx",
+    "src/islands/admin/evolution-timeline/EvolutionTimelineListPage.test.tsx",
+    "src/islands/admin/layout/AdminLayout.test.tsx",
+    "src/islands/admin/layout/AdminShell.integration.test.tsx",
+    "src/islands/admin/layout/Sidebar.test.tsx",
+    "src/islands/admin/layout/Toast.test.tsx",
+    "src/islands/admin/news/NewsFormPage.test.tsx",
+    "src/islands/admin/news/NewsListPage.test.tsx",
+    "src/islands/admin/page-content/PageContentFormPage.test.tsx",
+    "src/islands/admin/page-content/PageContentListPage.test.tsx",
+    "src/islands/admin/partners/PartnerFormPage.test.tsx",
+    "src/islands/admin/partners/PartnersListPage.test.tsx",
+    "src/islands/admin/people/PeopleListPage.test.tsx",
+    "src/islands/admin/people/PersonFormPage.test.tsx",
+    "src/islands/admin/projects/ProjectFormPage.test.tsx",
+    "src/islands/admin/projects/ProjectsListPage.test.tsx",
+    "src/islands/admin/publications/PublicationFormPage.test.tsx",
+    "src/islands/admin/publications/PublicationsListPage.test.tsx",
+    "src/islands/admin/shared/AdminFormShell.integration.test.tsx",
+    "src/islands/admin/shared/ConfirmDialog.test.tsx",
+    "src/islands/admin/shared/ContentForm.test.tsx",
+    "src/islands/admin/shared/ContentTable.test.tsx",
+    "src/islands/admin/shared/FormFeedback.test.tsx",
+    "src/islands/admin/shared/ImageUpload.test.tsx",
+    "src/islands/admin/shared/MarkdownField.test.tsx",
+    "src/islands/admin/shared/SlugField.test.tsx",
+    "src/islands/admin/shared/StatusSelect.test.tsx",
+    "src/islands/admin/shared/VideoUpload.test.tsx",
+    "src/islands/admin/statistics/StatisticFormPage.test.tsx",
+    "src/islands/admin/statistics/StatisticsListPage.test.tsx",
+    "src/islands/components/IslandComponents.integration.test.tsx",
+    "src/islands/components/ObservabilityBoundary.test.tsx",
+    "src/islands/components/ProjectCard.test.tsx",
+    "src/islands/components/ProjectShowcase.test.tsx",
+    "src/islands/components/StatusBadge.test.tsx",
+    "src/islands/detail-islands.test.tsx",
+    "src/islands/marina-public-islands.test.tsx",
+    "src/islands/public-islands.test.tsx",
+    "src/lib/lib-integration.test.ts",
+    "tests/integration/astro-components.integration.test.ts",
+    "tests/pages/admin-astro.test.ts",
+    "tests/pages/admin-page.test.ts",
+    "tests/pages/components.test.ts",
+    "tests/pages/index-page.test.ts",
+    "tests/pages/layout-base-layout.test.ts",
+    "tests/pages/layout-header.test.ts",
+    "tests/pages/public-pages.test.ts"
+  ],
+  "lib_list": [
+    "src/data/sampleContent.ts",
+    "src/lib/admin-queries.ts",
+    "src/lib/admin-security.ts",
+    "src/lib/auth-callback.ts",
+    "src/lib/magic-link-errors.ts",
+    "src/lib/markdown.ts",
+    "src/lib/observability.ts",
+    "src/lib/queries.ts",
+    "src/lib/storage.ts",
+    "src/lib/supabase-auth.ts",
+    "src/lib/supabase.ts",
+    "src/lib/url.ts"
+  ],
+  "components_list": [
+    "src/components/layout/BaseLayout.astro",
+    "src/components/layout/Footer.astro",
+    "src/components/layout/Header.astro",
+    "src/components/sections/ParticlesHero.astro",
+    "src/components/ui/EmptyState.astro",
+    "src/components/ui/LoadingSpinner.astro",
+    "src/components/ui/SDGWheel.astro",
+    "src/components/ui/StatusBadge.astro"
+  ],
+  "pages_list": [
+    "src/pages/404.astro",
+    "src/pages/about.astro",
+    "src/pages/admin.astro",
+    "src/pages/capacity-building.astro",
+    "src/pages/contact.astro",
+    "src/pages/focus-areas.astro",
+    "src/pages/how-we-work.astro",
+    "src/pages/index.astro",
+    "src/pages/launch-readiness.astro",
+    "src/pages/news/detail.astro",
+    "src/pages/news/index.astro",
+    "src/pages/programmes.astro",
+    "src/pages/projects/detail.astro",
+    "src/pages/projects/index.astro",
+    "src/pages/research.astro",
+    "src/pages/resources.astro",
+    "src/pages/robots.txt.ts",
+    "src/pages/services.astro",
+    "src/pages/sitemap.xml.ts",
+    "src/pages/team.astro",
+    "src/pages/tech4r.astro",
+    "src/pages/volunteer.astro"
+  ]
+}

@@ -1,0 +1,9 @@
+# These owners are requested for review on matching PRs.
+# See docs/branch-protection.md for required GitHub branch settings.
+
+* @Ushindi-Zirimwabagabo-Josue
+
+# Application source and CMS contracts
+/src/ @Ushindi-Zirimwabagabo-Josue
+/supabase/ @Ushindi-Zirimwabagabo-Josue
+/.github/ @Ushindi-Zirimwabagabo-Josue

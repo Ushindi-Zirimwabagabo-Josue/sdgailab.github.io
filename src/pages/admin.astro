@@ -1,0 +1,39 @@
+---
+import { withBase } from '../lib/url';
+import '../styles/global.css';
+import AdminApp from '../islands/admin/AdminApp';
+
+const adminContentSecurityPolicy = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "form-action 'self'",
+  "img-src 'self' data: https:",
+  "media-src 'self' https: blob:",
+  "font-src 'self' data:",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://*.ingest.sentry.io https://*.sentry.io",
+  "frame-src 'none'",
+  "manifest-src 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="Content-Security-Policy" content={adminContentSecurityPolicy} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>Admin - SDG AI Lab</title>
+    <link rel="icon" type="image/x-icon" href={withBase('/favicon.ico')} />
+  </head>
+  <body class="admin-cms">
+    <div id="admin-root">
+      <AdminApp client:only="react" />
+    </div>
+  </body>
+</html>
+

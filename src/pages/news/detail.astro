@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import NewsDetail from '../../islands/NewsDetail';
+---
+
+<BaseLayout title="News Article - SDG AI Lab">
+  <section class="section-padding">
+    <div class="container-narrow">
+      <NewsDetail client:load />
+    </div>
+  </section>
+</BaseLayout>

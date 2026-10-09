@@ -39,16 +39,23 @@
 }
 
 .article-list .item {
-  padding-top: 50px;
   min-height: 425px;
   text-align: center;
+  margin-bottom: 30px;
+  height: calc(100% - 30px);
 }
-
+.article-list .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-decoration: none !important;
+}
 .article-list .item .name {
   font-weight: bold;
   font-size: 16px;
   margin-top: 20px;
-  color: inherit;
+  color: rgb(49, 52, 55);
+  text-decoration: none;
 }
 
 .article-list .item .description {
