@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [new-version]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
           PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
           PUBLIC_SENTRY_DSN: ${{ secrets.PUBLIC_SENTRY_DSN }}
           PUBLIC_SENTRY_ENVIRONMENT: ${{ github.ref_name == 'new-version' && 'staging' || 'production' }}
-          GITHUB_PAGES_BASE: /sdgailab.github.io/
+          GITHUB_PAGES_BASE: /
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist/
