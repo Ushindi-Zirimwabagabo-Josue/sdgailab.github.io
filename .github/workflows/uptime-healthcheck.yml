@@ -4,7 +4,7 @@ on:
   schedule:
     # Run every 6 hours. This is frequent enough to catch outages and keep the
     # Supabase free-tier project warm without generating noisy traffic.
-    - cron: "17 */6 * * *"
+    - cron: '17 */6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  SITE_URL: ${{ vars.HEALTHCHECK_SITE_URL || 'https://sdg-ai-lab.github.io/sdgailab.github.io/' }}
+  SITE_URL: ${{ vars.HEALTHCHECK_SITE_URL || 'https://sdgailab.org/' }}
 
 jobs:
   healthcheck:

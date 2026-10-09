@@ -7,6 +7,7 @@ on:
       - main
       - master
       - new-version
+      - staging
 
 permissions:
   contents: read
