@@ -222,6 +222,7 @@ describe('public islands', () => {
           featured_image_url: 'https://example.com/news.png',
           author_name: 'SDG AI Lab',
           publish_date: '2026-07-15',
+          source_url: 'https://www.undp.org/news/new-lab-launch',
         },
       ],
       error: null,
@@ -233,9 +234,10 @@ describe('public islands', () => {
     expect(container.textContent).toContain('Launch summary');
     expect(container.textContent).toContain('SDG AI Lab');
     expect(container.textContent).toContain('July 15, 2026');
-    expect(container.querySelector('a')?.getAttribute('href')).toContain(
-      '/news/detail/?slug=new-lab-launch'
+    expect(container.querySelector('a')?.getAttribute('href')).toBe(
+      'https://www.undp.org/news/new-lab-launch'
     );
+    expect(container.querySelector('a')?.getAttribute('target')).toBe('_blank');
   });
 
   it('renders people, empty, and error states', async () => {

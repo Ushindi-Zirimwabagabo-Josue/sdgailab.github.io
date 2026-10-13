@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ContentTable, type Column } from '../shared/ContentTable';
 import { ConfirmDialog } from '../shared/ConfirmDialog';
 import { archivePublication, deletePublication, listPublications } from '../../../lib/admin-queries';
+import { PUBLICATION_GROUP_LABELS, resolvePublicationGroup } from '../../../lib/publicationGroup';
 import { useToast } from '../layout/Toast';
 import type { Publication, PublicationType } from '../../../lib/types';
 
@@ -15,7 +16,7 @@ const typeLabels: Record<PublicationType, string> = {
 function matchesSearch(publication: Publication, query: string): boolean {
   const normalized = query.trim().toLowerCase();
   if (!normalized) return true;
-  return [publication.title, publication.slug, publication.authors, publication.publisher, publication.summary, publication.publication_type, publication.status]
+  return [publication.title, publication.slug, publication.authors, publication.publisher, publication.summary, publication.publication_type, PUBLICATION_GROUP_LABELS[resolvePublicationGroup(publication)], publication.status]
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
@@ -36,6 +37,7 @@ export default function PublicationsListPage() {
   const columns: Column<Publication>[] = [
     { label: 'Title', accessor: 'title' },
     { label: 'Type', accessor: (item) => typeLabels[item.publication_type] },
+    { label: 'Section', accessor: (item) => PUBLICATION_GROUP_LABELS[resolvePublicationGroup(item)] },
     { label: 'Year', accessor: (item) => item.publication_date?.slice(0, 4) || item.date_label || '—' },
     { label: 'Status', accessor: 'status' },
   ];

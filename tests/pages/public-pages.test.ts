@@ -88,10 +88,11 @@ describe('Public Astro pages', () => {
   it('services page exposes requestable support pathways', () => {
     const source = readSource('src/pages/services.astro');
     expect(source).toContain('BaseLayout');
-    expect(source).toContain('What a partner can commission from the Lab.');
+    expect(source).toContain('section="heading"');
     expect(source).toContain('offer-grid');
-    expect(source).toContain('Artificial Intelligence');
-    expect(source).toContain('Agile, aligned with UNDP practice, enhanced by AI.');
+    expect(source).toContain('offer-heading');
+    expect(source).toContain('offer-1');
+    expect(source).toContain('section="approach-heading"');
   });
 
   it('about page includes Marina evolution, team, figures, and CTA sections', () => {

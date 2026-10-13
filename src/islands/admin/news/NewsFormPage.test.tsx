@@ -16,6 +16,10 @@ const {
   showToastMock: vi.fn(),
 }));
 
+vi.mock('../../../lib/linkPreview', () => ({
+  fetchLinkPreview: vi.fn().mockResolvedValue({ data: null, error: 'Preview is not used in this test.' }),
+}));
+
 vi.mock('../../../lib/admin-queries', () => ({
   getNewsArticle: getNewsArticleMock,
   createNewsArticle: createNewsArticleMock,
@@ -186,31 +190,27 @@ describe('NewsFormPage', () => {
     window.location.hash = originalHash;
   });
 
-  it('blocks submit when body is blank', async () => {
+  it('requires a source link before saving', async () => {
     await act(async () => {
       root.render(<NewsFormPage />);
     });
 
     expect(container.querySelector('a[href="#/news"]')?.textContent).toContain('Back to news');
+    expect(container.querySelector('textarea[aria-label="Body *"]')).toBeNull();
 
     const titleInput = container.querySelector('input[type="text"]') as HTMLInputElement;
     const slugInput = container.querySelector('input[aria-label="Slug"]') as HTMLInputElement;
-    const body = container.querySelector('textarea[aria-label="Body *"]') as HTMLTextAreaElement;
     const form = container.querySelector('form') as HTMLFormElement;
 
     await act(async () => {
       setInputValue(titleInput, 'My article');
       setInputValue(slugInput, 'my-article');
-      setInputValue(body, '   ');
-    });
-
-    await act(async () => {
       form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     });
     await flushEffects();
 
     expect(createNewsArticleMock).not.toHaveBeenCalled();
-    expect(container.textContent).toContain('Body is required');
+    expect(container.textContent).toContain('Source link is required');
   });
 
   it('creates an article and navigates back to the news list', async () => {
@@ -221,8 +221,7 @@ describe('NewsFormPage', () => {
     const textInputs = Array.from(container.querySelectorAll('input[type="text"]')) as HTMLInputElement[];
     const titleInput = textInputs[0];
     const slugInput = container.querySelector('input[aria-label="Slug"]') as HTMLInputElement;
-    const body = container.querySelector('textarea[aria-label="Body *"]') as HTMLTextAreaElement;
-    const summary = container.querySelector('textarea:not([aria-label])') as HTMLTextAreaElement;
+    const summary = container.querySelector('textarea') as HTMLTextAreaElement;
     const authorInput = textInputs[textInputs.length - 1];
     const publishDateInput = container.querySelector('input[type="date"]') as HTMLInputElement;
     const statusSelect = container.querySelector('select[aria-label="Status"]') as HTMLSelectElement;
@@ -234,9 +233,9 @@ describe('NewsFormPage', () => {
     await act(async () => {
       setInputValue(titleInput, 'My article');
       setInputValue(slugInput, 'my-article');
-      setInputValue(body, 'Article body');
       setInputValue(summary, 'Summary text');
       setInputValue(authorInput, 'A. Writer');
+      setInputValue(container.querySelector('input[type="url"]') as HTMLInputElement, 'https://example.com/story');
       setInputValue(publishDateInput, '2026-07-15');
       setInputValue(statusSelect, 'published');
       imageButton.click();
@@ -250,10 +249,11 @@ describe('NewsFormPage', () => {
     expect(createNewsArticleMock).toHaveBeenCalledWith({
       title: 'My article',
       slug: 'my-article',
-      body: 'Article body',
+      body: '',
       summary: 'Summary text',
       featured_image_url: 'https://example.com/news-image.png',
       author_name: 'A. Writer',
+      source_url: 'https://example.com/story',
       publish_date: '2026-07-15',
       status: 'published',
     });
@@ -270,6 +270,7 @@ describe('NewsFormPage', () => {
         summary: 'Existing summary',
         featured_image_url: 'https://example.com/old-news-image.png',
         author_name: 'Reporter',
+        source_url: 'https://example.com/existing',
         publish_date: '2026-07-10',
         status: 'draft',
       },
@@ -281,14 +282,12 @@ describe('NewsFormPage', () => {
     });
     await flushEffects();
 
-    const body = container.querySelector('textarea[aria-label="Body *"]') as HTMLTextAreaElement;
     const statusSelect = container.querySelector('select[aria-label="Status"]') as HTMLSelectElement;
     const form = container.querySelector('form') as HTMLFormElement;
 
     expect(getNewsArticleMock).toHaveBeenCalledWith('news-42');
 
     await act(async () => {
-      setInputValue(body, 'Updated body');
       setInputValue(statusSelect, 'published');
     });
 
@@ -300,10 +299,11 @@ describe('NewsFormPage', () => {
     expect(updateNewsArticleMock).toHaveBeenCalledWith('news-42', {
       title: 'Existing article',
       slug: 'existing-article',
-      body: 'Updated body',
+      body: 'Existing body',
       summary: 'Existing summary',
       featured_image_url: 'https://example.com/old-news-image.png',
       author_name: 'Reporter',
+      source_url: 'https://example.com/existing',
       publish_date: '2026-07-10',
       status: 'published',
     });

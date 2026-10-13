@@ -297,9 +297,9 @@ export default function PortfolioGrid() {
           {(loading
             ? headingTemplate.replace('{count}', 'Products')
             : headingTemplate.replace(
-                '{count}',
-                `${cards.length} ${cards.length === 1 ? 'product' : 'products'}`
-              )
+              '{count}',
+              `${cards.length} ${cards.length === 1 ? 'product' : 'products'}`
+            )
           ).replace(/\s+/g, ' ').trim()}
         </h1>
         <p className="desc">{intro}</p>
@@ -431,8 +431,6 @@ export default function PortfolioGrid() {
           </button>
         ))}
       </div>
-
-      {!loading ? <p className="portfolio-count" style={{ marginTop: 22 }}>{filteredCards.length} of {cards.length} products shown</p> : null}
     </>
   );
 }

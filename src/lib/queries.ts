@@ -206,12 +206,19 @@ export async function getPublishedNews(
     if (!isSupabaseConfigured) {
       return { data: [], error: null, page, pageSize, hasMore: false };
     }
-    const { data, error } = await getSupabase()
-      .from('news_articles')
-      .select('id, title, slug, summary, featured_image_url, author_name, publish_date')
-      .eq('status', 'published')
-      .order('publish_date', { ascending: false })
-      .range(from, from + pageSize);
+    const columns = 'id, title, slug, summary, featured_image_url, author_name, publish_date';
+    const loadPage = (select: string) =>
+      getSupabase()
+        .from('news_articles')
+        .select(select)
+        .eq('status', 'published')
+        .order('publish_date', { ascending: false })
+        .range(from, from + pageSize);
+
+    let { data, error } = await loadPage(`${columns}, source_url`);
+    if (error && /source_url/i.test(error.message)) {
+      ({ data, error } = await loadPage(columns));
+    }
 
     if (error) return { data: [], error: error.message, page, pageSize, hasMore: false };
     const rows = (data ?? []) as NewsListItem[];
@@ -239,15 +246,21 @@ export async function getPublishedPublications(
     if (!isSupabaseConfigured) {
       return { data: [], error: null, page, pageSize, hasMore: false };
     }
-    const { data, error } = await getSupabase()
-      .from('publications')
-      .select(
-        'id, title, slug, publication_type, authors, publication_date, date_label, publisher, summary, source_url, cover_image_url, display_order'
-      )
-      .eq('status', 'published')
-      .order('publication_date', { ascending: false, nullsFirst: false })
-      .order('display_order', { ascending: true })
-      .range(from, from + pageSize);
+    const columns =
+      'id, title, slug, publication_type, authors, publication_date, date_label, publisher, summary, source_url, cover_image_url, display_order';
+    const loadPage = (select: string) =>
+      getSupabase()
+        .from('publications')
+        .select(select)
+        .eq('status', 'published')
+        .order('publication_date', { ascending: false, nullsFirst: false })
+        .order('display_order', { ascending: true })
+        .range(from, from + pageSize);
+
+    let { data, error } = await loadPage(`${columns.replace('publication_type,', 'publication_type, publication_group,')}`);
+    if (error && /publication_group/i.test(error.message)) {
+      ({ data, error } = await loadPage(columns));
+    }
 
     if (error) return { data: [], error: error.message, page, pageSize, hasMore: false };
     const rows = (data ?? []) as PublicationListItem[];

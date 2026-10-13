@@ -68,18 +68,6 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
             <p><CmsText client:load page="expertise" section="fintech-body" /></p>
             <CmsList client:load page="expertise" section="fintech-items" className="proj-list" />
           </a>
-
-          <a
-            class="focus-card reveal tilt"
-            id="advisory"
-            href={withBase('/projects/?focus=advisory')}
-            style="--sdg:#7E57C2;"
-          >
-            <span class="focus-idx">06</span>
-            <h3><CmsText client:load page="expertise" section="advisory-title" /></h3>
-            <p><CmsText client:load page="expertise" section="advisory-body" /></p>
-            <CmsList client:load page="expertise" section="advisory-items" className="proj-list" />
-          </a>
         </div>
       </div>
     </section>
@@ -392,9 +380,6 @@ const marinaAsset = (path: string) => `https://sdg-dark.netlify.app/${path}`;
     }
     .marina-focus-page .focus-card:nth-child(5) {
       --rd: 100ms;
-    }
-    .marina-focus-page .focus-card:nth-child(6) {
-      --rd: 60ms;
     }
 
     .marina-focus-page :global(.proj-list) {

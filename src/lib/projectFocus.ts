@@ -36,13 +36,12 @@ export function toFocusLabel(project: FocusSource): string {
   return FOCUS_LABELS[toFocus(project)];
 }
 
-export type PortfolioFocus = FocusCategory | 'resilience' | 'fintech' | 'advisory';
+export type PortfolioFocus = FocusCategory | 'resilience' | 'fintech';
 
 export const PORTFOLIO_FOCUS_LABELS: Record<PortfolioFocus, string> = {
   ...FOCUS_LABELS,
   resilience: 'Resilience',
   fintech: 'FinTech & Digital Finance',
-  advisory: 'Research & Advisory',
 };
 
 const PORTFOLIO_FOCUS_IDS = new Set<string>(Object.keys(PORTFOLIO_FOCUS_LABELS));
@@ -67,6 +66,5 @@ export function projectMatchesFocus(
   if (focus === 'gis' || focus === 'nlp' || focus === 'training') return toFocus(project) === focus;
   const text = projectText(project);
   if (focus === 'resilience') return /resilien|early warning|disaster|\bdrr\b/.test(text);
-  if (focus === 'fintech') return /fintech|suptech|digital finance|public finance|sdg finance/.test(text);
-  return /advisory|white paper|partnership agreement/.test(text);
+  return /fintech|suptech|digital finance|public finance|sdg finance/.test(text);
 }

@@ -1,16 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ContentForm } from '../shared/ContentForm';
 import { StatusSelect } from '../shared/StatusSelect';
 import { SlugField } from '../shared/SlugField';
-import { MarkdownField } from '../shared/MarkdownField';
 import { ImageUpload } from '../shared/ImageUpload';
 import { FormFeedback } from '../shared/FormFeedback';
 import { getNewsArticle, createNewsArticle, updateNewsArticle } from '../../../lib/admin-queries';
+import { fetchLinkPreview, type LinkPreview } from '../../../lib/linkPreview';
 import { useToast } from '../layout/Toast';
 import type { PublishStatus } from '../../../lib/types';
 
 interface NewsFormPageProps {
   id?: string | null;
+}
+
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 const defaultValues = {
@@ -20,7 +30,8 @@ const defaultValues = {
   summary: '',
   featured_image_url: null as string | null,
   author_name: '',
-  publish_date: new Date().toISOString().split('T')[0],
+  source_url: '',
+  publish_date: '',
   status: 'draft' as PublishStatus,
 };
 
@@ -33,6 +44,8 @@ export default function NewsFormPage({ id }: NewsFormPageProps) {
   const [feedback, setFeedback] = useState<{ message: string; type: 'success' | 'error' } | null>(
     null
   );
+  const [readingSource, setReadingSource] = useState(false);
+  const feedbackRef = useRef<HTMLDivElement>(null);
 
   const isDirty =
     JSON.stringify({ ...values, featured_image_url: values.featured_image_url || null }) !==
@@ -57,6 +70,7 @@ export default function NewsFormPage({ id }: NewsFormPageProps) {
           summary: data.summary ?? '',
           featured_image_url: data.featured_image_url,
           author_name: data.author_name ?? '',
+          source_url: data.source_url ?? '',
           publish_date: data.publish_date,
           status: data.status as PublishStatus,
         };
@@ -69,23 +83,71 @@ export default function NewsFormPage({ id }: NewsFormPageProps) {
     };
   }, [id]);
 
+  useEffect(() => {
+    if (!feedback?.message) return;
+    feedbackRef.current?.scrollIntoView?.({ block: 'start' });
+  }, [feedback]);
+
+  const applyPreview = (
+    current: typeof values,
+    data: LinkPreview,
+    overwrite: boolean
+  ) => {
+    const title = overwrite || !current.title.trim() ? data.title : current.title;
+    return {
+      ...current,
+      title,
+      slug: current.slug.trim() ? current.slug : slugify(title),
+      summary: overwrite || !current.summary.trim() ? data.summary ?? current.summary : current.summary,
+      featured_image_url: overwrite || !current.featured_image_url ? data.image ?? current.featured_image_url : current.featured_image_url,
+      publish_date: (overwrite || !current.publish_date) && data.publish_date ? data.publish_date : current.publish_date,
+    };
+  };
+
+  const readSource = async (overwrite = true) => {
+    const sourceUrl = values.source_url.trim();
+    if (!sourceUrl) {
+      setFeedback({ message: 'Enter the source link first.', type: 'error' });
+      return null;
+    }
+    setFeedback(null);
+    setReadingSource(true);
+    const { data, error } = await fetchLinkPreview(sourceUrl);
+    setReadingSource(false);
+    if (error || !data) {
+      setFeedback({ message: error || 'The page could not be read.', type: 'error' });
+      return null;
+    }
+    const next = applyPreview(values, data, overwrite);
+    setValues(next);
+    showToast('Title, image, and date filled from the source page', 'success');
+    return next;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFeedback(null);
-    if (!values.body.trim()) {
-      setFeedback({ message: 'Body is required', type: 'error' });
+    if (!values.source_url.trim()) {
+      setFeedback({ message: 'Source link is required', type: 'error' });
       return;
+    }
+    let next = values;
+    if (!next.title.trim() || !next.featured_image_url || !next.publish_date) {
+      const filled = await readSource(false);
+      if (!filled) return;
+      next = filled;
     }
     setLoading(true);
     const input = {
-      title: values.title,
-      slug: values.slug,
-      body: values.body,
-      summary: values.summary || null,
-      featured_image_url: values.featured_image_url,
-      author_name: values.author_name || null,
-      publish_date: values.publish_date,
-      status: values.status,
+      title: next.title,
+      slug: next.slug,
+      body: next.body,
+      summary: next.summary || null,
+      featured_image_url: next.featured_image_url,
+      author_name: next.author_name || null,
+      source_url: next.source_url.trim(),
+      publish_date: next.publish_date,
+      status: next.status,
     };
     if (!id) {
       const { error } = await createNewsArticle(input);
@@ -139,6 +201,39 @@ export default function NewsFormPage({ id }: NewsFormPageProps) {
         isDirty={isDirty}
       >
         <div className="space-y-4">
+          <div ref={feedbackRef}>
+            <FormFeedback
+              message={feedback?.message ?? null}
+              type={feedback?.type ?? 'error'}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-lab-text mb-1">Source link *</label>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <input
+                type="url"
+                required
+                value={values.source_url}
+                onChange={(e) => setValues((v) => ({ ...v, source_url: e.target.value }))}
+                onBlur={() => {
+                  if (values.source_url.trim() && (!values.title.trim() || !values.featured_image_url || !values.publish_date)) {
+                    void readSource(false);
+                  }
+                }}
+                placeholder="https://"
+                className="w-full border border-lab-border rounded-md px-3 py-2 text-sm"
+              />
+              <button
+                type="button"
+                onClick={() => void readSource(true)}
+                disabled={readingSource}
+                className="shrink-0 rounded-md border border-lab-border px-3 py-2 text-sm font-medium text-lab-text disabled:opacity-60"
+              >
+                {readingSource ? 'Reading page…' : 'Fill title, image, and date'}
+              </button>
+            </div>
+            <span className="mt-1 block text-xs text-lab-muted">Paste the story link. The button reads its title, image, and publication date, and the card opens that page.</span>
+          </div>
           <div>
             <label className="block text-sm font-medium text-lab-text mb-1">Title *</label>
             <input
@@ -153,11 +248,6 @@ export default function NewsFormPage({ id }: NewsFormPageProps) {
             value={values.slug}
             sourceValue={values.title}
             onChange={(slug) => setValues((v) => ({ ...v, slug }))}
-          />
-          <MarkdownField
-            value={values.body}
-            onChange={(val) => setValues((v) => ({ ...v, body: val }))}
-            label="Body *"
           />
           <div>
             <label className="block text-sm font-medium text-lab-text mb-1">Summary</label>
@@ -196,10 +286,6 @@ export default function NewsFormPage({ id }: NewsFormPageProps) {
             value={values.status}
             onChange={(v) => setValues((prev) => ({ ...prev, status: v as PublishStatus }))}
             label="Status"
-          />
-          <FormFeedback
-            message={feedback?.message ?? null}
-            type={feedback?.type ?? 'error'}
           />
         </div>
       </ContentForm>

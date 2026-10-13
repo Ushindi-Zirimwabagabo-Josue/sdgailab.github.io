@@ -5,6 +5,7 @@ import {
   normalizePageOptions,
   type ListPageOptions,
 } from './pagination';
+import { publicationGroupFromType } from './publicationGroup';
 import { getSupabaseAuth } from './supabase-auth';
 import type {
   PublishStatus,
@@ -14,6 +15,7 @@ import type {
   Project,
   NewsArticle,
   Publication,
+  PublicationGroup,
   PublicationType,
   Person,
   Partner,
@@ -92,11 +94,12 @@ export interface ProjectInput {
 export interface NewsArticleInput {
   title: string;
   slug: string;
-  body: string;
+  body?: string | null;
   summary?: string | null;
   featured_image_url?: string | null;
   author_name?: string | null;
   publish_date: string;
+  source_url: string;
   status: PublishStatus;
   published_at?: string | null;
 }
@@ -105,6 +108,7 @@ export interface PublicationInput {
   title: string;
   slug: string;
   publication_type: PublicationType;
+  publication_group?: PublicationGroup;
   authors?: string | null;
   publication_date?: string | null;
   date_label?: string | null;
@@ -170,6 +174,7 @@ const VALID_PROJECT_STATUSES: ProjectStatus[] = ['active', 'completed', 'under_d
 const VALID_DEPLOYMENT_STATUSES = ['live', 'prototype', 'internal'] as const;
 const VALID_PEOPLE_GROUPS: PeopleGroup[] = ['team', 'advisory_board'];
 const VALID_PUBLICATION_TYPES: PublicationType[] = ['report', 'brief_white_paper', 'academic_paper', 'dataset'];
+const VALID_PUBLICATION_GROUPS: PublicationGroup[] = ['official_undp', 'network'];
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const SECTION_PATTERN = /^[a-z0-9]+(?:-[a-z0-9_]+)*$/;
 const MUTATION_WINDOW_MS = 5 * 60 * 1000;
@@ -345,6 +350,13 @@ function assertPublicationType(value: unknown): PublicationType {
   return value as PublicationType;
 }
 
+function assertPublicationGroup(value: unknown): PublicationGroup {
+  if (typeof value !== 'string' || !VALID_PUBLICATION_GROUPS.includes(value as PublicationGroup)) {
+    throw new Error('Publication group is invalid.');
+  }
+  return value as PublicationGroup;
+}
+
 function assertSlug(value: unknown, field: string): string {
   const slug = assertNonEmptyString(value, field).toLowerCase();
   if (!SLUG_PATTERN.test(slug)) {
@@ -457,11 +469,12 @@ function validateNewsArticleInput(input: NewsArticleInput): NewsArticleInput {
   return {
     title: assertNonEmptyString(input.title, 'Title'),
     slug: assertSlug(input.slug, 'Slug'),
-    body: assertNonEmptyString(input.body, 'Body'),
+    body: normalizeOptionalString(input.body, 'Body') ?? '',
     summary: normalizeOptionalString(input.summary, 'Summary'),
     featured_image_url: assertOptionalHttpUrl(input.featured_image_url, 'Featured image URL'),
     author_name: normalizeOptionalString(input.author_name, 'Author name'),
     publish_date: assertIsoDate(input.publish_date, 'Publish date'),
+    source_url: assertNonEmptyString(assertOptionalHttpUrl(input.source_url, 'Source URL'), 'Source URL'),
     status: assertStatus(input.status),
     published_at: assertOptionalIsoDateTime(input.published_at, 'Published at'),
   };
@@ -473,6 +486,7 @@ function validatePublicationInput(input: PublicationInput): PublicationInput {
     title: assertNonEmptyString(input.title, 'Title'),
     slug: assertSlug(input.slug, 'Slug'),
     publication_type: assertPublicationType(input.publication_type),
+    publication_group: assertPublicationGroup(input.publication_group ?? publicationGroupFromType(input.publication_type)),
     authors: normalizeOptionalString(input.authors, 'Authors'),
     publication_date: publicationDate ? assertIsoDate(publicationDate, 'Publication date') : null,
     date_label: normalizeOptionalString(input.date_label, 'Date label'),

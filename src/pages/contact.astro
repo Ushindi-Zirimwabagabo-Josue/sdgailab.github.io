@@ -1,8 +1,6 @@
 ---
 import BaseLayout from '../components/layout/BaseLayout.astro';
 import CmsText, { CmsList } from '../islands/CmsText';
-
-const contactEmail = 'dina.akylbekova@undp.org';
 ---
 
 <BaseLayout
@@ -16,19 +14,6 @@ const contactEmail = 'dina.akylbekova@undp.org';
           <h1><CmsText client:load page="contact" section="heading" /></h1>
           <div class="band-head-copy">
             <p><CmsText client:load page="contact" section="intro" /></p>
-            <div class="contact-email">
-              <a class="contact-email-link" href={`mailto:${contactEmail}`}
-                >{contactEmail}</a
-              >
-              <button
-                type="button"
-                class="contact-email-copy"
-                data-email={contactEmail}
-                aria-label={`Copy ${contactEmail} to clipboard`}
-              >
-                Copy
-              </button>
-            </div>
           </div>
         </div>
         <div class="contact-grid">
@@ -76,7 +61,12 @@ const contactEmail = 'dina.akylbekova@undp.org';
             <span class="contact-side-label"
               ><CmsText client:load page="contact" section="ways-label" /></span
             >
-            <CmsList client:load page="contact" section="ways-items" className="engage-list" />
+            <CmsList
+              client:load
+              page="contact"
+              section="ways-items"
+              className="engage-list"
+            />
           </aside>
         </div>
       </div>
@@ -173,6 +163,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
       gap: 60px;
+      align-items: start;
       margin-bottom: 72px;
     }
     .marina-contact .band-head h1 {
@@ -189,7 +180,7 @@ const contactEmail = 'dina.akylbekova@undp.org';
       letter-spacing: -0.03em;
     }
     .marina-contact .band-head-copy {
-      align-self: end;
+      align-self: start;
       max-width: 460px;
     }
     .marina-contact .band-head p {

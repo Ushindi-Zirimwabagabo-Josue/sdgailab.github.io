@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { resolvePublicationGroup } from '../lib/publicationGroup';
 import { getPublishedPublications } from '../lib/queries';
 import type { PublicationListItem, PublicationType } from '../lib/types';
 
@@ -10,6 +11,10 @@ const typeFilters: Array<{ id: TypeFilter; label: string }> = [
   { id: 'report', label: 'Reports' },
   { id: 'dataset', label: 'Datasets' },
 ];
+
+function isOfficialUndp(publication: PublicationListItem): boolean {
+  return resolvePublicationGroup(publication) === 'official_undp';
+}
 
 /** Briefs / white papers are surfaced under Reports on the public research page. */
 function displayType(publicationType: PublicationType): Exclude<PublicationType, 'brief_white_paper'> {
@@ -101,6 +106,9 @@ export default function ResearchOutputs() {
     [publications, typeFilter, yearFilter]
   );
 
+  const officialPublications = visiblePublications.filter((publication) => isOfficialUndp(publication));
+  const networkPublications = visiblePublications.filter((publication) => !isOfficialUndp(publication));
+
   return (
     <div className="research-outputs">
       <div className="research-toolbar" role="group" aria-label="Filter by output type">
@@ -147,42 +155,65 @@ export default function ResearchOutputs() {
         <p className="research-empty">No published outputs match these filters yet.</p>
       ) : null}
 
-      <div className="output-grid" aria-live="polite">
-        {visiblePublications.map((publication) => {
-          const date = dateForCard(publication);
-          const shownType = displayType(publication.publication_type);
-          return (
-            <article className="output-card" key={publication.id}>
-              <a
-                className="output-link"
-                href={publication.source_url}
-                target="_blank"
-                rel="noreferrer"
-                aria-label={`Open ${publication.title}`}
-              >
-                {publication.cover_image_url ? (
-                  <div className="output-cover-tile">
-                    <img src={publication.cover_image_url} alt="" loading="lazy" decoding="async" />
-                  </div>
-                ) : (
-                  <div className={`output-cover output-cover--${shownType}`}>
-                    <span>{typeCoverLabels[shownType]}</span>
-                  </div>
-                )}
-                <div className="output-link-body">
-                  <div className="output-meta">
-                    <span>{typeLabels[shownType]}</span>
-                    {date ? <span>{date}</span> : null}
-                  </div>
-                  <h2>{publication.title}</h2>
-                  <p>{publication.summary}</p>
-                  <span className="output-more">Open output <span aria-hidden="true">→</span></span>
-                </div>
-              </a>
-            </article>
-          );
-        })}
+      <div aria-live="polite">
+        {officialPublications.length > 0 ? (
+          <section className="output-group" aria-labelledby="official-undp-heading">
+            <h2 id="official-undp-heading">Official UNDP reports</h2>
+            <p className="output-group-note">Reports and briefs published through a UNDP process.</p>
+            <OutputGrid publications={officialPublications} />
+          </section>
+        ) : null}
+        {networkPublications.length > 0 ? (
+          <section className="output-group" aria-labelledby="network-papers-heading">
+            <h2 id="network-papers-heading">Papers from the wider network</h2>
+            <p className="output-group-note">
+              Academic papers and other outputs published independently, or through a process outside UNDP.
+            </p>
+            <OutputGrid publications={networkPublications} />
+          </section>
+        ) : null}
       </div>
+    </div>
+  );
+}
+
+function OutputGrid({ publications }: { publications: PublicationListItem[] }) {
+  return (
+    <div className="output-grid">
+      {publications.map((publication) => {
+        const date = dateForCard(publication);
+        const shownType = displayType(publication.publication_type);
+        return (
+          <article className="output-card" key={publication.id}>
+            <a
+              className="output-link"
+              href={publication.source_url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Open ${publication.title}`}
+            >
+              {publication.cover_image_url ? (
+                <div className="output-cover-tile">
+                  <img src={publication.cover_image_url} alt="" loading="lazy" decoding="async" />
+                </div>
+              ) : (
+                <div className={`output-cover output-cover--${shownType}`}>
+                  <span>{typeCoverLabels[shownType]}</span>
+                </div>
+              )}
+              <div className="output-link-body">
+                <div className="output-meta">
+                  <span>{typeLabels[shownType]}</span>
+                  {date ? <span>{date}</span> : null}
+                </div>
+                <h3>{publication.title}</h3>
+                <p>{publication.summary}</p>
+                <span className="output-more">Open output <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+          </article>
+        );
+      })}
     </div>
   );
 }

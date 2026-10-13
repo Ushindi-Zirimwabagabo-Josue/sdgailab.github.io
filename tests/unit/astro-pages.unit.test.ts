@@ -126,7 +126,7 @@ const pageSources: { path: string; checks: (source: string) => void }[] = [
     path: 'src/pages/services.astro',
     checks: (source) => {
       expect(source).toContain('marina-services');
-      expect(source).toContain('What a partner can commission from the Lab.');
+      expect(source).toContain('section="heading"');
       expect(source).toContain('offer-grid');
     },
   },

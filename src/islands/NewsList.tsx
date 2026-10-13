@@ -1,11 +1,26 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getPublishedNews } from '../lib/queries';
 import type { NewsListItem } from '../lib/types';
-import { withBase } from '../lib/url';
+/** Original UNDP pages for stories published before source links were stored in the CMS. */
+const sourceBySlug: Record<string, string> = {
+  'iicpsd-unv-joint-webinar-showcased-digital-development-solutions-from-sdg-ai-lab-and-un-volunteers':
+    'https://www.undp.org/policy-centre/istanbul/news/iicpsd-unv-joint-webinar-showcased-digital-development-solutions-sdg-ai-lab-and-un-volunteers',
+  'sdg-ai-lab-and-un-volunteers-hosted-joint-annual-demo-day-event-to-showcase-volunteer-digital-solutions-for-sustainable-development-and-sdgs':
+    'https://www.undp.org/policy-centre/istanbul/news/sdg-ai-lab-and-un-volunteers-hosted-joint-annual-demo-day-event-showcase-volunteer-digital-solutions-sustainable',
+  'iicpsd-partners-with-ppmi-to-unleash-the-potential-of-frontier-technologies-for-sdgs-acceleration':
+    'https://www.undp.org/policy-centre/istanbul/news/iicpsd-partners-ppmi-unleash-potential-frontier-technologies-sdgs-acceleration',
+};
+
+function sourceFor(article: NewsListItem): string | null {
+  const fromCms = article.source_url?.trim();
+  if (fromCms) return fromCms;
+  return sourceBySlug[article.slug] ?? null;
+}
 
 function NewsCard({ article }: { article: NewsListItem }) {
-  return (
-    <a href={withBase(`/news/detail/?slug=${article.slug}`)} className="news-card">
+  const source = sourceFor(article);
+  const card = (
+    <>
       {article.featured_image_url ? (
         <div className="news-card-image">
           <img src={article.featured_image_url} alt="" loading="lazy" decoding="async" />
@@ -24,7 +39,18 @@ function NewsCard({ article }: { article: NewsListItem }) {
         </div>
         <h2>{article.title}</h2>
         {article.summary ? <p>{article.summary}</p> : null}
+        {source ? <span className="news-card-source">Read at source</span> : null}
       </div>
+    </>
+  );
+
+  if (!source) {
+    return <article className="news-card">{card}</article>;
+  }
+
+  return (
+    <a href={source} className="news-card" target="_blank" rel="noopener noreferrer">
+      {card}
     </a>
   );
 }

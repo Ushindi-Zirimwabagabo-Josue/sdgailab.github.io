@@ -14,6 +14,8 @@ export type PublicationType =
   | "academic_paper"
   | "dataset";
 
+export type PublicationGroup = "official_undp" | "network";
+
 export interface Statistic {
   id: string;
   label: string;
@@ -77,6 +79,7 @@ export interface NewsArticle {
   featured_image_url: string | null;
   author_name: string | null;
   publish_date: string;
+  source_url?: string | null;
   status: PublishStatus;
   published_at: string | null;
   created_at: string;
@@ -88,6 +91,7 @@ export interface Publication {
   title: string;
   slug: string;
   publication_type: PublicationType;
+  publication_group?: PublicationGroup | null;
   authors: string | null;
   publication_date: string | null;
   date_label: string | null;
@@ -166,8 +170,8 @@ export interface PageContent {
 export type StatisticCard = Pick<Statistic, "id" | "label" | "value" | "icon_name" | "display_order">;
 export type FeaturedProjectCard = Pick<Project, "id" | "title" | "slug" | "project_status" | "is_deployed" | "image_url" | "display_order" | "summary" | "deployment_status" | "sdgs" | "is_sample" | "is_featured" | "impact_area" | "timeline" | "project_year" | "best_fit" | "core_capabilities" | "tech_stack" | "implementation_countries" | "capabilities_involved" | "video_url" | "work_stream" | "project_category">;
 export type ProjectListItem = FeaturedProjectCard;
-export type NewsListItem = Pick<NewsArticle, "id" | "title" | "slug" | "summary" | "featured_image_url" | "author_name" | "publish_date">;
-export type PublicationListItem = Pick<Publication, "id" | "title" | "slug" | "publication_type" | "authors" | "publication_date" | "date_label" | "publisher" | "summary" | "source_url" | "cover_image_url" | "display_order">;
+export type NewsListItem = Pick<NewsArticle, "id" | "title" | "slug" | "summary" | "featured_image_url" | "author_name" | "publish_date" | "source_url">;
+export type PublicationListItem = Pick<Publication, "id" | "title" | "slug" | "publication_type" | "publication_group" | "authors" | "publication_date" | "date_label" | "publisher" | "summary" | "source_url" | "cover_image_url" | "display_order">;
 export type PersonCard = Pick<Person, "id" | "name" | "role_title" | "photo_url" | "team_group" | "biography" | "display_order">;
 export type PartnerLogo = Pick<Partner, "id" | "name" | "logo_url" | "website_url" | "display_order">;
 export type EvolutionTimelineCard = Pick<EvolutionTimelineItem, "id" | "period" | "title" | "body" | "display_order">;

@@ -193,6 +193,7 @@ describe('PublicationFormPage', () => {
         slug: 'new-research-output',
         summary: 'Summary of the output',
         source_url: 'https://example.com/output',
+        publication_group: 'official_undp',
         status: 'published',
       })
     );
