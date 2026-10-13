@@ -3,14 +3,70 @@ import BaseLayout from '../../components/layout/BaseLayout.astro';
 import NewsList from '../../islands/NewsList';
 ---
 
-<BaseLayout title="News - SDG AI Lab">
-  <section class="section-padding">
-    <div class="container-narrow">
-      <h1 class="text-3xl sm:text-4xl font-bold text-lab-text mb-2">News</h1>
-      <p class="text-lg text-lab-muted mb-8">
-        Latest updates and stories from the SDG AI Lab.
-      </p>
-      <NewsList client:load />
-    </div>
-  </section>
+<BaseLayout title="News - SDG AI Lab" description="Latest updates and stories from the SDG AI Lab.">
+  <main class="marina-news" id="main">
+    <section class="news-band" aria-labelledby="news-heading">
+      <div class="marina-live-wrap">
+        <div class="news-heading reveal">
+          <h1 id="news-heading">News</h1>
+          <p class="news-intro">Latest updates and stories from the SDG AI Lab.</p>
+        </div>
+        <NewsList client:load />
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const reveals = document.querySelectorAll<HTMLElement>('.marina-news .reveal');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            (entry.target as HTMLElement).classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach((element) => observer.observe(element));
+    } else {
+      reveals.forEach((element) => element.classList.add('is-visible'));
+    }
+  </script>
+
+  <style is:global>
+    .marina-news { background: #15181c; color: #eef2f6; font-family: 'Inter', sans-serif; min-height: 100vh; }
+    .marina-news *, .marina-news *::before, .marina-news *::after { box-sizing: border-box; }
+    .news-band { padding: 150px 0 80px; background: radial-gradient(650px 440px at 2% 28%, rgba(62, 198, 230, .06), transparent 68%), #15181c; }
+    .news-heading { display: grid; grid-template-columns: .9fr 1.1fr; column-gap: 60px; align-items: end; margin-bottom: 48px; }
+    .news-heading h1 { max-width: 510px; margin: 0; font-family: 'Cabinet Grotesk', sans-serif; font-size: clamp(2.15rem, 4vw, 3.3rem); font-weight: 700; line-height: 1.06; letter-spacing: -.03em; background: linear-gradient(115deg, #fff 20%, #a8e6f5 55%, #c5eef8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
+    .news-intro { max-width: 460px; margin: 0; color: #d7dee6; font-size: 1.1rem; line-height: 1.6; }
+    .news-toolbar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+    .news-search { display: flex; flex-direction: column; gap: 8px; width: min(100%, 360px); color: #c3ccd4; font-size: 0.78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .news-search input { width: 100%; border: 1px solid #24292f; border-radius: 999px; background: #1b1f24; color: #eef2f6; font: 600 0.92rem 'Inter', sans-serif; padding: 10px 16px; outline: none; }
+    .news-search input:focus { border-color: #3ec6e6; }
+    .news-count { margin: 0 0 28px; color: #aeb7c0; font-size: 0.94rem; }
+    .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .news-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #24292f; border-radius: 12px; background: #1b1f24; color: inherit; text-decoration: none; transition: border-color .18s ease, transform .18s ease; }
+    .news-card:hover { border-color: #2c323a; transform: translateY(-3px); }
+    .news-card-image { aspect-ratio: 16 / 9; overflow: hidden; background: #21262c; border-bottom: 1px solid #24292f; }
+    .news-card-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .news-card-body { display: flex; flex: 1; flex-direction: column; padding: 18px; }
+    .news-card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; color: #3ec6e6; font-size: 0.78rem; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
+    .news-card h2 { margin: 0; color: #eef2f6; font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
+    .news-card p { margin: 10px 0 0; color: #c3ccd4; font-size: 0.94rem; line-height: 1.55; }
+    .news-empty, .news-status { margin: 0; color: #c3ccd4; font-size: 1.02rem; }
+    .news-empty h2 { margin: 0 0 8px; color: #eef2f6; font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.4rem; }
+    .news-empty p { margin: 0; max-width: 36rem; }
+    .news-note { margin: 0 0 20px; color: #d7dee6; }
+    .news-more { display: flex; justify-content: center; margin-top: 28px; }
+    .news-more button { border: 1px solid #24292f; border-radius: 999px; background: transparent; color: #eef2f6; cursor: pointer; font: 600 0.9rem 'Inter', sans-serif; padding: 10px 18px; }
+    .news-more button:hover { border-color: #3ec6e6; color: #3ec6e6; }
+    .news-more button:disabled { opacity: .5; cursor: default; }
+    .marina-news .reveal { opacity: 0; transform: translateY(28px) scale(.985); transition: opacity .9s cubic-bezier(.16, 1, .3, 1), transform .9s cubic-bezier(.16, 1, .3, 1); }
+    .marina-news .reveal.is-visible { opacity: 1; transform: none; }
+    @media (max-width: 900px) { .news-heading { grid-template-columns: 1fr; row-gap: 20px; } .news-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .news-band { padding-top: 106px; padding-bottom: 56px; } .news-grid { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { .marina-news .reveal, .news-card { opacity: 1; transform: none; transition: none; } }
+  </style>
 </BaseLayout>

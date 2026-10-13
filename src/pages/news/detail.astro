@@ -3,10 +3,31 @@ import BaseLayout from '../../components/layout/BaseLayout.astro';
 import NewsDetail from '../../islands/NewsDetail';
 ---
 
-<BaseLayout title="News Article - SDG AI Lab">
-  <section class="section-padding">
-    <div class="container-narrow">
-      <NewsDetail client:load />
-    </div>
-  </section>
+<BaseLayout title="News Article - SDG AI Lab" description="A news update from the SDG AI Lab.">
+  <main class="marina-news" id="main">
+    <section class="news-band">
+      <div class="marina-live-wrap">
+        <NewsDetail client:load />
+      </div>
+    </section>
+  </main>
+
+  <style is:global>
+    .marina-news { background: #15181c; color: #eef2f6; font-family: 'Inter', sans-serif; min-height: 100vh; }
+    .marina-news *, .marina-news *::before, .marina-news *::after { box-sizing: border-box; }
+    .news-band { padding: 150px 0 80px; background: #15181c; }
+    .news-article { max-width: 760px; }
+    .news-back { display: inline-flex; margin-bottom: 28px; color: #3ec6e6; font-weight: 600; text-decoration: none; }
+    .news-back:hover { color: #c5eef8; }
+    .news-cover { margin: 0 0 28px; overflow: hidden; border: 1px solid #24292f; border-radius: 12px; background: #21262c; aspect-ratio: 16 / 9; }
+    .news-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .news-article h1 { margin: 0 0 14px; font-family: 'Cabinet Grotesk', sans-serif; font-size: clamp(2.15rem, 4vw, 3.1rem); font-weight: 700; line-height: 1.08; letter-spacing: -.03em; color: #eef2f6; }
+    .news-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; color: #c3ccd4; font-size: 0.94rem; }
+    .news-status { color: #c3ccd4; }
+    .news-status h1 { margin: 0 0 12px; font-family: 'Cabinet Grotesk', sans-serif; font-size: 2rem; color: #eef2f6; }
+    .marina-news .prose-content { color: #d7dee6; font-size: 1.05rem; line-height: 1.7; }
+    .marina-news .prose-content h2, .marina-news .prose-content h3 { color: #eef2f6; font-family: 'Cabinet Grotesk', sans-serif; }
+    .marina-news .prose-content a { color: #3ec6e6; }
+    @media (max-width: 640px) { .news-band { padding-top: 106px; padding-bottom: 56px; } }
+  </style>
 </BaseLayout>

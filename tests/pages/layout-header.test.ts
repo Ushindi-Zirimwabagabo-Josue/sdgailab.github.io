@@ -25,6 +25,7 @@ describe('Header.astro source', () => {
     expect(source).toContain("label: 'Services'");
     expect(source).toContain("label: 'Solutions'");
     expect(source).toContain("label: 'Research'");
+    expect(source).toContain("label: 'News'");
     expect(source).toContain("label: 'Contact'");
     expect(source).toContain('aria-label="SDG AI Lab homepage"');
     expect(source).not.toContain('serviceSubLinks');

@@ -46,20 +46,18 @@ function NewsDetailContent() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center py-12" role="status" aria-label="Loading">
-        <h1 className="sr-only">Loading article</h1>
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary-200 border-t-primary" />
-        <span className="sr-only">Loading article...</span>
-      </div>
+      <p className="news-status" role="status" aria-label="Loading">
+        Loading article…
+      </p>
     );
   }
 
   if (error || !article) {
     return (
-      <div className="text-center py-12" role="alert">
-        <h1 className="text-2xl font-bold text-lab-text mb-4">Article Not Found</h1>
-        <p className="text-xl text-lab-subtle mb-4">{error || 'The requested article could not be found.'}</p>
-        <a href={withBase('/news')} className="text-lab-accent-soft hover:underline font-medium">
+      <div className="news-status" role="alert">
+        <h1>Article Not Found</h1>
+        <p>{error || 'The requested article could not be found.'}</p>
+        <a href={withBase('/news')} className="news-back">
           &larr; Back to News
         </a>
       </div>
@@ -67,26 +65,20 @@ function NewsDetailContent() {
   }
 
   return (
-    <article>
-      <a href={withBase('/news')} className="inline-flex items-center text-lab-accent-soft hover:underline font-medium mb-6">
+    <article className="news-article">
+      <a href={withBase('/news')} className="news-back">
         &larr; Back to News
       </a>
 
-      {article.featured_image_url && (
-        <div className="aspect-video overflow-hidden rounded-lg bg-lab-section mb-8 max-h-96">
-          <img
-            src={article.featured_image_url}
-            alt=""
-            className="h-full w-full object-cover"
-          />
+      {article.featured_image_url ? (
+        <div className="news-cover">
+          <img src={article.featured_image_url} alt="" />
         </div>
-      )}
+      ) : null}
 
-      <header className="mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-lab-text mb-4">
-          {article.title}
-        </h1>
-        <div className="flex items-center gap-2 text-sm text-lab-subtle">
+      <header>
+        <h1>{article.title}</h1>
+        <div className="news-meta">
           <time dateTime={article.publish_date}>
             {new Date(article.publish_date).toLocaleDateString('en-US', {
               year: 'numeric',
@@ -94,19 +86,11 @@ function NewsDetailContent() {
               day: 'numeric',
             })}
           </time>
-          {article.author_name && (
-            <>
-              <span aria-hidden="true">&middot;</span>
-              <span>By {article.author_name}</span>
-            </>
-          )}
+          {article.author_name ? <span>By {article.author_name}</span> : null}
         </div>
       </header>
 
-      <div
-        className="prose-content"
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
+      <div className="prose-content" dangerouslySetInnerHTML={{ __html: html }} />
     </article>
   );
 }

@@ -3249,7 +3249,7 @@
   }
 
   .marina-nav-partner-logo.marina-nav-icpsd {
-    height: var(--nav-logo-height);
+    height: calc(var(--nav-logo-height) * 0.5);
   }
 
   .marina-nav-links {
