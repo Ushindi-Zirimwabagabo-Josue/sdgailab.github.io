@@ -40,22 +40,23 @@ import NewsList from '../../islands/NewsList';
     .news-band { padding: 150px 0 80px; background: radial-gradient(650px 440px at 2% 28%, rgba(62, 198, 230, .06), transparent 68%), #15181c; }
     .news-heading { display: grid; grid-template-columns: .9fr 1.1fr; column-gap: 60px; align-items: end; margin-bottom: 48px; }
     .news-heading h1 { max-width: 510px; margin: 0; font-family: 'Cabinet Grotesk', sans-serif; font-size: clamp(2.15rem, 4vw, 3.3rem); font-weight: 700; line-height: 1.06; letter-spacing: -.03em; background: linear-gradient(115deg, #fff 20%, #a8e6f5 55%, #c5eef8 100%); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; }
-    .news-intro { max-width: 460px; margin: 0; color: #d7dee6; font-size: 1.1rem; line-height: 1.6; }
+    .news-intro { max-width: 460px; margin: 0; color: #d7dee6; font: 400 1.1rem/1.6 'Inter', sans-serif; }
     .news-toolbar { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
-    .news-search { display: flex; flex-direction: column; gap: 8px; width: min(100%, 360px); color: #c3ccd4; font-size: 0.78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .news-search { display: flex; flex-direction: column; gap: 8px; width: min(100%, 360px); color: #c3ccd4; font: 600 0.92rem 'Inter', sans-serif; }
     .news-search input { width: 100%; border: 1px solid #24292f; border-radius: 999px; background: #1b1f24; color: #eef2f6; font: 600 0.92rem 'Inter', sans-serif; padding: 10px 16px; outline: none; }
     .news-search input:focus { border-color: #3ec6e6; }
-    .news-count { margin: 0 0 28px; color: #aeb7c0; font-size: 0.94rem; }
+    .news-count { margin: 0 0 28px; color: #aeb7c0; font: 400 0.94rem/1.55 'Inter', sans-serif; }
     .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
     .news-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid #24292f; border-radius: 12px; background: #1b1f24; color: inherit; text-decoration: none; transition: border-color .18s ease, transform .18s ease; }
     .news-card:hover { border-color: #2c323a; transform: translateY(-3px); }
     .news-card-image { aspect-ratio: 16 / 9; overflow: hidden; background: #21262c; border-bottom: 1px solid #24292f; }
     .news-card-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
     .news-card-body { display: flex; flex: 1; flex-direction: column; padding: 18px; }
-    .news-card-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; color: #3ec6e6; font-size: 0.78rem; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; }
-    .news-card h2 { margin: 0; color: #eef2f6; font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.2; }
-    .news-card p { margin: 10px 0 0; color: #c3ccd4; font-size: 0.94rem; line-height: 1.55; }
-    .news-card-source { margin-top: auto; padding-top: 14px; color: #3ec6e6; font-size: 0.78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .news-card-meta { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; color: #3ec6e6; font: 600 0.78rem 'Inter', sans-serif; letter-spacing: .03em; text-transform: uppercase; }
+    .news-card h2 { margin: 0; color: #eef2f6; font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.12rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.15; }
+    .news-card p { margin: 10px 0 0; color: #c3ccd4; font: 400 0.94rem/1.55 'Inter', sans-serif; }
+    .news-card-source { display: inline-flex; margin-top: auto; padding-top: 18px; color: #c3ccd4; font: 600 0.88rem 'Inter', sans-serif; }
+    .news-card:hover .news-card-source { color: #26bde2; }
     .news-empty, .news-status { margin: 0; color: #c3ccd4; font-size: 1.02rem; }
     .news-empty h2 { margin: 0 0 8px; color: #eef2f6; font-family: 'Cabinet Grotesk', sans-serif; font-size: 1.4rem; }
     .news-empty p { margin: 0; max-width: 36rem; }

@@ -39,7 +39,7 @@ function NewsCard({ article }: { article: NewsListItem }) {
         </div>
         <h2>{article.title}</h2>
         {article.summary ? <p>{article.summary}</p> : null}
-        {source ? <span className="news-card-source">Read at source</span> : null}
+        {source ? <span className="news-card-source">Read the story</span> : null}
       </div>
     </>
   );
