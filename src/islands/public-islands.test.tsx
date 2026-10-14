@@ -129,7 +129,7 @@ describe('public islands', () => {
 
     expect(container.textContent).toContain('Forecasting Platform');
     expect(container.querySelector('a')?.getAttribute('href')).toContain(
-      '/projects/detail/?slug=forecasting-platform'
+      '/projects/detail/forecasting-platform/'
     );
   });
 

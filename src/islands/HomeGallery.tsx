@@ -17,28 +17,28 @@ const fallbackTiles: GalleryTile[] = [
   {
     slug: HOME_GALLERY_SLUGS[0],
     name: 'Tech4R',
-    href: withBase(`/projects/detail/?slug=${HOME_GALLERY_SLUGS[0]}`),
+    href: withBase(`/projects/detail/${HOME_GALLERY_SLUGS[0]}/`),
     image: marinaAsset('assets/hero-tech4r.jpg'),
     alt: 'Tech4R volunteers working a live coordination session',
   },
   {
     slug: HOME_GALLERY_SLUGS[1],
     name: 'DSVI',
-    href: withBase(`/projects/detail/?slug=${HOME_GALLERY_SLUGS[1]}`),
+    href: withBase(`/projects/detail/${HOME_GALLERY_SLUGS[1]}/`),
     image: marinaAsset('assets/dsvi-georgia-map.jpg'),
     alt: 'DSVI drivetime access map, Georgia',
   },
   {
     slug: HOME_GALLERY_SLUGS[2],
     name: 'Frontier Tech Leaders',
-    href: withBase(`/projects/detail/?slug=${HOME_GALLERY_SLUGS[2]}`),
+    href: withBase(`/projects/detail/${HOME_GALLERY_SLUGS[2]}/`),
     image: marinaAsset('assets/hero-ftl-graduation.jpg'),
     alt: 'Frontier Tech Leaders cohort graduation',
   },
   {
     slug: HOME_GALLERY_SLUGS[3],
     name: 'Innovation Campus',
-    href: withBase(`/projects/detail/?slug=${HOME_GALLERY_SLUGS[3]}`),
+    href: withBase(`/projects/detail/${HOME_GALLERY_SLUGS[3]}/`),
     image: marinaAsset('assets/hero-innovation-campus.jpg'),
     alt: 'Innovation Campus graduates with Samsung',
   },
@@ -48,7 +48,7 @@ function tileFromProject(project: HomeGalleryProject, fallback?: GalleryTile): G
   return {
     slug: project.slug,
     name: project.title,
-    href: withBase(`/projects/detail/?slug=${project.slug}`),
+    href: withBase(`/projects/detail/${project.slug}/`),
     image: project.image_url || fallback?.image || null,
     alt: project.title,
   };

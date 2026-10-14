@@ -72,7 +72,7 @@ function ProjectMedia({ project }: { project: Project }) {
   );
 }
 
-function ProjectDetailContent() {
+function ProjectDetailContent({ slug }: { slug?: string }) {
   const [project, setProject] = useState<Project | null>(null);
   const [html, setHtml] = useState('');
   const [loading, setLoading] = useState(true);
@@ -80,7 +80,7 @@ function ProjectDetailContent() {
 
   useEffect(() => {
     let active = true;
-    const slugParam = new URLSearchParams(window.location.search).get('slug');
+    const slugParam = slug || new URLSearchParams(window.location.search).get('slug');
     if (!slugParam) {
       setError('No project specified.');
       setLoading(false);
@@ -124,13 +124,13 @@ function ProjectDetailContent() {
 
     void loadProject(slugParam);
     return () => { active = false; };
-  }, []);
+  }, [slug]);
 
   if (loading) {
     return <div className="marina-case-loading" role="status" aria-label="Loading project"><span className="marina-case-spinner" aria-hidden="true" /><span className="sr-only">Loading project...</span></div>;
   }
   if (error || !project) {
-    return <section className="marina-case-error" role="alert"><h1>Project Not Found</h1><p>{error || 'The requested project could not be found.'}</p><a href={withBase('/projects')}>← Back to Our Work</a></section>;
+    return <section className="marina-case-error" role="alert"><h1>Project Not Found</h1><p>{error || 'The requested project could not be found.'}</p><a href={withBase('/projects')}>← Back to Solutions</a></section>;
   }
 
   const categoryLabel = toFocusLabel(project);
@@ -157,7 +157,7 @@ function ProjectDetailContent() {
     <article className="marina-case-study">
       <header className="marina-case-hero">
         <div className="marina-case-wrap">
-          <p className="marina-case-crumb"><a href={withBase('/projects')}>Our Work</a> <span aria-hidden="true">/</span> {project.title}</p>
+          <p className="marina-case-crumb"><a href={withBase('/projects')}>Solutions</a> <span aria-hidden="true">/</span> {project.title}</p>
           {metadata.length > 0 && <p className="marina-case-meta">{metadata.map((item, index) => <span key={item}>{index > 0 && <b aria-hidden="true">/</b>}{item}</span>)}</p>}
           <h1>{project.title}</h1>
           {project.summary && <p className="marina-case-summary">{project.summary}</p>}
@@ -183,6 +183,6 @@ function ProjectDetailContent() {
   );
 }
 
-export default function ProjectDetail() {
-  return <ObservabilityBoundary surface="public" name="ProjectDetail"><ProjectDetailContent /></ObservabilityBoundary>;
+export default function ProjectDetail({ slug }: { slug?: string }) {
+  return <ObservabilityBoundary surface="public" name="ProjectDetail"><ProjectDetailContent slug={slug} /></ObservabilityBoundary>;
 }

@@ -17,7 +17,7 @@ test.describe('Marina secondary journeys', () => {
 
   test('publications page hydrates the publications island', async ({ page }) => {
     await page.goto('/resources/');
-    await expect(page).toHaveTitle(/Publications - SDG AI Lab/);
+    await expect(page).toHaveTitle(/Publications — SDG AI Lab/);
     await expect(page.getByText('Publications').first()).toBeVisible({ timeout: 15_000 });
   });
 });

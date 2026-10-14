@@ -79,6 +79,18 @@ const impactStats = [
         />
       </div>
     </section>
+    <nav class="marina-live-explore" aria-label="Explore the lab">
+      <div class="marina-live-wrap">
+        <ul>
+          <li><a href={withBase('/expertise')}>Expertise</a></li>
+          <li><a href={withBase('/services')}>Services</a></li>
+          <li><a href={withBase('/projects')}>Solutions</a></li>
+          <li><a href={withBase('/research')}>Research</a></li>
+          <li><a href={withBase('/news')}>News</a></li>
+          <li><a href={withBase('/contact')}>Contact</a></li>
+        </ul>
+      </div>
+    </nav>
     <section class="marina-live-mission">
       <div class="marina-live-wrap reveal">
         <CmsText client:load page="home" section="mission" as="p" rich />

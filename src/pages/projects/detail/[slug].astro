@@ -1,0 +1,31 @@
+---
+import BaseLayout from '../../../components/layout/BaseLayout.astro';
+import ProjectDetail from '../../../islands/ProjectDetail';
+import {
+  loadPublishedProjectIndex,
+  projectDescription,
+  type PublishedProjectIndexItem,
+} from '../../../lib/publishedProjectIndex';
+
+export async function getStaticPaths() {
+  const projects = await loadPublishedProjectIndex();
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: PublishedProjectIndexItem;
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout
+  title={`${project.title} — SDG AI Lab`}
+  description={projectDescription(project.summary, project.title)}
+  image={project.image_url ?? undefined}
+>
+  <ProjectDetail client:load slug={project.slug} />
+</BaseLayout>

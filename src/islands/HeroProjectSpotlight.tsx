@@ -15,7 +15,7 @@ function ProjectPreviewCard({ project, index }: { project: FeaturedProjectCard; 
 
   return (
     <a
-      href={withBase(`/projects/detail/?slug=${project.slug}`)}
+      href={withBase(`/projects/detail/${project.slug}/`)}
       className="hero-project-card group grid gap-4 rounded-[1.35rem] border border-lab-border bg-lab-surface/92 p-4 text-left no-underline shadow-[0_18px_44px_rgba(0,0,0,0.18)] transition hover:-translate-y-1 hover:border-lab-accent/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-lab-accent focus-visible:ring-offset-2 focus-visible:ring-offset-lab-section sm:grid-cols-[7rem_1fr]"
     >
       <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-gradient-to-br from-lab-accent/80 via-lab-accent/45 to-lab-elevated sm:aspect-square">

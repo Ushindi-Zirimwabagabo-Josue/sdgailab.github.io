@@ -383,7 +383,7 @@ export const PAGE_SECTIONS: PageSectionDef[] = [
     sectionSlug: 'intro',
     label: 'Page introduction',
     kind: 'text',
-    fallback: 'Eight practice areas, from AI development to volunteer talent — mixed and matched per engagement.',
+    fallback: 'What partners can commission from the SDG AI Lab, from an iterative build through to independent operation.',
   },
   {
     pageSlug: 'services',

@@ -35,6 +35,8 @@ describe('Page endpoints', () => {
     for (const route of [
       'https://sdgailab.org/',
       'https://sdgailab.org/about/',
+      'https://sdgailab.org/expertise/',
+      'https://sdgailab.org/how-we-work/',
       'https://sdgailab.org/projects/',
       'https://sdgailab.org/tech4r/',
       'https://sdgailab.org/resources/',
@@ -48,6 +50,7 @@ describe('Page endpoints', () => {
 
     expect(body).not.toContain('/admin');
     expect(body).not.toContain('/launch-readiness');
+    expect(body).not.toContain('/news/detail');
     expect(body).toContain('<priority>1.0</priority>');
     expect(body).toContain('<priority>0.9</priority>');
     expect(body).toContain('<changefreq>weekly</changefreq>');

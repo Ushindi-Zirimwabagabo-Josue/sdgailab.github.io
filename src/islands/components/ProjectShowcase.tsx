@@ -32,7 +32,7 @@ export function ProjectOverlayCard({
 
   return (
     <a
-      href={withBase(`/projects/detail/?slug=${project.slug}`)}
+      href={withBase(`/projects/detail/${project.slug}/`)}
       className={`project-showcase-card project-showcase-card--${size} group ${className}`.trim()}
     >
       {videoUrl ? (

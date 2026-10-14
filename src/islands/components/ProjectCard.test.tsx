@@ -45,7 +45,7 @@ describe('ProjectCard', () => {
     const link = container.querySelector('a');
     const image = container.querySelector('img');
 
-    expect(link?.getAttribute('href')).toContain('/projects/detail/?slug=ai-lab-project');
+    expect(link?.getAttribute('href')).toContain('/projects/detail/ai-lab-project/');
     expect(container.textContent).toContain('AI Lab Project');
     expect(container.textContent).toContain('A helpful project summary.');
     expect(container.textContent).toContain('Live');

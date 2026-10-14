@@ -20,7 +20,7 @@ export default function ProjectCard({ project }: { project: ProjectListItem }) {
 
   return (
     <a
-      href={withBase(`/projects/detail/?slug=${project.slug}`)}
+      href={withBase(`/projects/detail/${project.slug}/`)}
       className="group flex h-full flex-col overflow-hidden rounded-2xl bg-lab-surface ring-1 ring-lab-border/70 transition hover:-translate-y-1 hover:ring-lab-accent/55 hover:shadow-[0_18px_42px_rgba(0,0,0,0.18)] focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
     >
       {project.image_url ? (

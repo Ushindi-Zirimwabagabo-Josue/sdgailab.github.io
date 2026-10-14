@@ -106,7 +106,7 @@ describe('Public Astro pages', () => {
   it('publications page is reserved for publication content only', () => {
     const source = readSource('src/pages/resources.astro');
     expect(source).toContain('BaseLayout');
-    expect(source).toContain('Publications - SDG AI Lab');
+    expect(source).toContain('Publications — SDG AI Lab');
     expect(source).toContain('PublicationsList');
     expect(source).not.toContain('Knowledge hub');
     expect(source).not.toContain("withBase('/news')");
@@ -115,8 +115,8 @@ describe('Public Astro pages', () => {
 
   it('research page exposes research and advisory content', () => {
     const source = readSource('src/pages/research.astro');
-    expect(source).toContain('Research & Advisory - SDG AI Lab');
-    expect(source).toContain('Key outputs from technical assessments');
+    expect(source).toContain('Research — SDG AI Lab');
+    expect(source).toContain('Research outputs from the SDG AI Lab');
     expect(source).toContain('marina-research');
     expect(source).toContain('research-intro');
     expect(source).toContain('ResearchOutputs');

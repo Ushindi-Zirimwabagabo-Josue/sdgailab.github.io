@@ -265,7 +265,7 @@ export default function PortfolioGrid() {
   }
 
   function openProject(project: PortfolioCard) {
-    window.location.href = withBase(`/projects/detail/?slug=${project.slug}`);
+    window.location.href = withBase(`/projects/detail/${project.slug}/`);
   }
 
   function selectCountry(value: string) {

@@ -51,7 +51,7 @@ describe('Island components integration', () => {
     expect(container.textContent).toContain('Integrated Coverage Project');
     expect(container.textContent).toContain('Active');
     expect(container.querySelector('a')?.getAttribute('href')).toContain(
-      '/projects/detail/?slug=integrated-coverage-project'
+      '/projects/detail/integrated-coverage-project/'
     );
   });
 });

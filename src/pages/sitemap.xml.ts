@@ -1,10 +1,13 @@
 import type { APIRoute } from 'astro';
+import { loadPublishedProjectIndex, projectDetailPath } from '../lib/publishedProjectIndex';
 
 const productionHost = 'https://sdgailab.org';
 
 const publicRoutes = [
   '/',
   '/about/',
+  '/expertise/',
+  '/how-we-work/',
   '/projects/',
   '/tech4r/',
   '/services/',
@@ -27,9 +30,14 @@ function xmlEscape(value: string) {
     .replaceAll("'", '&apos;');
 }
 
-export const GET: APIRoute = ({ site }) => {
+export const GET: APIRoute = async ({ site }) => {
   const origin = site?.toString().replace(/\/$/, '') || productionHost;
-  const urls = publicRoutes
+  const projects = await loadPublishedProjectIndex();
+  const routes = [
+    ...publicRoutes,
+    ...projects.map((project) => projectDetailPath(project.slug)),
+  ];
+  const urls = routes
     .map((route) => {
       const loc = `${origin}${route}`;
       const priority = route === '/' ? '1.0' : route === '/contact/' ? '0.9' : '0.7';
