@@ -17,6 +17,8 @@ import type { ProjectListItem } from '../lib/types';
 type FocusFilter = 'all' | PortfolioFocus;
 
 const VISIBLE_FOCUS_COUNT = 4;
+const FOCUS_SCROLL_QUERY = '(max-width: 800px)';
+
 type ProjectStatusLabel = 'ongoing' | 'completed';
 type OpenFilter = 'country' | 'year' | null;
 
@@ -185,6 +187,14 @@ export default function PortfolioGrid() {
   }, []);
 
   useEffect(() => {
+    if (!window.matchMedia(FOCUS_SCROLL_QUERY).matches) return;
+    const active = toolbarRef.current?.querySelector<HTMLButtonElement>(
+      '.proj-filters--scroll .proj-filter.active'
+    );
+    active?.scrollIntoView({ inline: 'nearest', block: 'nearest' });
+  }, [focusFilter]);
+
+  useEffect(() => {
     let cancelled = false;
 
     getPublishedProjects()
@@ -290,6 +300,19 @@ export default function PortfolioGrid() {
   const hasEarlierFocus = focusPage > 0;
   const hasMoreFocus = focusStart + VISIBLE_FOCUS_COUNT < focusFilters.length;
 
+  function renderFocusButton(filter: { id: FocusFilter; label: string }) {
+    return (
+      <button
+        key={filter.id}
+        type="button"
+        className={`proj-filter ${focusFilter === filter.id ? 'active' : ''}`}
+        onClick={() => selectFocus(filter.id)}
+      >
+        {filter.label}
+      </button>
+    );
+  }
+
   return (
     <>
       <div className="band-head reveal">
@@ -306,7 +329,7 @@ export default function PortfolioGrid() {
       </div>
 
       <div className="portfolio-toolbar reveal" ref={toolbarRef}>
-        <div className="proj-filters" role="group" aria-label="Filter by focus area">
+        <div className="proj-filters proj-filters--paged" role="group" aria-label="Filter by focus area">
           {hasEarlierFocus ? (
             <button
               type="button"
@@ -319,16 +342,7 @@ export default function PortfolioGrid() {
               </svg>
             </button>
           ) : null}
-          {visibleFocusFilters.map((filter) => (
-            <button
-              key={filter.id}
-              type="button"
-              className={`proj-filter ${focusFilter === filter.id ? 'active' : ''}`}
-              onClick={() => selectFocus(filter.id)}
-            >
-              {filter.label}
-            </button>
-          ))}
+          {visibleFocusFilters.map(renderFocusButton)}
           {hasMoreFocus ? (
             <button
               type="button"
@@ -341,6 +355,9 @@ export default function PortfolioGrid() {
               </svg>
             </button>
           ) : null}
+        </div>
+        <div className="proj-filters proj-filters--scroll" role="group" aria-label="Filter by focus area">
+          {focusFilters.map(renderFocusButton)}
         </div>
         <div className="filter-dropdowns">
           <details
