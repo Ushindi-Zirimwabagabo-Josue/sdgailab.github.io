@@ -790,28 +790,6 @@
     font-weight: 600;
   }
 
-  .marina-live-explore {
-    padding: 8px 0 36px;
-  }
-  .marina-live-explore ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 22px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .marina-live-explore a {
-    color: #d7dee6;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 600;
-    text-decoration: none;
-  }
-  .marina-live-explore a:hover {
-    color: #3ec6e6;
-  }
-
   .marina-live-mission {
     padding: 56px 0;
     border-bottom: 1px solid #24292f;
